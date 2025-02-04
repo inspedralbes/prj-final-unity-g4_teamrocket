@@ -3,12 +3,16 @@ using UnityEngine;
 public class VisionController : MonoBehaviour
 {
     public float lightAngle = 45f; // Ángulo de visión (puedes ajustarlo en el Inspector)
-    private Material visionMaterial; // Material que usa el shader
+    public LayerMask wallLayer; // Capa que representa las paredes
+    public int rayCount = 36; // Número de rayos para dividir el cono (aumentado para mayor precisión)
+    public float visionRadius = 10f; // Radio máximo de la visión
+    private Mesh visionMesh; // Malla para el cono de visión
 
     void Start()
     {
-        // Obtén el material del objeto que usa el shader
-        visionMaterial = GetComponent<Renderer>().material;
+        // Crea una malla para el cono de visión
+        visionMesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = visionMesh;
     }
 
     void Update()
@@ -30,13 +34,60 @@ public class VisionController : MonoBehaviour
         // Ajusta el ángulo para que esté en el rango [0, 360]
         if (angle < 0) angle += 360;
 
-        // Pasa el ángulo de dirección al shader
-        visionMaterial.SetFloat("_LightDirection", angle);
+        // Genera la malla del cono de visión
+        GenerateVisionMesh(angle);
+    }
 
-        // Pasa el ángulo de visión al shader (opcional, si quieres ajustarlo dinámicamente)
-        visionMaterial.SetFloat("_LightAngle", lightAngle);
-        Debug.Log("Mouse Position: " + mousePosition);
-        Debug.Log("World Mouse Position: " + worldMousePosition);
-        Debug.Log("Angle: " + angle);
+    void GenerateVisionMesh(float centerAngle)
+    {
+        // Crea los vértices y triángulos de la malla
+        Vector3[] vertices = new Vector3[rayCount + 2];
+        int[] triangles = new int[rayCount * 3];
+
+        // El primer vértice es el centro del cono
+        vertices[0] = Vector3.zero;
+
+        // Calcula los vértices del cono
+        float halfAngle = lightAngle / 2f;
+        float angleStep = lightAngle / (rayCount - 1);
+
+        for (int i = 0; i < rayCount; i++)
+        {
+            // Calcula el ángulo para este rayo
+            float currentAngle = centerAngle - halfAngle + angleStep * i;
+
+            // Convierte el ángulo a una dirección
+            Vector3 direction = new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0f);
+
+            // Lanza un rayo para detectar colisiones con las paredes
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, visionRadius, wallLayer);
+
+            // Si el rayo choca con una pared, usa la distancia de la colisión
+            if (hit.collider != null)
+            {
+                vertices[i + 1] = transform.InverseTransformPoint(hit.point);
+            }
+            else
+            {
+                // Si no hay pared, usa la distancia máxima
+                vertices[i + 1] = direction * visionRadius;
+            }
+
+            // Depuración: Dibuja los rayos en la escena
+            Debug.DrawRay(transform.position, direction * visionRadius, Color.red);
+        }
+
+        // Crea los triángulos de la malla
+        for (int i = 0; i < rayCount - 1; i++)
+        {
+            triangles[i * 3] = 0;
+            triangles[i * 3 + 1] = i + 1;
+            triangles[i * 3 + 2] = i + 2;
+        }
+
+        // Asigna los vértices y triángulos a la malla
+        visionMesh.Clear();
+        visionMesh.vertices = vertices;
+        visionMesh.triangles = triangles;
     }
 }
