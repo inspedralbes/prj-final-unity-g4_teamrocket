@@ -6,6 +6,7 @@ public class VisionController : MonoBehaviour
     public LayerMask wallLayer; // Capa que representa las paredes
     public int rayCount = 36; // Número de rayos para dividir el cono (aumentado para mayor precisión)
     public float visionRadius = 10f; // Radio máximo de la visión
+    public Material darknessMaterial; // Material de la máscara de oscuridad
     private Mesh visionMesh; // Malla para el cono de visión
 
     void Start()
@@ -36,6 +37,15 @@ public class VisionController : MonoBehaviour
 
         // Genera la malla del cono de visión
         GenerateVisionMesh(angle);
+
+        // Pasa los parámetros del cono al shader de la máscara de oscuridad
+        if (darknessMaterial != null)
+        {
+            darknessMaterial.SetVector("_ConePosition", transform.position);
+            darknessMaterial.SetFloat("_ConeDirection", angle);
+            darknessMaterial.SetFloat("_ConeAngle", lightAngle);
+            darknessMaterial.SetFloat("_ConeRadius", visionRadius);
+        }
     }
 
     void GenerateVisionMesh(float centerAngle)
