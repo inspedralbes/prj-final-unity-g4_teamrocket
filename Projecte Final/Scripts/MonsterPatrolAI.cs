@@ -7,10 +7,10 @@ public class MonsterPatrolAI : MonoBehaviour
     [Header("Movimiento")]
     [SerializeField] private float speed = 2f;
     [SerializeField] private float waitTime = 1f;
-    
+
     [Header("Patrulla")]
     [SerializeField] private Transform[] waypoints;
-    
+
     private int currentWaypoint = 0;
     private bool isWaiting;
     private MonsterChaseAI chaseAI;
@@ -24,7 +24,8 @@ public class MonsterPatrolAI : MonoBehaviour
         {
             ShuffleWaypoints();
         }
-        transform.position = waypoints[0].position;
+
+        transform.position = waypoints[0].position; // Iniciar en el primer waypoint
     }
 
     void Update()
@@ -40,13 +41,17 @@ public class MonsterPatrolAI : MonoBehaviour
 
     void Patrol()
     {
-        if (transform.position != waypoints[currentWaypoint].position)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWaypoint].position, speed * Time.deltaTime);
-        }
-        else if (!isWaiting)
+        // Si está esperando, no hacer nada
+        if (isWaiting) return;
+
+        // Si el monstruo llega al waypoint (comparación con distancia en lugar de !=)
+        if (Vector2.Distance(transform.position, waypoints[currentWaypoint].position) < 0.01f)
         {
             StartCoroutine(WaitAtWaypoint());
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWaypoint].position, speed * Time.deltaTime);
         }
     }
 
@@ -54,11 +59,14 @@ public class MonsterPatrolAI : MonoBehaviour
     {
         isWaiting = true;
         yield return new WaitForSeconds(waitTime);
+
+        // Pasar al siguiente waypoint de la lista
         currentWaypoint++;
-        if (currentWaypoint == waypoints.Length)
+        if (currentWaypoint >= waypoints.Length)
         {
             currentWaypoint = 0;
         }
+
         isWaiting = false;
     }
 
