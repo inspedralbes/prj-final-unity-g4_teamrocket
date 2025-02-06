@@ -3,12 +3,20 @@ using UnityEngine;
 public class MonsterChaseAI : MonoBehaviour
 {
     [Header("Persecución")]
-    [SerializeField] private Transform player;
-    [SerializeField] private float minDistance;
-    [SerializeField] private float visionRange;
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private Transform player; // Referencia al jugador
+    [SerializeField] private float minDistance = 1.5f; // Distancia mínima para atacar
+    [SerializeField] private float visionRange = 5f; // Rango de visión
+    [SerializeField] private float speed = 2f; // Velocidad de persecución
 
     private bool isChasing = false;
+    private UnityEngine.AI.NavMeshAgent agent; // Referencia al NavMeshAgent
+
+    void Start()
+    {
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent.updateRotation = false; // Desactiva la rotación automática
+        agent.updateUpAxis = false;   // Evita cambios en el eje Z (útil en 2D)
+    }
 
     void Update()
     {
@@ -30,16 +38,20 @@ public class MonsterChaseAI : MonoBehaviour
 
     void ChasePlayer()
     {
-        if(Vector2.Distance(transform.position, player.position) > minDistance) {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        // Usamos el NavMeshAgent para perseguir al jugador
+        if (Vector2.Distance(transform.position, player.position) > minDistance)
+        {
+            agent.SetDestination(player.position); // Establecer la posición del jugador como destino
         }
-        else {
+        else
+        {
             Attack();
         }
     }
 
-    public void Attack() {
-        Debug.Log("Atacar");
+    public void Attack()
+    {
+        Debug.Log("¡Atacar al jugador!");
     }
 
     public bool IsChasing()
@@ -52,5 +64,4 @@ public class MonsterChaseAI : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, visionRange);
     }
-
 }

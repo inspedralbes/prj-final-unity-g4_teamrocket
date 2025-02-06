@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI; // Importar NavMesh
 using System.Linq;
 
 public class MonsterPatrolAI : MonoBehaviour
@@ -13,19 +14,31 @@ public class MonsterPatrolAI : MonoBehaviour
 
     private int currentWaypoint = 0;
     private bool isWaiting;
+    private NavMeshAgent agent; // Referencia al NavMeshAgent
     private MonsterChaseAI chaseAI;
 
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false; // Desactiva la rotación automática
+        agent.updateUpAxis = false;   // Evita cambios en el eje Z (útil en 2D)
+        agent.autoBraking = false; // Evita que frene entre waypoints
+
         // Obtener la referencia del script de persecución
         chaseAI = GetComponent<MonsterChaseAI>();
+
+        if (waypoints.Length > 0)
+        {
+            transform.position = waypoints[0].position; // TELETRANSPORTAR al primer waypoint
+            agent.Warp(waypoints[0].position); // Asegurar que el NavMeshAgent inicie correctamente
+        }
 
         if (waypoints.Length > 1)
         {
             ShuffleWaypoints();
         }
 
-        transform.position = waypoints[0].position; // Iniciar en el primer waypoint
+        MoveToNextWaypoint();
     }
 
     void Update()
@@ -41,17 +54,12 @@ public class MonsterPatrolAI : MonoBehaviour
 
     void Patrol()
     {
-        // Si está esperando, no hacer nada
         if (isWaiting) return;
 
-        // Si el monstruo llega al waypoint (comparación con distancia en lugar de !=)
-        if (Vector2.Distance(transform.position, waypoints[currentWaypoint].position) < 0.01f)
+        // Si el monstruo llega al waypoint
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             StartCoroutine(WaitAtWaypoint());
-        }
-        else
-        {
-            transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWaypoint].position, speed * Time.deltaTime);
         }
     }
 
@@ -60,14 +68,19 @@ public class MonsterPatrolAI : MonoBehaviour
         isWaiting = true;
         yield return new WaitForSeconds(waitTime);
 
-        // Pasar al siguiente waypoint de la lista
-        currentWaypoint++;
-        if (currentWaypoint >= waypoints.Length)
-        {
-            currentWaypoint = 0;
-        }
+        // Pasar al siguiente waypoint
+        currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+        MoveToNextWaypoint();
 
         isWaiting = false;
+    }
+
+    void MoveToNextWaypoint()
+    {
+        if (waypoints.Length > 0)
+        {
+            agent.SetDestination(waypoints[currentWaypoint].position);
+        }
     }
 
     void ShuffleWaypoints()
