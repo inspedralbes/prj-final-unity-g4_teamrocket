@@ -1,21 +1,29 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Importar el nuevo sistema de entrada
+using System.Collections;
+using System.Collections.Generic;
 
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f; // Velocidad de movimiento
-    private Vector2 inputVector; // Vector de entrada
-
-    // Método llamado por el Input System para leer el movimiento
-    public void OnMove(InputValue value)
+    private Rigidbody2D Rigidbody2D;
+    private float Horizontal;
+    private float Vertical;
+    private float Speed = 5f;
+    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        inputVector = value.Get<Vector2>(); // Leer el input como un Vector2
+        Rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // Aplicar movimiento basado en el input
-        Vector3 movement = new Vector3(inputVector.x, inputVector.y, 0f);
-        transform.position += movement * speed * Time.deltaTime;
+        Horizontal = Input.GetAxisRaw("Horizontal");
+        Vertical = Input.GetAxisRaw("Vertical");
+    }
+
+    private void FixedUpdate()
+    {
+        Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
     }
 }

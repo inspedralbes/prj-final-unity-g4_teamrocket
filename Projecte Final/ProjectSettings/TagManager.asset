@@ -44,5 +44,8 @@ TagManager:
   - name: DarkMask
     uniqueID: 623481541
     locked: 0
+  - name: Player
+    uniqueID: 3482722967
+    locked: 0
   m_RenderingLayers:
   - Default
