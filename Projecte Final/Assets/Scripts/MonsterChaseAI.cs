@@ -6,7 +6,6 @@ public class MonsterChaseAI : MonoBehaviour
     [SerializeField] private Transform player; // Referencia al jugador
     [SerializeField] private float minDistance = 1.5f; // Distancia mínima para atacar
     [SerializeField] private float visionRange = 5f; // Rango de visión
-    [SerializeField] private float speed = 2f; // Velocidad de persecución
 
     private bool isChasing = false;
     private UnityEngine.AI.NavMeshAgent agent; // Referencia al NavMeshAgent

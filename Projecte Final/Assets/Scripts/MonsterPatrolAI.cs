@@ -6,7 +6,6 @@ using System.Linq;
 public class MonsterPatrolAI : MonoBehaviour
 {
     [Header("Movimiento")]
-    [SerializeField] private float speed = 2f;
     [SerializeField] private float waitTime = 1f;
 
     [Header("Patrulla")]
