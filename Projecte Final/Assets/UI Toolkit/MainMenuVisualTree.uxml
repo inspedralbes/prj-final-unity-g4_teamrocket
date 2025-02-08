@@ -3,15 +3,28 @@
     <engine:VisualElement name="a" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Resourses/fondo_MenuDarknessUnseen.png?fileID=2800000&amp;guid=ef7d3d6fc4542d342a1dbef158f78279&amp;type=3#fondo_MenuDarknessUnseen&quot;); background-size: cover; background-position: center;">
         <engine:Label text="Darkness&#10;Unseen" name="header" class="header" style="color: rgba(255, 255, 255, 0.9); font-size: 60px; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); text-align: center; margin-top: 20px;" />
         <engine:VisualElement name="Container" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <engine:Button text="Start" name="StartGameButton" class="button" style="background-color: rgba(0, 0, 0, 0.7); color: rgba(255, 255, 255, 0.9); font-size: 30px; border-radius: 5px; margin-bottom: 20px; padding: 10px 30px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);" />
-            <engine:Button text="Settings" name="Settings" class="button" style="background-color: rgba(0, 0, 0, 0.7); color: rgba(255, 255, 255, 0.9); font-size: 30px; border-radius: 5px; margin-bottom: 20px; padding: 10px 30px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);" />
-            <engine:Button text="Exit" name="Exit" class="button" style="background-color: rgba(0, 0, 0, 0.7); color: rgba(255, 255, 255, 0.9); font-size: 30px; border-radius: 5px; margin-bottom: 20px; padding: 10px 30px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);" />
+            <engine:Button text="Start" name="StartGameButton" class="button" />
+            <engine:Button text="Settings" name="Settings" class="button" />
+            <engine:Button text="Exit" name="Exit" class="button" />
         </engine:VisualElement>
-        <engine:VisualElement name="StartS" class="hidden" style="flex-grow: 1; padding-top: 421px; height: 406px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <engine:VisualElement name="StartS" class="hidden" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <engine:Button text="Create Room" name="CreateR" class="buttonS button" style="font-size: 25px;" />
             <engine:Button text="Join Room" name="JoinR" class="buttonS button" style="font-size: 25px;" />
-            <engine:TextField name="CodeInputField" label="Enter Room Code" style="display: none; width: 300px; height: 50px; align-self: center; margin-top: 20px; font-size: 18px; border-radius: 5px; background-color: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);" />
-            <engine:Label name="GeneratedCodeLabel" style="color: rgba(255, 255, 255, 0.9); font-size: 30px; display: none; align-self: center; margin-top: 20px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);" />
+            <engine:Button text="Start Offline" name="StartOffline" class="buttonS button" style="font-size: 25px;" />
+            <engine:Button text="Back" name="BackButton" class="buttonS button" style="font-size: 25px;" />
+            <engine:TextField name="CodeInputField" label="Enter Room Code" style="display: none; width: 300px; height: 50px; font-size: 18px;" />
+            <engine:Label name="GeneratedCodeLabel" style="color: rgba(255, 255, 255, 0.9); font-size: 30px; display: none;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="SettingsMenu" class="hidden" style="display: flex; justify-content: center; align-items: center; flex-grow: 1; margin-top: -600px;">
+            <engine:VisualElement class="settings-container">
+                <engine:Label text="Audio Settings" class="label" />
+                <engine:Slider name="VolumeSlider" value="1" min="0" max="1" class="slider" />
+                <engine:Label name="VolumeLabel" text="Volume: 100%" class="volume-label" />
+                <engine:Label text="Language" class="label" />
+                <engine:Button text="English" name="EnglishButton" class="button" />
+                <engine:Button text="Español" name="SpanishButton" class="button" />
+                <engine:Button text="Back" name="BackButton" class="button" />
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
