@@ -1,0 +1,20 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/PauseMenuStyle.uss?fileID=7433441132597879392&amp;guid=91942b4bc916e484b93dbd6c84e0547e&amp;type=3#PauseMenuStyle" />
+    <engine:VisualElement name="PauseM" style="position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7);">
+        <engine:VisualElement name="Background" style="position: absolute; width: 100%; height: 100%; background-color: black; opacity: 0.7;" />
+        <engine:VisualElement name="MenuContainer" style="position: absolute; left: 15%; top: 30%; width: 70%; height: 40%; text-align: center; justify-content: center;">
+            <engine:Label name="PauseTitle" text="Pause" style="font-size: 32px; color: white; margin-bottom: 20px; font-weight: bold; width: 104px; margin-left: 88px; margin-right: 64px;" />
+            <engine:Button name="ResumeButton" text="Resume" style="font-size: 24px; padding: 15px;" />
+            <engine:Button name="OptionsButton" text="Options" style="font-size: 24px; padding: 15px;" />
+            <engine:Button name="ExitButton" text="Exit" style="font-size: 24px; padding: 15px;" />
+            <engine:VisualElement name="OptionsMenu" style="display: none;">
+                <engine:Label name="VolumeLabel" text="Volume" style="font-size: 20px;" />
+                <engine:Slider name="VolumeSlider" low-value="0" high-value="1" value="1" />
+                <engine:Label name="VolumePercentage" text="100%" style="font-size: 18px;" />
+                <engine:Button name="EnglishButton" text="English" style="font-size: 20px; padding: 10px;" />
+                <engine:Button name="SpanishButton" text="Spanish" style="font-size: 20px; padding: 10px;" />
+                <engine:Button name="BackButton" text="Back" style="font-size: 20px; padding: 10px;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

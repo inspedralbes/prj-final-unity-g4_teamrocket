@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic; // Agrega esta línea para usar Dictionary
+using UnityEngine.SceneManagement;
+
 
 public class MainMenuEvents : MonoBehaviour
 {
@@ -190,16 +192,6 @@ private void ShowNewButtons()
     _codeInputField.style.display = DisplayStyle.Flex;
     _generatedCodeLabel.style.display = DisplayStyle.Flex;
 }
-    private void OnStartOfflineButtonClick(ClickEvent evt)
-{
-    Debug.Log("Start Offline clicked");
-
-    // Ocultar el menú principal y el submenú de StartS
-    _container.style.display = DisplayStyle.None;
-    _startS.style.display = DisplayStyle.None;
-
-    // Aquí podrías agregar más lógica para iniciar el juego offline si es necesario
-}
 
     private void OnBackFromStartSButtonClick(ClickEvent evt)
 {
@@ -237,10 +229,7 @@ private void ShowNewButtons()
         }
     }
 
-    private void OnExitButtonClick(ClickEvent evt)
-    {
-        Application.Quit();
-    }
+    
 
     private void OnSettingsButtonClick(ClickEvent evt)
     {
@@ -298,4 +287,22 @@ private void ShowNewButtons()
         _exitButton.style.opacity = alpha;
         _settingsButton.style.opacity = alpha;
     }
+
+    private void OnStartOfflineButtonClick(ClickEvent evt)
+{
+    Debug.Log("Start Offline clicked");
+
+    // Cambiar a la escena "Carga"
+    SceneManager.LoadScene("Carga");
+}
+
+private void OnExitButtonClick(ClickEvent evt)
+{
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // Detener el juego en el editor
+    #else
+        Application.Quit(); // Cerrar la aplicación en la build final
+    #endif
+}
+
 }
