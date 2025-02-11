@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI; // Importar NavMesh
+using UnityEngine.AI;
 using System.Linq;
 
 public class MonsterPatrolAI : MonoBehaviour
@@ -13,23 +13,22 @@ public class MonsterPatrolAI : MonoBehaviour
 
     private int currentWaypoint = 0;
     private bool isWaiting;
-    private NavMeshAgent agent; // Referencia al NavMeshAgent
+    private NavMeshAgent agent;
     private MonsterChaseAI chaseAI;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; // Desactiva la rotación automática
-        agent.updateUpAxis = false;   // Evita cambios en el eje Z (útil en 2D)
-        agent.autoBraking = false; // Evita que frene entre waypoints
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        agent.autoBraking = false;
 
-        // Obtener la referencia del script de persecución
         chaseAI = GetComponent<MonsterChaseAI>();
 
         if (waypoints.Length > 0)
         {
-            transform.position = waypoints[0].position; // TELETRANSPORTAR al primer waypoint
-            agent.Warp(waypoints[0].position); // Asegurar que el NavMeshAgent inicie correctamente
+            transform.position = waypoints[0].position;
+            agent.Warp(waypoints[0].position);
         }
 
         if (waypoints.Length > 1)
@@ -42,7 +41,6 @@ public class MonsterPatrolAI : MonoBehaviour
 
     void Update()
     {
-        // Si el monstruo está persiguiendo, no patrulla
         if (chaseAI != null && chaseAI.IsChasing())
         {
             return;
@@ -55,7 +53,6 @@ public class MonsterPatrolAI : MonoBehaviour
     {
         if (isWaiting) return;
 
-        // Si el monstruo llega al waypoint
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             StartCoroutine(WaitAtWaypoint());
@@ -67,7 +64,6 @@ public class MonsterPatrolAI : MonoBehaviour
         isWaiting = true;
         yield return new WaitForSeconds(waitTime);
 
-        // Pasar al siguiente waypoint
         currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
         MoveToNextWaypoint();
 
@@ -79,6 +75,8 @@ public class MonsterPatrolAI : MonoBehaviour
         if (waypoints.Length > 0)
         {
             agent.SetDestination(waypoints[currentWaypoint].position);
+
+            chaseAI.UpdateVisionAngleToWaypoint(waypoints[currentWaypoint].position);
         }
     }
 
