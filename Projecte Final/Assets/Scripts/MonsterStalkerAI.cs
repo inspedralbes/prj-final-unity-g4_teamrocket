@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterStalkerAI : MonoBehaviour
+public class MonsterStalkerAI : EnemigoBase
 {
     [Header("Configuración")]
     [SerializeField] private Transform player;  // Referencia al jugador
@@ -12,6 +12,7 @@ public class MonsterStalkerAI : MonoBehaviour
 
     void Start()
     {
+        damage = 2;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false; // Desactiva la rotación automática
         agent.updateUpAxis = false;   // Evita cambios en el eje Z (útil en 2D)
@@ -33,7 +34,7 @@ public class MonsterStalkerAI : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))  
+        if (other.CompareTag("Vision"))  
         {
             RespawnAtWaypoint(); 
         }

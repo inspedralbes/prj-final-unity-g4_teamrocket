@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterChaseAI : MonoBehaviour
+public class MonsterChaseAI : EnemigoBase
 {
     [Header("Persecución")]
     [SerializeField] private Transform player; // Referencia al jugador
@@ -18,6 +18,7 @@ public class MonsterChaseAI : MonoBehaviour
 
     void Start()
     {
+        damage = 3;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
