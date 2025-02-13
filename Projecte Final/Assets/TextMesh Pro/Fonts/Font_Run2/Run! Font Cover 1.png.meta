@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Run! Font Cover 1_0: -469068596867127320
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
