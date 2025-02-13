@@ -22,7 +22,7 @@
                 <engine:Label name="VolumeLabel" text="Volume: 100%" class="volume-label" style="-unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;);" />
                 <engine:Label text="Language" class="label" style="-unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
                 <engine:Button text="English" name="EnglishButton" class="button" style="-unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
-                <engine:Button text="Español" name="SpanishButton" class="button" style="-unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
+                <engine:Button text="Spanish" name="SpanishButton" class="button" style="-unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
                 <engine:Button text="Back" name="BackButton" class="button" style="-unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
             </engine:VisualElement>
         </engine:VisualElement>

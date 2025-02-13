@@ -18,7 +18,6 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         _document = GetComponent<UIDocument>();
-        _audioSource = FindObjectOfType<AudioSource>();
 
         // Obtener elementos del UI
         _pauseMenu = _document.rootVisualElement.Q<VisualElement>("PauseM");

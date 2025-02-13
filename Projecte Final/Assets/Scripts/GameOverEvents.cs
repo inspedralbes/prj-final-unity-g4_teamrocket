@@ -20,16 +20,11 @@ public class GameOverEvents : MonoBehaviour
         tryAgainButton = root.Q<Button>("TryAgainButton");
         exitButton = root.Q<Button>("ExitButton");
 
-        // Obtener el objeto de GameObject que contiene el ParticleSystem
+        // Obtener el objeto que contiene el ParticleSystem
         var bloodRainGameObject = GameObject.Find("GeneradorSangre");
         if (bloodRainGameObject != null)
         {
             bloodRain = bloodRainGameObject.GetComponent<ParticleSystem>();
-        }
-
-        // Asegurarse de que el ParticleSystem se inicie desde el principio
-        if (bloodRain != null)
-        {
             bloodRain.Play(); // Reproducir la lluvia de sangre inmediatamente
         }
 
@@ -47,58 +42,55 @@ public class GameOverEvents : MonoBehaviour
     }
 
     private IEnumerator FadeInGameOver()
+{
+    // Aparecer el fondo primero
+    gameOverElement.style.opacity = 1;
+    yield return new WaitForSeconds(0.5f); // Pequeña pausa para enfatizar el efecto
+
+    // Mostrar el texto "Game Over" primero
+    float fadeDuration = 2f;
+    float timeElapsed = 0;
+    while (timeElapsed < fadeDuration)
     {
-        // Animación para mostrar "Game Over" con un fondo negro y hacer aparecer el texto y los botones
-        // Fondo negro
-        gameOverElement.style.opacity = 1;
-        float fadeDuration = 1.5f;
-        float timeElapsed = 0;
-
-        while (timeElapsed < fadeDuration)
-        {
-            gameOverElement.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        gameOverElement.style.opacity = 1;
-
-        // Texto Game Over
-        timeElapsed = 0;
-        fadeDuration = 2f;
-        while (timeElapsed < fadeDuration)
-        {
-            gameOverLabel.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        gameOverLabel.style.opacity = 1;
-
-        // Botón Try Again
-        timeElapsed = 0;
-        fadeDuration = 3f;
-        while (timeElapsed < fadeDuration)
-        {
-            tryAgainButton.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        tryAgainButton.style.opacity = 1;
-
-        // Botón Exit
-        timeElapsed = 0;
-        fadeDuration = 3.5f;
-        while (timeElapsed < fadeDuration)
-        {
-            exitButton.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        exitButton.style.opacity = 1;
+        gameOverLabel.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
+        timeElapsed += Time.deltaTime;
+        yield return null;
     }
+    gameOverLabel.style.opacity = 1;
+
+    // Pequeña pausa antes de los botones
+    yield return new WaitForSeconds(0.5f);
+
+    // Mostrar el botón "Try Again" con una animación suave
+    timeElapsed = 0;
+    fadeDuration = 3f; // Aseguramos que tenga una animación progresiva
+    while (timeElapsed < fadeDuration)
+    {
+        tryAgainButton.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
+        timeElapsed += Time.deltaTime;
+        yield return null;
+    }
+    tryAgainButton.style.opacity = 1;
+
+    // Pequeña pausa antes del botón "Exit"
+    yield return new WaitForSeconds(0.5f);
+
+    // Mostrar el botón "Exit"
+    timeElapsed = 0;
+    fadeDuration = 3.5f;
+    while (timeElapsed < fadeDuration)
+    {
+        exitButton.style.opacity = Mathf.Lerp(0, 1, timeElapsed / fadeDuration);
+        timeElapsed += Time.deltaTime;
+        yield return null;
+    }
+    exitButton.style.opacity = 1;
+}
+
 
     private void OnExitButtonClicked()
     {
         // Cargar la escena "Sample Scene"
-        SceneManager.LoadScene("Sample Scene");
+        SceneManager.LoadScene("SampleScene");
     }
 }

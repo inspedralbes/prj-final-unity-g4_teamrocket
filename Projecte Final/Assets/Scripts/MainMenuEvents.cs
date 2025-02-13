@@ -39,6 +39,7 @@ public class MainMenuEvents : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Awake");
         _audioSource = GetComponent<AudioSource>();
         _document = GetComponent<UIDocument>();
 
@@ -121,11 +122,11 @@ public class MainMenuEvents : MonoBehaviour
             { "CreateR_es", "Crear Sala" },
             { "JoinR_es", "Unirse a Sala" },
             { "Exit_es", "Salir" },
-            { "Settings_es", "Configuración" },
+            { "Settings_es", "Configuracion" },
             { "BackButton_es", "Volver" },
             { "VolumeLabel_es", "Volumen" },
-            { "EnglishButton_es", "Inglés" },
-            { "SpanishButton_es", "Español" },
+            { "EnglishButton_es", "Ingles" },
+            { "SpanishButton_es", "Castellano" },
             { "CodeInputField_es", "Introduce el Código de la Sala" },
             { "GeneratedCodeLabel_es", "Código de la Sala: {0}" }
         };

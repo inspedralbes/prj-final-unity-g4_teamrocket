@@ -8,12 +8,12 @@
             <engine:Button name="OptionsButton" text="Options" style="font-size: 24px; padding: 15px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
             <engine:Button name="ExitButton" text="Exit" style="font-size: 24px; padding: 15px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
             <engine:VisualElement name="OptionsMenu" style="display: none;">
-                <engine:Label name="VolumeLabel" text="Volume" style="font-size: 20px;" />
+                <engine:Label name="VolumeLabel" text="Volume" style="font-size: 20px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_HelpMe/HelpMe.ttf?fileID=12800000&amp;guid=de38f7a9dc26283438219d0a29482aef&amp;type=3#HelpMe&quot;);" />
                 <engine:Slider name="VolumeSlider" low-value="0" high-value="1" value="1" />
                 <engine:Label name="VolumePercentage" text="100%" style="font-size: 18px;" />
-                <engine:Button name="EnglishButton" text="English" style="font-size: 20px; padding: 10px;" />
-                <engine:Button name="SpanishButton" text="Spanish" style="font-size: 20px; padding: 10px;" />
-                <engine:Button name="BackButton" text="Back" style="font-size: 20px; padding: 10px;" />
+                <engine:Button name="EnglishButton" text="English" style="font-size: 20px; padding: 10px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
+                <engine:Button name="SpanishButton" text="Spanish" style="font-size: 20px; padding: 10px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
+                <engine:Button name="BackButton" text="Back" style="font-size: 20px; padding: 10px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_Run2/Run!%20Demo.otf?fileID=12800000&amp;guid=f63368cbaf2aa1a4f8e0f6b60b2e2dd7&amp;type=3#Run! Demo&quot;);" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
