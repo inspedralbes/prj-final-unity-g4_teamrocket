@@ -41,7 +41,7 @@ public class LevelEvents : MonoBehaviour
     root.Insert(0, background);
 
     // Asignamos el evento al botón
-    exitButton.clicked += () => SceneManager.LoadScene("SampleScene");
+    exitButton.clicked += () => SceneManager.LoadScene("MainMenuUnseen");
 
     // Establecemos las clases de estilo para el botón Exit
     exitButton.AddToClassList("ExitButton"); // Asegúrate de que se aplica el estilo

@@ -91,6 +91,6 @@ public class GameOverEvents : MonoBehaviour
     private void OnExitButtonClicked()
     {
         // Cargar la escena "Sample Scene"
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainMenuUnseen");
     }
 }

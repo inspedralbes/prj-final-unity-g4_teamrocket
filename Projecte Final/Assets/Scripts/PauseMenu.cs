@@ -77,7 +77,7 @@ public class PauseMenu : MonoBehaviour
     private void ExitGame()
 {
     Time.timeScale = 1f; // Asegurarse de reanudar el tiempo
-    SceneManager.LoadScene("SampleScene"); // Cargar la escena del menú principal
+    SceneManager.LoadScene("MainMenuUnseen"); // Cargar la escena del menú principal
 }
 
     private void ShowOptions()
