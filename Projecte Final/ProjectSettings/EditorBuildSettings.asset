@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 886f2f0b9414ee34788e78ff6ccea4b8
   - enabled: 1
-    path: Assets/Mapas/SampleScene.unity
+    path: Assets/Scenes/MainMenuUnseen.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Mapas/Carga.unity
