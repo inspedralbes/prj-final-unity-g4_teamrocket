@@ -53,7 +53,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
+        if (Input.GetKeyDown(KeyCode.Escape) && !SiEscenaActiva("GameOver") && !SiEscenaActiva("LevelComplete")) 
         {
             if (_isPaused) ResumeGame();
             else PauseGame();
@@ -117,5 +117,10 @@ public class PauseMenu : MonoBehaviour
         _englishButton.text = language == "es" ? "Inglés" : "English";
         _spanishButton.text = language == "es" ? "Español" : "Spanish";
         _backButton.text = language == "es" ? "Atrás" : "Back"; // Cambio de texto en el botón "Back"
+    }
+    public static bool SiEscenaActiva(string sceneName)
+    {
+        Scene scene = SceneManager.GetSceneByName(sceneName);
+        return scene.IsValid() && scene.isLoaded;
     }
 }
