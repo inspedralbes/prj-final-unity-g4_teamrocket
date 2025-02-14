@@ -30,6 +30,7 @@ public class TerminadaPartida : MonoBehaviour
     {
         if(collision.CompareTag("Player") && collision.IsTouching(miHitBox))
         {
+            GameObject.Find("Barras").SetActive(false);
             SceneManager.LoadScene("LevelComplete", LoadSceneMode.Additive);
         }
     }

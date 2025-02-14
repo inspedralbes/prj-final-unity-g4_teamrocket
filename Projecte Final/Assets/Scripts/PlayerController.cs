@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Muerto");
             CancelInvoke("RecibirDanoPeriodico"); // Detiene el daño cuando la vida llega a 0
+            GameObject.Find("Barras").SetActive(false);
             gameObject.SetActive(false);
             SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }

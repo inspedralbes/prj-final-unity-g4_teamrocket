@@ -39,6 +39,7 @@ public class GameOverEvents : MonoBehaviour
 
         // Agregar el evento al botón "Exit"
         exitButton.clicked += OnExitButtonClicked;
+        tryAgainButton.clicked += OntryAgainButton;
     }
 
     private IEnumerator FadeInGameOver()
@@ -87,6 +88,9 @@ public class GameOverEvents : MonoBehaviour
     exitButton.style.opacity = 1;
 }
 
+    private void OntryAgainButton(){
+        SceneManager.LoadScene("Mansion");
+    }
 
     private void OnExitButtonClicked()
     {
