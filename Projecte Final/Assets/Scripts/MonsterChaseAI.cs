@@ -51,14 +51,14 @@ public class MonsterChaseAI : EnemigoBase
         }
         else
         {
-            Attack();
+            // Attack();
         }
     }
 
-    void Attack()
-    {
-        Debug.Log("¡Atacar al jugador!");
-    }
+    // void Attack()
+    // {
+    //     Debug.Log("¡Atacar al jugador!");
+    // }
 
     // Verifica si el jugador está dentro del círculo de detección
     bool IsPlayerInDetectionRadius()
@@ -102,21 +102,21 @@ public class MonsterChaseAI : EnemigoBase
     }
 
     // Manejar colisiones con el collider de detección
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerInsideCollider = true; // Detectó al jugador dentro del collider
-        }
-    }
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("Player"))
+    //     {
+    //         playerInsideCollider = true; // Detectó al jugador dentro del collider
+    //     }
+    // }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerInsideCollider = false; // El jugador salió del collider
-        }
-    }
+    // private void OnTriggerExit2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("Player"))
+    //     {
+    //         playerInsideCollider = false; // El jugador salió del collider
+    //     }
+    // }
 
     // Dibujar el Cono de Visión en el Editor (Gizmo)
     void OnDrawGizmos()

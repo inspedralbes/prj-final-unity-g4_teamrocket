@@ -9,15 +9,18 @@ public class PlayerController : MonoBehaviour
     private float Speed = 5f;
     private float SpeedBase = 5f; // Velocidad normal del jugador
     private float SpeedBoost = 10f; // Velocidad duplicada cuando se presiona Shift
+    private int enemigosTocandoHitbox = 0; // Contador de enemigos dentro de miHitbox
 
     private int damage = 1;
 
     public int vida = 3;
-    public int stamina = 30;
+    public int stamina = 100;
+    public int staminaMax = 100;
+    public int regeneracioStamina = 1;
     public BarraVida barraVida; // Referencia a la barra de vida
     
     public BarraStamina barraStamina; // Referencia a la barra de vida
-    public float tiempoEntreGolpes = 0.8f; // Controla la frecuencia del daño
+    public float tiempoEntreGolpes = 0.5f; // Controla la frecuencia del daño
     public float velocidadConsumoStamina = 0.1f; // Controla la frecuencia del daño
 
     public Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
@@ -41,8 +44,8 @@ public class PlayerController : MonoBehaviour
         if (Speed == SpeedBoost) {
             ReducirStamina(1);
         }else {
-            if (stamina < 30){
-                stamina += 1;
+            if (stamina < staminaMax){
+                stamina += regeneracioStamina;
                 barraStamina.ActualizarStamina(stamina);
             }
         }
@@ -68,10 +71,6 @@ public class PlayerController : MonoBehaviour
     public void RecibirDano(int cantidad)
     {
         vida -= cantidad;
-        if (vida < 0) vida = 0;
-        barraVida.ActualizarVida(vida);
-        Debug.Log("Vida restante: " + vida);
-
         if (vida <= 0)
         {
             Debug.Log("Muerto");
@@ -80,6 +79,9 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
             SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }
+
+        barraVida.ActualizarVida(vida);
+        Debug.Log("Vida restante: " + vida);
     }
 
     private void RecibirDanoPeriodico()
@@ -91,6 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
         {
+            enemigosTocandoHitbox++; // Un enemigo más dentro
             // Obtener el script del enemigo
             EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
             if (enemigo != null) // Verificar que el enemigo tiene el script
@@ -98,14 +101,22 @@ public class PlayerController : MonoBehaviour
             damage = enemigo.damage; // Obtener el valor de daño del enemigo
             }
             InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
+            Debug.Log("Invoke");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
+    {
+        enemigosTocandoHitbox--; // Un enemigo menos dentro
+
+        // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
+        if (enemigosTocandoHitbox <= 0)
         {
             CancelInvoke("RecibirDanoPeriodico");
+            Debug.Log("Cancel Invoke");
         }
+    }
     }
 }
