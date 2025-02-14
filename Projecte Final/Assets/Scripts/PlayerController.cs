@@ -12,8 +12,12 @@ public class PlayerController : MonoBehaviour
     private int damage = 1;
 
     public int vida = 3;
+    public int stamina = 30;
     public BarraVida barraVida; // Referencia a la barra de vida
+    
+    public BarraStamina barraStamina; // Referencia a la barra de vida
     public float tiempoEntreGolpes = 0.8f; // Controla la frecuencia del daño
+    public float velocidadConsumoStamina = 0.1f; // Controla la frecuencia del daño
 
     public Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
 
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         barraVida.SetMaxHealth(vida);
+        barraStamina.SetMaxStamina(stamina);
     }
 
     void Update()
@@ -29,12 +34,34 @@ public class PlayerController : MonoBehaviour
         Vertical = Input.GetAxisRaw("Vertical");
 
         // Si se mantiene presionada la tecla Shift, la velocidad se duplica
-        Speed = Input.GetKey(KeyCode.LeftShift) ? SpeedBoost : SpeedBase;
+        if(stamina != 0){
+            Speed = Input.GetKey(KeyCode.LeftShift) ? SpeedBoost : SpeedBase;
+        }
+        if (Speed == SpeedBoost) {
+            ReducirStamina(1);
+        }else {
+            if (stamina < 30){
+                stamina += 1;
+                barraStamina.ActualizarStamina(stamina);
+            }
+        }
+        if (stamina <= 0){
+            Speed = SpeedBase;
+        }
     }
 
     private void FixedUpdate()
     {
         Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
+    }
+
+    public void ReducirStamina(int cantidad)
+    {
+        stamina -= cantidad;
+        if (stamina < 0) stamina = 0;
+        
+        barraStamina.ActualizarStamina(stamina);
+        Debug.Log("Stamina restante: " + stamina);
     }
 
     public void RecibirDano(int cantidad)
