@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections.Generic; // Agrega esta línea para usar Dictionary
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-
 
 public class MainMenuEvents : MonoBehaviour
 {
@@ -12,30 +11,30 @@ public class MainMenuEvents : MonoBehaviour
     private Button _createRoomButton;
     private Button _joinRoomButton;
     private Button _exitButton;
-    private Button _settingsButton;   // Botón de Settings
+    private Button _settingsButton;
     private VisualElement _container;
-    private TextField _codeInputField; // Campo para el código de la sala
-    private Label _generatedCodeLabel; // Mostrar código generado
+    private TextField _codeInputField;
+    private Label _generatedCodeLabel;
     private AudioSource _audioSource;
 
     private string roomCode;
 
-    // Nuevos elementos para Settings
+    // Menú de configuraciones
     private VisualElement _settingsMenu;
-    private Button _backButton;      // Botón de Volver
-    private Slider _volumeSlider;    // Slider de volumen
-    private Label _volumeLabel;      // Etiqueta del volumen
-    private Button _englishButton;   // Botón para inglés
-    private Button _spanishButton;   // Botón para español
+    private Button _backButton;
+    private Slider _volumeSlider;
+    private Label _volumeLabel;
+    private Button _englishButton;
+    private Button _catalanButton;
 
-    // Nuevos elementos para StartS
+    // Elementos de StartS
     private VisualElement _startS;
-    private Button _startOfflineButton;  // Botón Start Offline
-    private Button _backFromStartSButton; // Botón Back en StartS
+    private Button _startOfflineButton;
+    private Button _backFromStartSButton;
 
-    private string _currentLanguage = "en"; // Idioma por defecto
+    private string _currentLanguage = "en";
 
-    private Dictionary<string, string> _translations; // Agregado
+    private Dictionary<string, string> _translations;
 
     private void Awake()
     {
@@ -43,10 +42,8 @@ public class MainMenuEvents : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _document = GetComponent<UIDocument>();
 
-        // Inicializamos las traducciones
         InitializeTranslations();
 
-        // Obtener referencias a los elementos UI
         _startButton = _document.rootVisualElement.Q<Button>("StartGameButton");
         _createRoomButton = _document.rootVisualElement.Q<Button>("CreateR");
         _joinRoomButton = _document.rootVisualElement.Q<Button>("JoinR");
@@ -55,30 +52,21 @@ public class MainMenuEvents : MonoBehaviour
         _codeInputField = _document.rootVisualElement.Q<TextField>("CodeInputField");
         _generatedCodeLabel = _document.rootVisualElement.Q<Label>("GeneratedCodeLabel");
 
-        // Menú de configuraciones
         _settingsMenu = _document.rootVisualElement.Q<VisualElement>("SettingsMenu");
         _settingsButton = _document.rootVisualElement.Q<Button>("Settings");
         _backButton = _settingsMenu.Q<Button>("BackButton");
         _volumeSlider = _settingsMenu.Q<Slider>("VolumeSlider");
         _volumeLabel = _settingsMenu.Q<Label>("VolumeLabel");
         _englishButton = _settingsMenu.Q<Button>("EnglishButton");
-        _spanishButton = _settingsMenu.Q<Button>("SpanishButton");
+        _catalanButton = _settingsMenu.Q<Button>("CatalanButton");
 
-        // Elementos de StartS
         _startS = _document.rootVisualElement.Q<VisualElement>("StartS");
         _startOfflineButton = _document.rootVisualElement.Q<Button>("StartOffline");
         _backFromStartSButton = _document.rootVisualElement.Q<Button>("BackButton");
 
-        // Ocultar elementos al inicio
-        _createRoomButton.style.display = DisplayStyle.None;
-        _joinRoomButton.style.display = DisplayStyle.None;
-        _startOfflineButton.style.display = DisplayStyle.None;
-        _backFromStartSButton.style.display = DisplayStyle.None;
-        _codeInputField.style.display = DisplayStyle.None;
-        _generatedCodeLabel.style.display = DisplayStyle.None;
-        _settingsMenu.style.display = DisplayStyle.None;
+        HideMenus();
 
-        // Registrar eventos
+        // Eventos de botones
         _startButton.RegisterCallback<ClickEvent>(OnStartButtonClick);
         _joinRoomButton.RegisterCallback<ClickEvent>(OnJoinRoomClick);
         _createRoomButton.RegisterCallback<ClickEvent>(OnCreateRoomClick);
@@ -86,151 +74,119 @@ public class MainMenuEvents : MonoBehaviour
         _settingsButton.RegisterCallback<ClickEvent>(OnSettingsButtonClick);
         _backButton.RegisterCallback<ClickEvent>(OnBackButtonClick);
 
-        // Configuración de volumen
         _volumeSlider.RegisterValueChangedCallback(OnVolumeSliderChange);
         _englishButton.RegisterCallback<ClickEvent>(OnEnglishButtonClick);
-        _spanishButton.RegisterCallback<ClickEvent>(OnSpanishButtonClick);
+        _catalanButton.RegisterCallback<ClickEvent>(OnCatalanButtonClick);
 
-        // Eventos de StartS
         _startOfflineButton.RegisterCallback<ClickEvent>(OnStartOfflineButtonClick);
         _backFromStartSButton.RegisterCallback<ClickEvent>(OnBackFromStartSButtonClick);
 
-        // Establecer idioma inicial
         SetLanguage(_currentLanguage);
+    }
+
+    private void HideMenus()
+    {
+        _createRoomButton.style.display = DisplayStyle.None;
+        _joinRoomButton.style.display = DisplayStyle.None;
+        _startOfflineButton.style.display = DisplayStyle.None;
+        _backFromStartSButton.style.display = DisplayStyle.None;
+        _codeInputField.style.display = DisplayStyle.None;
+        _generatedCodeLabel.style.display = DisplayStyle.None;
+        _settingsMenu.style.display = DisplayStyle.None;
     }
 
     private void InitializeTranslations()
     {
-        // Diccionario con traducciones
         _translations = new Dictionary<string, string>
         {
-            // Inglés (en)
             { "StartGameButton", "Start Game" },
             { "CreateR", "Create Room" },
             { "JoinR", "Join Room" },
+            { "StartOffline", "Start Offline" },
             { "Exit", "Exit" },
             { "Settings", "Settings" },
             { "BackButton", "Back" },
             { "VolumeLabel", "Volume" },
             { "EnglishButton", "English" },
-            { "SpanishButton", "Spanish" },
+            { "CatalanButton", "Catala" },
             { "CodeInputField", "Enter Room Code" },
             { "GeneratedCodeLabel", "Room Code: {0}" },
-
-            // Español (es)
-            { "StartGameButton_es", "Iniciar Juego" },
-            { "CreateR_es", "Crear Sala" },
-            { "JoinR_es", "Unirse a Sala" },
-            { "Exit_es", "Salir" },
-            { "Settings_es", "Configuracion" },
-            { "BackButton_es", "Volver" },
-            { "VolumeLabel_es", "Volumen" },
-            { "EnglishButton_es", "Ingles" },
-            { "SpanishButton_es", "Castellano" },
-            { "CodeInputField_es", "Introduce el Código de la Sala" },
-            { "GeneratedCodeLabel_es", "Código de la Sala: {0}" }
+            { "Language", "Language" },
+            { "Language_ca", "Idioma" },
+            
+            { "AudioSettings", "Audio Settings" },
+            { "AudioSettings_ca", "Configuració d'àudio" },
+            { "StartGameButton_ca", "Inicia Joc" },
+            { "CreateR_ca", "Crea Sala" },
+            { "JoinR_ca", "Uneix Sala" },
+            { "StartOffline_ca", "Jugar Offline" },
+            { "Exit_ca", "Surt" },
+            { "Settings_ca", "Configuracio" },
+            { "BackButton_ca", "Enrere" },
+            { "VolumeLabel_ca", "Volum" },
+            { "EnglishButton_ca", "Angles" },
+            { "CatalanButton_ca", "Catala" },
+            { "CodeInputField_ca", "Introdueix el codi de la sala" },
+            { "GeneratedCodeLabel_ca", "Codi de la Sala: {0}" }
         };
     }
 
     private void SetLanguage(string language)
-    {
-        _currentLanguage = language;
+{
+    _currentLanguage = language;
+    string suffix = language == "ca" ? "_ca" : "";
 
-        // Cambiar textos en la interfaz según el idioma
-        _startButton.text = _translations["StartGameButton" + (language == "es" ? "_es" : "")];
-        _createRoomButton.text = _translations["CreateR" + (language == "es" ? "_es" : "")];
-        _joinRoomButton.text = _translations["JoinR" + (language == "es" ? "_es" : "")];
-        _exitButton.text = _translations["Exit" + (language == "es" ? "_es" : "")];
-        _settingsButton.text = _translations["Settings" + (language == "es" ? "_es" : "")];
-        _backButton.text = _translations["BackButton" + (language == "es" ? "_es" : "")];
-        _volumeLabel.text = _translations["VolumeLabel" + (language == "es" ? "_es" : "")];
-        _englishButton.text = _translations["EnglishButton" + (language == "es" ? "_es" : "")];
-        _spanishButton.text = _translations["SpanishButton" + (language == "es" ? "_es" : "")];
+    _startButton.text = _translations["StartGameButton" + suffix];
+    _createRoomButton.text = _translations["CreateR" + suffix];
+    _joinRoomButton.text = _translations["JoinR" + suffix];
+    _startOfflineButton.text = _translations["StartOffline" + suffix];
+    _exitButton.text = _translations["Exit" + suffix];
+    _settingsButton.text = _translations["Settings" + suffix];
+    _backButton.text = _translations["BackButton" + suffix];
+    _backFromStartSButton.text = _translations["BackButton" + suffix];
+    _volumeLabel.text = _translations["VolumeLabel" + suffix];
+    _englishButton.text = _translations["EnglishButton" + suffix];
+    _catalanButton.text = _translations["CatalanButton" + suffix];
 
-        // Establecer marcador de posición para el campo de código
-        _codeInputField.RegisterCallback<FocusInEvent>(evt => 
-        {
-            // Establecer el marcador de posición solo si el campo está vacío
-            if (string.IsNullOrEmpty(_codeInputField.value))
-            {
-                _codeInputField.SetValueWithoutNotify(_translations["CodeInputField" + (language == "es" ? "_es" : "")]);
-            }
-        });
+    _generatedCodeLabel.text = string.Format(_translations["GeneratedCodeLabel" + suffix], roomCode);
 
-        _generatedCodeLabel.text = string.Format(_translations["GeneratedCodeLabel" + (language == "es" ? "_es" : "")], roomCode);
-    }
+    // Actualiza los textos de las etiquetas de configuración
+    _settingsMenu.Q<Label>("AudioSettingsLabel").text = _translations["AudioSettings" + suffix];
+    _settingsMenu.Q<Label>("LanguageLabel").text = _translations["Language" + suffix];
+}
 
-    private void OnEnglishButtonClick(ClickEvent evt)
-    {
-        SetLanguage("en");
-    }
-
-    private void OnSpanishButtonClick(ClickEvent evt)
-    {
-        SetLanguage("es");
-    }
+    private void OnEnglishButtonClick(ClickEvent evt) => SetLanguage("en");
+    private void OnCatalanButtonClick(ClickEvent evt) => SetLanguage("ca");
 
     private void OnStartButtonClick(ClickEvent evt)
-{
-    Debug.Log("Start button clicked!");
-
-    // Ocultar los botones iniciales
-    _container.style.display = DisplayStyle.None;
-
-    // Mostrar los nuevos botones después de un pequeño retraso
-    ShowNewButtons();
-}
-
-private void ShowNewButtons()
-{
-    // Asegurarse de que todos los botones estén visibles
-    _createRoomButton.style.display = DisplayStyle.Flex;
-    _joinRoomButton.style.display = DisplayStyle.Flex;
-    _startOfflineButton.style.display = DisplayStyle.Flex;
-    _backFromStartSButton.style.display = DisplayStyle.Flex;
-
-    // Agregar elementos adicionales si es necesario
-    _codeInputField.style.display = DisplayStyle.Flex;
-    _generatedCodeLabel.style.display = DisplayStyle.Flex;
-}
+    {
+        _container.style.display = DisplayStyle.None;
+        _createRoomButton.style.display = DisplayStyle.Flex;
+        _joinRoomButton.style.display = DisplayStyle.Flex;
+        _startOfflineButton.style.display = DisplayStyle.Flex;
+        _backFromStartSButton.style.display = DisplayStyle.Flex;
+        _codeInputField.style.display = DisplayStyle.Flex;
+        _generatedCodeLabel.style.display = DisplayStyle.Flex;
+    }
 
     private void OnBackFromStartSButtonClick(ClickEvent evt)
-{
-    Debug.Log("Back button from StartS clicked");
-
-    // Ocultar la nueva pantalla y volver al menú inicial
-    _createRoomButton.style.display = DisplayStyle.None;
-    _joinRoomButton.style.display = DisplayStyle.None;
-    _startOfflineButton.style.display = DisplayStyle.None;
-    _backFromStartSButton.style.display = DisplayStyle.None;
-    _codeInputField.style.display = DisplayStyle.None;
-    _generatedCodeLabel.style.display = DisplayStyle.None;
-
-    // Mostrar de nuevo el contenedor de botones iniciales
-    _container.style.display = DisplayStyle.Flex;
-}
+    {
+        HideMenus();
+        _container.style.display = DisplayStyle.Flex;
+    }
 
     private void OnCreateRoomClick(ClickEvent evt)
     {
         roomCode = "ABC123";
-        _generatedCodeLabel.text = "Room Code: " + roomCode;
+        _generatedCodeLabel.text = _translations["GeneratedCodeLabel" + (_currentLanguage == "ca" ? "_ca" : "")].Replace("{0}", roomCode);
         _generatedCodeLabel.style.display = DisplayStyle.Flex;
     }
 
     private void OnJoinRoomClick(ClickEvent evt)
     {
         string inputCode = _codeInputField.text;
-        if (!string.IsNullOrEmpty(inputCode))
-        {
-            Debug.Log("Joining room with code: " + inputCode);
-        }
-        else
-        {
-            Debug.Log("No room code entered.");
-        }
+        Debug.Log(string.IsNullOrEmpty(inputCode) ? "No room code entered." : "Joining room with code: " + inputCode);
     }
-
-    
 
     private void OnSettingsButtonClick(ClickEvent evt)
     {
@@ -244,66 +200,16 @@ private void ShowNewButtons()
         _container.style.display = DisplayStyle.Flex;
     }
 
-    private void OnVolumeSliderChange(ChangeEvent<float> evt)
+    private void OnVolumeSliderChange(ChangeEvent<float> evt) => _audioSource.volume = evt.newValue;
+
+    private void OnStartOfflineButtonClick(ClickEvent evt) => SceneManager.LoadScene("Mansion");
+
+    private void OnExitButtonClick(ClickEvent evt)
     {
-        _audioSource.volume = evt.newValue;
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
-
-    private IEnumerator HideButtonsCoroutine(System.Action onComplete)
-    {
-        var startTime = Time.time;
-        float duration = 0.5f; // Duración de la animación en segundos
-
-        while (Time.time - startTime < duration)
-        {
-            float alpha = 1 - (Time.time - startTime) / duration;
-            SetButtonAlpha(alpha);
-            yield return null;
-        }
-
-        SetButtonAlpha(0);
-        onComplete?.Invoke();
-    }
-
-    private IEnumerator ShowButtonsCoroutine(Button button1, Button button2, Button button3)
-    {
-        var startTime = Time.time;
-        float duration = 0.5f;
-
-        while (Time.time - startTime < duration)
-        {
-            float alpha = (Time.time - startTime) / duration;
-            SetButtonAlpha(alpha);
-            yield return null;
-        }
-
-        SetButtonAlpha(1);
-    }
-
-    private void SetButtonAlpha(float alpha)
-    {
-        _startButton.style.opacity = alpha;
-        _createRoomButton.style.opacity = alpha;
-        _joinRoomButton.style.opacity = alpha;
-        _exitButton.style.opacity = alpha;
-        _settingsButton.style.opacity = alpha;
-    }
-
-    private void OnStartOfflineButtonClick(ClickEvent evt)
-{
-    Debug.Log("Start Offline clicked");
-
-    // Cambiar a la escena "Carga"
-    SceneManager.LoadScene("Mansion");
-}
-
-private void OnExitButtonClick(ClickEvent evt)
-{
-    #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // Detener el juego en el editor
-    #else
-        Application.Quit(); // Cerrar la aplicación en la build final
-    #endif
-}
-
 }
