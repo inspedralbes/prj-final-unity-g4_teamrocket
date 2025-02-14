@@ -1,0 +1,53 @@
+PauseM {
+    width: 889px;
+    height: 682px;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+Label {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#VolumeLabel {
+    font-weight: bold;
+}
+
+#VolumeSlider {
+    width: 300px;
+    height: 10px;
+    margin: 5px;
+}
+
+#VolumePercentage {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px black;
+}
+
+Button {
+    width: 250px;
+    height: 60px;
+    font-size: 20px;
+    background-color: #444;
+    color: white;
+    border-radius: 10px;
+    margin: 10px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+Button:hover {
+    background-color: #666;
+    transform: scale(1.1);
+    box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.3);
+}
