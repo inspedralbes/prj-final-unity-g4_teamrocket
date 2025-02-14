@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float tiempoEntreGolpes = 0.8f; // Controla la frecuencia del daño
 
     public Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
+    private bool controlesInvertidos = false;
+    private float tiempoRestanteInversion = 0f;
 
     void Start()
     {
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         Horizontal = Input.GetAxisRaw("Horizontal");
         Vertical = Input.GetAxisRaw("Vertical");
-
+        TiempoEspejoRestante();
         // Si se mantiene presionada la tecla Shift, la velocidad se duplica
         Speed = Input.GetKey(KeyCode.LeftShift) ? SpeedBoost : SpeedBase;
     }
@@ -80,5 +82,21 @@ public class PlayerController : MonoBehaviour
         {
             CancelInvoke("RecibirDanoPeriodico");
         }
+    }
+    public void TiempoEspejoRestante(){
+        tiempoRestanteInversion -= Time.deltaTime;
+        if (tiempoRestanteInversion <= 0)
+        {
+            controlesInvertidos = false;
+        }
+        if (controlesInvertidos) {
+            Horizontal = -Horizontal;
+            Vertical = -Vertical;
+        }
+    }
+    public void InvertirControles(float tiempo)
+    {
+        controlesInvertidos = true;
+        tiempoRestanteInversion = tiempo;
     }
 }
