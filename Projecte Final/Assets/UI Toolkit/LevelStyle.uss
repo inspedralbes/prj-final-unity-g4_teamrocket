@@ -1,0 +1,21 @@
+#LevelPass {
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+}
+
+#TitleText {
+    font-size: 2px;
+    color: white;
+    transition: font-size 2s ease, color 2s ease;
+}
+
+#ForNowText {
+    font-size: 106px; /* Ahora es más grande */
+    color: red;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+
+

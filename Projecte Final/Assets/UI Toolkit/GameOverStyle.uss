@@ -1,0 +1,39 @@
+/* Estilo del fondo */
+GameO {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo negro oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+}
+
+/* Estilo del texto Game Over */
+#GameOverLabel {
+    font-size: 48px;
+    color: white;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 2s ease-in; /* El texto se muestra lentamente */
+}
+
+/* Estilo de los botones */
+Button {
+    width: 250px;
+    height: 60px;
+    font-size: 20px;
+    background-color: #444;
+    color: white;
+    border-radius: 10px;
+    margin: 10px;
+    opacity: 0;
+}
+
+/* Efecto al pasar el cursor sobre los botones */
+Button:hover {
+    background-color: #666;
+    transform: scale(1.1);
+    box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.3);
+}
