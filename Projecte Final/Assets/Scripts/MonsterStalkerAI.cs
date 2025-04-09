@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterStalkerAI : EnemigoBase
+public class MonsterStalkerAI : EnemyBase
 {
     [Header("Configuración")]
     [SerializeField] private Transform player;  // Referencia al jugador
     [SerializeField] private Transform respawnWaypoint;  // El waypoint específico donde respawnea el monstruo
-    [SerializeField] private float speed = 3f;  // Velocidad de persecución
+    // [SerializeField] private float speed = 3f;  // Velocidad de persecución
 
     private NavMeshAgent agent;
 

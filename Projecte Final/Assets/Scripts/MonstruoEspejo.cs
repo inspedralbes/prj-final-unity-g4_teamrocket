@@ -3,7 +3,7 @@ using UnityEngine;
 public class MonstruoEspejo : MonoBehaviour
 {
     public float tiempoEfecto = 5f;
-    public PlayerController playerController;
+    // public PlayerController playerController;
     public Collider2D espejocollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,6 +17,8 @@ public class MonstruoEspejo : MonoBehaviour
     {
         
     }
+
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Player") && collision.collider.IsTouching(espejocollider))
@@ -24,4 +26,5 @@ public class MonstruoEspejo : MonoBehaviour
             playerController.InvertirControles(tiempoEfecto);
         }
     }
+    */
 }

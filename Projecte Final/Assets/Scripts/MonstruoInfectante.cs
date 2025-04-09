@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonstruoInfectante : EnemigoBase
+public class MonstruoInfectante : EnemyBase
 {
     public PlayerController playerController;
     public Collider2D infectanteCollider;
@@ -17,6 +17,7 @@ public class MonstruoInfectante : EnemigoBase
         
     }
 
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Player") && collision.collider.IsTouching(infectanteCollider))
@@ -38,6 +39,8 @@ public class MonstruoInfectante : EnemigoBase
             
         }
     }
+    */
+    
     private void Infectar()
     {
         playerController.tag = "Infected";
