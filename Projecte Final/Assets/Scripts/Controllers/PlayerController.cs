@@ -3,16 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D Rigidbody2D;
-    public float horizontal;
-    public float vertical;
+    private Rigidbody2D rb;
+    private float horizontal;
+    private float vertical;
     public float speed;
     public float speedBase = 5f; // Velocidad normal del jugador
     public float speedBoost = 10f; // Velocidad duplicada cuando se presiona Shift
+    public float maxHealth = 100f;
 
-    // private int damage = 1;
-    // public int vida = 3;
-    // public BarraVida barraVida; // Referencia a la barra de vida
+    public HealthBar healthBar;
+
     // public float tiempoEntreGolpes = 0.8f; // Controla la frecuencia del daño
 
     private Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Rigidbody2D = GetComponent<Rigidbody2D>();
-        // barraVida.SetMaxHealth(vida);
+        rb = GetComponent<Rigidbody2D>();
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -36,7 +36,23 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Rigidbody2D.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
+        rb.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
+    }
+
+    public void TakeDamage(float damage) {
+        float newHealth = maxHealth - damage;
+        maxHealth = Mathf.Clamp(newHealth, 0, 100f);
+
+        if(maxHealth <= 0) {
+            Die();
+        }
+
+        healthBar.UpdateHealth(maxHealth);
+    }
+
+    void Die() {
+        // GameObject.Find("Barras").SetActive(false);
+        gameObject.SetActive(false);
     }
 
     /*
@@ -54,36 +70,6 @@ public class PlayerController : MonoBehaviour
             GameObject.Find("Barras").SetActive(false);
             gameObject.SetActive(false);
             SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
-        }
-    }
-    */
-
-    /*
-    private void RecibirDanoPeriodico()
-    {
-        RecibirDano(damage);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
-        {
-            // Obtener el script del enemigo
-            EnemyBase enemigo = collision.GetComponent<EnemyBase>();
-            if (enemigo != null) // Verificar que el enemigo tiene el script
-            {
-                damage = enemigo.damage; // Obtener el valor de daño del enemigo
-            }
-
-            InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            CancelInvoke("RecibirDanoPeriodico");
         }
     }
     */

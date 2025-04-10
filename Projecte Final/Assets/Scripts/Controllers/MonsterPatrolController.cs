@@ -3,13 +3,14 @@ using UnityEngine.AI;
 using System.Linq;
 using System.Collections;
 
-public class MonsterChaseController : EnemyBase
+public class MonsterPatrolController : EnemyBase
 {
-    public Transform player; // Referencia al jugador
-    public float minDistance = 1.5f; // Distancia mínima para atacar
-    public float visionRange = 5f; // Rango de visión
-    public float visionAngle = 60f; // Ángulo del cono de visión
-    public float detectionRadius = 2f; // Rango de detección circular
+    [Header("Player Detection")]
+    public Transform player;
+    public float minDistance = 1.5f;
+    public float visionRange = 5f;
+    public float visionAngle = 60f;
+    public float detectionRadius = 2f;
     public float currentAngle = 0f;
 
     [Header("Patrol")]
@@ -18,14 +19,15 @@ public class MonsterChaseController : EnemyBase
     private int currentWaypoint = 0;
     private bool isWaiting;
 
-    public bool isChasing = false;
-    public bool playerInsideCollider = false; // Si el jugador está dentro del collider
     private NavMeshAgent agent;
+    private bool isChasing = false;
+    // private bool playerInsideCollider = false;
+    private Coroutine damageCoroutine;
 
     void Start()
     {
-        damage = 3;
-        speed = 10;
+        damage = 10;
+        speed = 10f;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -50,7 +52,7 @@ public class MonsterChaseController : EnemyBase
         Vector2 playerDirection = player.position - transform.position;
 
         // Si el jugador está dentro del cono o dentro del collider, sigue persiguiendo
-        if (IsPlayerInVisionCone(playerDirection) || IsPlayerInDetectionRadius() || playerInsideCollider)
+        if (IsPlayerInVisionCone(playerDirection) || IsPlayerInDetectionRadius())
         {
             isChasing = true;
             UpdateVisionAngle(playerDirection);
@@ -153,23 +155,6 @@ public class MonsterChaseController : EnemyBase
         return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
     }
 
-    // Manejar colisiones con el collider de detección
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerInsideCollider = true; // Detectó al jugador dentro del collider
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerInsideCollider = false; // El jugador salió del collider
-        }
-    }
-
     // Dibujar el Cono de Visión en el Editor (Gizmo)
     void OnDrawGizmos()
     {
@@ -187,5 +172,37 @@ public class MonsterChaseController : EnemyBase
 
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + leftAngle);
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + rightAngle);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            PlayerController player = collision.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                damageCoroutine = StartCoroutine(DealDamageOverTime(player));
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+            }
+        }
+    }
+
+    IEnumerator DealDamageOverTime(PlayerController player)
+    {
+        while (true)
+        {
+            player.TakeDamage(damage);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }

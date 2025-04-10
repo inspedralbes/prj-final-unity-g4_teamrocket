@@ -1,30 +1,24 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterStalkerAI : EnemyBase
+public class MonsterStalkerController : EnemyBase
 {
-    [Header("Configuración")]
     [SerializeField] private Transform player;  // Referencia al jugador
     [SerializeField] private Transform respawnWaypoint;  // El waypoint específico donde respawnea el monstruo
-    // [SerializeField] private float speed = 3f;  // Velocidad de persecución
 
     private NavMeshAgent agent;
 
     void Start()
     {
-        damage = 2;
+        damage = 50;
+        speed = 3f;
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; // Desactiva la rotación automática
-        agent.updateUpAxis = false;   // Evita cambios en el eje Z (útil en 2D)
-        agent.speed = speed; // Asigna la velocidad al NavMeshAgent
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        agent.speed = speed;
     }
 
     void Update()
-    {
-        ChasePlayer();
-    }
-
-    void ChasePlayer()
     {
         if (player != null)
         {
@@ -37,6 +31,15 @@ public class MonsterStalkerAI : EnemyBase
         if (other.CompareTag("Vision"))  
         {
             RespawnAtWaypoint(); 
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonstruoEspejo : MonoBehaviour
+public class MonsterMirrorController : EnemyBase
 {
     public float tiempoEfecto = 5f;
     // public PlayerController playerController;
@@ -25,6 +25,26 @@ public class MonstruoEspejo : MonoBehaviour
         {
             playerController.InvertirControles(tiempoEfecto);
         }
+    }
+    */
+
+    /*
+    public void TiempoEspejoRestante(){
+        tiempoRestanteInversion -= Time.deltaTime;
+        if (tiempoRestanteInversion <= 0)
+        {
+            controlesInvertidos = false;
+        }
+        if (controlesInvertidos) {
+            Horizontal = -Horizontal;
+            Vertical = -Vertical;
+        }
+    }
+    
+    public void InvertirControles(float tiempo)
+    {
+        controlesInvertidos = true;
+        tiempoRestanteInversion = tiempo;
     }
     */
 }
