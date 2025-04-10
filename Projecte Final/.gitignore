@@ -60,3 +60,5 @@ ExportedObj/
 # Archivos creados por JetBrains Rider
 .idea/
 *.sln.iml
+
+Build-Game
