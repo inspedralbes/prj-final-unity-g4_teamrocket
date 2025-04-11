@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonstruoInfectante : EnemyBase
+public class InfectiousMonsterController : EnemyBase
 {
     public PlayerController playerController;
     public Collider2D infectanteCollider;

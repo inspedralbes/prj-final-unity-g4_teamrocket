@@ -21,7 +21,6 @@ public class MonsterPatrolController : EnemyBase
 
     private NavMeshAgent agent;
     private bool isChasing = false;
-    // private bool playerInsideCollider = false;
     private Coroutine damageCoroutine;
 
     void Start()

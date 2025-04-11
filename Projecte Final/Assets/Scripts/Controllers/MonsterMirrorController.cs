@@ -4,7 +4,6 @@ public class MonsterMirrorController : EnemyBase
 {
     public float tiempoEfecto = 5f;
     // public PlayerController playerController;
-    public Collider2D espejocollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

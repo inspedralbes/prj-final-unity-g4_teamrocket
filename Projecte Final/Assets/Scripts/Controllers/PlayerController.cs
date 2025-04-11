@@ -12,10 +12,6 @@ public class PlayerController : MonoBehaviour
     public float maxHealth = 100f;
 
     public HealthBar healthBar;
-
-    // public float tiempoEntreGolpes = 0.8f; // Controla la frecuencia del daño
-
-    private Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
     // private bool controlesInvertidos = false;
     // private float tiempoRestanteInversion = 0f;
 
@@ -54,25 +50,6 @@ public class PlayerController : MonoBehaviour
         // GameObject.Find("Barras").SetActive(false);
         gameObject.SetActive(false);
     }
-
-    /*
-    public void RecibirDano(int cantidad)
-    {
-        vida -= cantidad;
-        if (vida < 0) vida = 0;
-        barraVida.ActualizarVida(vida);
-        Debug.Log("Vida restante: " + vida);
-
-        if (vida <= 0)
-        {
-            Debug.Log("Muerto");
-            CancelInvoke("RecibirDanoPeriodico"); // Detiene el daño cuando la vida llega a 0
-            GameObject.Find("Barras").SetActive(false);
-            gameObject.SetActive(false);
-            SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
-        }
-    }
-    */
 
     /*
     public void TiempoEspejoRestante(){
