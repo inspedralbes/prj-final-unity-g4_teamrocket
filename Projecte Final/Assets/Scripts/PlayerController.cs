@@ -3,28 +3,33 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private float horizontal;
-    private float vertical;
-    public float speed;
-    public float speedBase = 5f; // Velocidad normal del jugador
-    public float speedBoost = 10f; // Velocidad duplicada cuando se presiona Shift
-    public float maxHealth = 100f;
+    private Rigidbody2D Rigidbody2D;
+    private float Horizontal;
+    private float Vertical;
+    private float Speed = 5f;
+    private float SpeedBase = 5f; // Velocidad normal del jugador
+    private float SpeedBoost = 10f; // Velocidad duplicada cuando se presiona Shift
+    private int enemigosTocandoHitbox = 0; // Contador de enemigos dentro de miHitbox
+
+    private int damage = 1;
+
+    public int vida = 3;
     public int stamina = 100;
     public int staminaMax = 100;
-    public int regenerationStamina = 1;
-    // private int enemigosTocandoHitbox = 0; // Contador de enemigos dentro de miHitbox
-
-    public HealthBar healthBar;
+    public int regeneracioStamina = 1;
+    public BarraVida barraVida; // Referencia a la barra de vida
+    
     public BarraStamina barraStamina; // Referencia a la barra de vida
+    public float tiempoEntreGolpes = 0.5f; // Controla la frecuencia del daño
     public float velocidadConsumoStamina = 0.1f; // Controla la frecuencia del daño
-    // private bool controlesInvertidos = false;
-    // private float tiempoRestanteInversion = 0f;
+
+    public Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        healthBar.SetMaxHealth(maxHealth);
+        Rigidbody2D = GetComponent<Rigidbody2D>();
+        barraVida.SetMaxHealth(vida);
+        barraStamina.SetMaxStamina(stamina);
     }
 
     void Update()
@@ -33,41 +38,50 @@ public class PlayerController : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         // TiempoEspejoRestante();
         // Si se mantiene presionada la tecla Shift, la velocidad se duplica
-        speed = Input.GetKey(KeyCode.LeftShift) ? speedBoost : speedBase;
+        if(stamina != 0){
+            Speed = Input.GetKey(KeyCode.LeftShift) ? SpeedBoost : SpeedBase;
+        }
+        if (Speed == SpeedBoost) {
+            ReducirStamina(1);
+        }else {
+            if (stamina < staminaMax){
+                stamina += regeneracioStamina;
+                barraStamina.ActualizarStamina(stamina);
+            }
+        }
+        if (stamina <= 0){
+            Speed = SpeedBase;
+        }
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
+        Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
     }
 
-    public void TakeDamage(float damage) {
-        float newHealth = maxHealth - damage;
-        maxHealth = Mathf.Clamp(newHealth, 0, 100f);
-
-        if(maxHealth <= 0) {
-            Die();
-        }
-
-        healthBar.UpdateHealth(maxHealth);
+    public void ReducirStamina(int cantidad)
+    {
+        stamina -= cantidad;
+        if (stamina < 0) stamina = 0;
+        
+        barraStamina.ActualizarStamina(stamina);
+        Debug.Log("Stamina restante: " + stamina);
     }
 
-    void Die() {
-        // GameObject.Find("Barras").SetActive(false);
-        gameObject.SetActive(false);
-    }
-
-    /*
-    public void TiempoEspejoRestante(){
-        tiempoRestanteInversion -= Time.deltaTime;
-        if (tiempoRestanteInversion <= 0)
+    public void RecibirDano(int cantidad)
+    {
+        vida -= cantidad;
+        if (vida <= 0)
         {
-            controlesInvertidos = false;
+            Debug.Log("Muerto");
+            CancelInvoke("RecibirDanoPeriodico"); // Detiene el daño cuando la vida llega a 0
+            GameObject.Find("Barras").SetActive(false);
+            gameObject.SetActive(false);
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }
-        if (controlesInvertidos) {
-            Horizontal = -Horizontal;
-            Vertical = -Vertical;
-        }
+
+        barraVida.ActualizarVida(vida);
+        Debug.Log("Vida restante: " + vida);
     }
     
     public void InvertirControles(float tiempo)
@@ -95,16 +109,16 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
-        {
-            enemigosTocandoHitbox--; // Un enemigo menos dentro
+    {
+        enemigosTocandoHitbox--; // Un enemigo menos dentro
 
-            // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
-            if (enemigosTocandoHitbox <= 0)
-            {
-                CancelInvoke("RecibirDanoPeriodico");
-                Debug.Log("Cancel Invoke");
-            }
+        // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
+        if (enemigosTocandoHitbox <= 0)
+        {
+            CancelInvoke("RecibirDanoPeriodico");
+            Debug.Log("Cancel Invoke");
         }
+    }
     }
     */
 }

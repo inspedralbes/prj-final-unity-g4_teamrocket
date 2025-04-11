@@ -112,14 +112,14 @@ public class MonsterPatrolController : EnemyBase
         }
         else
         {
-            Attack();
+            // Attack();
         }
     }
 
-    void Attack()
-    {
-        Debug.Log("¡Atacar al jugador!");
-    }
+    // void Attack()
+    // {
+    //     Debug.Log("¡Atacar al jugador!");
+    // }
 
     // Verifica si el jugador está dentro del círculo de detección
     bool IsPlayerInDetectionRadius()
