@@ -10,8 +10,14 @@ public class PlayerController : MonoBehaviour
     public float speedBase = 5f; // Velocidad normal del jugador
     public float speedBoost = 10f; // Velocidad duplicada cuando se presiona Shift
     public float maxHealth = 100f;
+    public int stamina = 100;
+    public int staminaMax = 100;
+    public int regenerationStamina = 1;
+    // private int enemigosTocandoHitbox = 0; // Contador de enemigos dentro de miHitbox
 
     public HealthBar healthBar;
+    public BarraStamina barraStamina; // Referencia a la barra de vida
+    public float velocidadConsumoStamina = 0.1f; // Controla la frecuencia del daño
     // private bool controlesInvertidos = false;
     // private float tiempoRestanteInversion = 0f;
 
@@ -68,6 +74,37 @@ public class PlayerController : MonoBehaviour
     {
         controlesInvertidos = true;
         tiempoRestanteInversion = tiempo;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
+        {
+            enemigosTocandoHitbox++; // Un enemigo más dentro
+            // Obtener el script del enemigo
+            EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
+            if (enemigo != null) // Verificar que el enemigo tiene el script
+            {
+                damage = enemigo.damage; // Obtener el valor de daño del enemigo
+            }
+            InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
+            Debug.Log("Invoke");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
+        {
+            enemigosTocandoHitbox--; // Un enemigo menos dentro
+
+            // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
+            if (enemigosTocandoHitbox <= 0)
+            {
+                CancelInvoke("RecibirDanoPeriodico");
+                Debug.Log("Cancel Invoke");
+            }
+        }
     }
     */
 }
