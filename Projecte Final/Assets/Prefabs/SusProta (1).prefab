@@ -98,9 +98,9 @@ GameObject:
   - component: {fileID: 629928398073564427}
   - component: {fileID: 3089517434252921962}
   - component: {fileID: 3133142788358609909}
-  - component: {fileID: 4154412139091706454}
   - component: {fileID: -5023830267599675514}
   - component: {fileID: -7540364054811695704}
+  - component: {fileID: 5052849642063431063}
   m_Layer: 0
   m_Name: SusProta (1)
   m_TagString: Player
@@ -302,30 +302,6 @@ MonoBehaviour:
   visionLight: {fileID: 152210719257971993}
   zDistanceFromCamera: 10
   rotationOffset: 90
---- !u!114 &4154412139091706454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6295919784117300754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede3e3f6bb43eaf46bd3ef149fe53646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  vida: 10
-  stamina: 100
-  staminaMax: 100
-  regeneracioStamina: 1
-  barraVida: {fileID: 0}
-  barraStamina: {fileID: 0}
-  tiempoEntreGolpes: 0.8
-  velocidadConsumoStamina: 0.1
-  miHitbox: {fileID: 7522254436032244155}
 --- !u!114 &-5023830267599675514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +353,28 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &5052849642063431063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295919784117300754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a27dfdc55e80f14bb5056019e5faeba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  speedBase: 5
+  speedBoost: 10
+  maxHealth: 100
+  stamina: 100
+  staminaMax: 100
+  regeneracioStamina: 1
+  healthBar: {fileID: 0}
+  barraStamina: {fileID: 0}
+  velocidadConsumoStamina: 0.1
 --- !u!1 &6527587636170514119
 GameObject:
   m_ObjectHideFlags: 0

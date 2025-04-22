@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         // Si se mantiene presionada la tecla Shift, la velocidad se duplica
         speed = Input.GetKey(KeyCode.LeftShift) ? speedBoost : speedBase;
 
-        if (Speed == SpeedBoost) {
+        if (speed == speedBoost) {
             ReducirStamina(1);
         }
         else {
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (stamina <= 0){
-            Speed = SpeedBase;
+            speed = speedBase;
         }
     }
 
