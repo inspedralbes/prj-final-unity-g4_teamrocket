@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     private Rigidbody2D Rigidbody2D;
     private float Horizontal;
@@ -28,12 +29,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        barraVida.SetMaxHealth(vida);
-        barraStamina.SetMaxStamina(stamina);
+        
+        // Solo configuramos la UI para el jugador local
+        if (isLocalPlayer)
+        {
+            barraVida.SetMaxHealth(vida);
+            barraStamina.SetMaxStamina(stamina);
+        }
     }
 
     void Update()
     {
+        // Solo procesamos los controles para el jugador local
+        if (!isLocalPlayer) return;
+
         Horizontal = Input.GetAxisRaw("Horizontal");
         Vertical = Input.GetAxisRaw("Vertical");
 
@@ -56,11 +65,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isLocalPlayer) return;
         Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
     }
 
     public void ReducirStamina(int cantidad)
     {
+        if (!isLocalPlayer) return;
         stamina -= cantidad;
         if (stamina < 0) stamina = 0;
         
@@ -75,12 +86,18 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Muerto");
             CancelInvoke("RecibirDanoPeriodico"); // Detiene el daño cuando la vida llega a 0
-            GameObject.Find("Barras").SetActive(false);
-            gameObject.SetActive(false);
-            SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+            if (isLocalPlayer)
+            {
+                GameObject.Find("Barras").SetActive(false);
+                gameObject.SetActive(false);
+                SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+            }
         }
 
-        barraVida.ActualizarVida(vida);
+        if (isLocalPlayer)
+        {
+            barraVida.ActualizarVida(vida);
+        }
         Debug.Log("Vida restante: " + vida);
     }
 
@@ -98,7 +115,7 @@ public class PlayerController : MonoBehaviour
             EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
             if (enemigo != null) // Verificar que el enemigo tiene el script
             {
-            damage = enemigo.damage; // Obtener el valor de daño del enemigo
+                damage = enemigo.damage; // Obtener el valor de daño del enemigo
             }
             InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
             Debug.Log("Invoke");
@@ -108,15 +125,15 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
-    {
-        enemigosTocandoHitbox--; // Un enemigo menos dentro
-
-        // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
-        if (enemigosTocandoHitbox <= 0)
         {
-            CancelInvoke("RecibirDanoPeriodico");
-            Debug.Log("Cancel Invoke");
+            enemigosTocandoHitbox--; // Un enemigo menos dentro
+
+            // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
+            if (enemigosTocandoHitbox <= 0)
+            {
+                CancelInvoke("RecibirDanoPeriodico");
+                Debug.Log("Cancel Invoke");
+            }
         }
-    }
     }
 }
