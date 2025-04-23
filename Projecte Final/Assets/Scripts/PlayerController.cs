@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal; // Para versiones más recientes de Unity
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,11 +26,23 @@ public class PlayerController : MonoBehaviour
 
     public Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
 
+    // Variables para la linterna
+    private bool flashing = true; // Indica si el jugador tiene la linterna
+    private bool linternaActiva = false; // Indica si la linterna está encendida
+    public Light2D luzLinterna; // Referencia al componente Light2D
+    public Collider2D colliderLinternaNormal; // Collider del cono normal
+    public Collider2D colliderLinternaAmplio; // Collider del cono ampliado
+    private float tiempoLinternaEncendida = 0f;
+    private float duracionMaximaLinterna = 180f; // 180 segundos
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         barraVida.SetMaxHealth(vida);
         barraStamina.SetMaxStamina(stamina);
+        
+        // Inicialización de la linterna
+        colliderLinternaAmplio.enabled = false; // Asegurarse que el collider amplio está desactivado al inicio
     }
 
     void Update()
@@ -52,11 +65,55 @@ public class PlayerController : MonoBehaviour
         if (stamina <= 0){
             Speed = SpeedBase;
         }
+
+        // Lógica de la linterna
+        if (flashing && Input.GetKeyDown(KeyCode.F))
+        {
+            ToggleLinterna();
+        }
+
+        if (linternaActiva)
+        {
+            tiempoLinternaEncendida += Time.deltaTime;
+            if (tiempoLinternaEncendida >= duracionMaximaLinterna)
+            {
+                ApagarLinterna();
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
+    }
+
+    // Métodos para la linterna
+    private void ToggleLinterna()
+    {
+        if (linternaActiva)
+        {
+            ApagarLinterna();
+        }
+        else
+        {
+            EncenderLinterna();
+        }
+    }
+
+    private void EncenderLinterna()
+    {
+        linternaActiva = true;
+        luzLinterna.pointLightOuterRadius = 10.4f; // Doble del radio normal
+        colliderLinternaNormal.enabled = false;
+        colliderLinternaAmplio.enabled = true;
+    }
+
+    private void ApagarLinterna()
+    {
+        linternaActiva = false;
+        luzLinterna.pointLightOuterRadius = 5.2f; // Radio normal
+        colliderLinternaAmplio.enabled = false;
+        colliderLinternaNormal.enabled = true;
     }
 
     public void ReducirStamina(int cantidad)
@@ -98,7 +155,7 @@ public class PlayerController : MonoBehaviour
             EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
             if (enemigo != null) // Verificar que el enemigo tiene el script
             {
-            damage = enemigo.damage; // Obtener el valor de daño del enemigo
+                damage = enemigo.damage; // Obtener el valor de daño del enemigo
             }
             InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
             Debug.Log("Invoke");
@@ -108,15 +165,15 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
-    {
-        enemigosTocandoHitbox--; // Un enemigo menos dentro
-
-        // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
-        if (enemigosTocandoHitbox <= 0)
         {
-            CancelInvoke("RecibirDanoPeriodico");
-            Debug.Log("Cancel Invoke");
+            enemigosTocandoHitbox--; // Un enemigo menos dentro
+
+            // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
+            if (enemigosTocandoHitbox <= 0)
+            {
+                CancelInvoke("RecibirDanoPeriodico");
+                Debug.Log("Cancel Invoke");
+            }
         }
-    }
     }
 }
