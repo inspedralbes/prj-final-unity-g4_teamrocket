@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
     private float tiempoLinternaEncendida = 0f;
     private float duracionMaximaLinterna = 180f; // 180 segundos
 
+    // Variables brujula
+    private bool brujula = true;
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -80,11 +83,22 @@ public class PlayerController : MonoBehaviour
                 ApagarLinterna();
             }
         }
+
+        // Lógica Brujula
+        if (brujula)
+        {
+            ActivateBrujula();
+        }
     }
 
     private void FixedUpdate()
     {
         Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
+    }
+
+    private void ActivateBrujula()
+    {
+        
     }
 
     // Métodos para la linterna
