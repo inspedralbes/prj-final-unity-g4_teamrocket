@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour
 
     // Variables brujula
     private bool brujula = true;
+    public GameObject objetoBrujula; // Referencia al GameObject que representa la brújula
+
+    public bool puedeAtacar = true; // Indica si el jugador puede atacar
+    public GameObject bate; // Objeto del bate
 
     void Start()
     {
@@ -88,6 +92,17 @@ public class PlayerController : MonoBehaviour
         if (brujula)
         {
             ActivateBrujula();
+        } else{
+            DesactivarBrujula();
+        }
+
+        if (puedeAtacar && Input.GetMouseButtonDown(0)) // Clic izquierdo
+        {
+            puedeAtacar = false;
+            if (bate != null)
+            {
+                bate.SetActive(true);
+            }
         }
     }
 
@@ -98,7 +113,18 @@ public class PlayerController : MonoBehaviour
 
     private void ActivateBrujula()
     {
-        
+        if (objetoBrujula != null)
+        {
+            objetoBrujula.SetActive(true);
+        }
+    }
+
+    private void DesactivarBrujula()
+    {
+        if (objetoBrujula != null)
+        {
+            objetoBrujula.SetActive(false);
+        }
     }
 
     // Métodos para la linterna
