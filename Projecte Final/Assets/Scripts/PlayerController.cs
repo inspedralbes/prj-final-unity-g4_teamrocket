@@ -8,23 +8,23 @@ public class PlayerController : MonoBehaviour
     private float Horizontal;
     private float Vertical;
     private float Speed = 5f;
-    private float SpeedBase = 5f; // Velocidad normal del jugador
-    private float SpeedBoost = 10f; // Velocidad duplicada cuando se presiona Shift
-    private int enemigosTocandoHitbox = 0; // Contador de enemigos dentro de miHitbox
-
+    private float SpeedBase = 5f;
+    private float SpeedBoost = 10f;
+    private int enemigosTocandoHitbox = 0;
     private int damage = 1;
 
     public int vida = 3;
     public int stamina = 100;
     public int staminaMax = 100;
     public int regeneracioStamina = 1;
-    public BarraVida barraVida; // Referencia a la barra de vida
-    
-    public BarraStamina barraStamina; // Referencia a la barra de vida
-    public float tiempoEntreGolpes = 0.5f; // Controla la frecuencia del daño
-    public float velocidadConsumoStamina = 0.1f; // Controla la frecuencia del daño
+    public BarraVida barraVida;
+    public BarraStamina barraStamina;
+    public float tiempoEntreGolpes = 0.5f;
+    public Collider2D miHitbox;
 
-    public Collider2D miHitbox; // La hitbox específica del jugador que debe ser golpeada
+    [SerializeField] private ShopController shopController;
+    private bool canMove = true;
+    private bool canOpenShop = true;
 
     // Variables para la linterna
     private bool flashing = true; // Indica si el jugador tiene la linterna
@@ -47,6 +47,20 @@ public class PlayerController : MonoBehaviour
         Rigidbody2D = GetComponent<Rigidbody2D>();
         barraVida.SetMaxHealth(vida);
         barraStamina.SetMaxStamina(stamina);
+
+        if (shopController != null)
+        {
+            shopController.OnShopToggle += HandleShopToggle;
+            shopController.ToggleShop(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (shopController != null)
+        {
+            shopController.OnShopToggle -= HandleShopToggle;
+        }
         
         // Inicialización de la linterna
         colliderLinternaAmplio.enabled = false; // Asegurarse que el collider amplio está desactivado al inicio
@@ -54,22 +68,34 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!canMove) return;
+
+        HandleMovementInput();
+        HandleShopInput();
+    }
+
+    private void HandleMovementInput()
+    {
         Horizontal = Input.GetAxisRaw("Horizontal");
         Vertical = Input.GetAxisRaw("Vertical");
 
-        // Si se mantiene presionada la tecla Shift, la velocidad se duplica
-        if(stamina != 0){
+        if (stamina != 0)
+        {
             Speed = Input.GetKey(KeyCode.LeftShift) ? SpeedBoost : SpeedBase;
         }
-        if (Speed == SpeedBoost) {
+
+        if (Speed == SpeedBoost)
+        {
             ReducirStamina(1);
-        }else {
-            if (stamina < staminaMax){
-                stamina += regeneracioStamina;
-                barraStamina.ActualizarStamina(stamina);
-            }
         }
-        if (stamina <= 0){
+        else if (stamina < staminaMax)
+        {
+            stamina += regeneracioStamina;
+            barraStamina.ActualizarStamina(stamina);
+        }
+
+        if (stamina <= 0)
+        {
             Speed = SpeedBase;
         }
 
@@ -106,8 +132,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleShopInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && canOpenShop)
+        {
+            ToggleShop();
+        }
+    }
+
+    private void HandleShopInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && canOpenShop)
+        {
+            ToggleShop();
+        }
+    }
+
     private void FixedUpdate()
     {
+        if (!canMove) return;
         Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
     }
 
@@ -160,9 +203,7 @@ public class PlayerController : MonoBehaviour
     {
         stamina -= cantidad;
         if (stamina < 0) stamina = 0;
-        
         barraStamina.ActualizarStamina(stamina);
-        Debug.Log("Stamina restante: " + stamina);
     }
 
     public void RecibirDano(int cantidad)
@@ -170,15 +211,18 @@ public class PlayerController : MonoBehaviour
         vida -= cantidad;
         if (vida <= 0)
         {
-            Debug.Log("Muerto");
-            CancelInvoke("RecibirDanoPeriodico"); // Detiene el daño cuando la vida llega a 0
-            GameObject.Find("Barras").SetActive(false);
-            gameObject.SetActive(false);
-            SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+            Morir();
         }
-
         barraVida.ActualizarVida(vida);
-        Debug.Log("Vida restante: " + vida);
+    }
+
+    private void Morir()
+    {
+        Debug.Log("Muerto");
+        CancelInvoke("RecibirDanoPeriodico");
+        GameObject.Find("Barras").SetActive(false);
+        gameObject.SetActive(false);
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 
     private void RecibirDanoPeriodico()
@@ -190,30 +234,55 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
         {
-            enemigosTocandoHitbox++; // Un enemigo más dentro
-            // Obtener el script del enemigo
-            EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
-            if (enemigo != null) // Verificar que el enemigo tiene el script
-            {
-                damage = enemigo.damage; // Obtener el valor de daño del enemigo
-            }
-            InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
-            Debug.Log("Invoke");
+            HandleEnemyCollision(collision);
         }
+        else if (collision.CompareTag("Tienda"))
+        {
+            canOpenShop = true;
+            Debug.Log("Puedes abrir la tienda con E");
+        }
+    }
+
+    private void HandleEnemyCollision(Collider2D collision)
+    {
+        enemigosTocandoHitbox++;
+        EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
+        if (enemigo != null)
+        {
+                damage = enemigo.damage;
+        }
+        InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
         {
-            enemigosTocandoHitbox--; // Un enemigo menos dentro
-
-            // Solo cancelar Invoke si ya no quedan enemigos tocando miHitbox
+            enemigosTocandoHitbox--;
             if (enemigosTocandoHitbox <= 0)
             {
                 CancelInvoke("RecibirDanoPeriodico");
-                Debug.Log("Cancel Invoke");
             }
+        }
+    }
+
+    private void ToggleShop()
+    {
+        if (shopController != null)
+        {
+            bool newState = !shopController.IsShopVisible();
+            shopController.ToggleShop(newState);
+        }
+    }
+
+    private void HandleShopToggle(bool isOpen)
+    {
+        canMove = !isOpen;
+        
+        if (!isOpen)
+        {
+            Time.timeScale = 1f;
+            Rigidbody2D.linearVelocity = Vector2.zero;
         }
     }
 }

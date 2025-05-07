@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private float Horizontal;
     private float Vertical;
-    private float Speed = 5f;
+    private float Speed = 10f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
