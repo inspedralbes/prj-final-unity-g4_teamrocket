@@ -1,58 +1,74 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering.Universal; // Para versiones más recientes de Unity
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D Rigidbody2D;
-    private float Horizontal;
-    private float Vertical;
-    private float Speed = 5f;
-    private float SpeedBase = 5f;
-    private float SpeedBoost = 10f;
-    private int enemigosTocandoHitbox = 0;
-    private int damage = 1;
-
-    public int vida = 3;
+    // Movimiento y física
+    private Rigidbody2D rb;
+    private float horizontal;
+    private float vertical;
+    private float speed = 5f;
+    private float speedBase = 5f;
+    private float speedBoost = 10f;
+    
+    // Atributos del jugador
+    //private int enemigosTocandoHitbox = 0;
+    //private int damage = 1;
+    //public int vida = 3;
+    public float maxHealth = 100f;
     public int stamina = 100;
     public int staminaMax = 100;
     public int regeneracioStamina = 1;
-    public BarraVida barraVida;
+    
+    // Referencias UI
+    //public BarraVida barraVida;
+    public HealthBar healthBar;
     public BarraStamina barraStamina;
+    
+    // Combate
     public float tiempoEntreGolpes = 0.5f;
     public Collider2D miHitbox;
-
+    public bool puedeAtacar = true;
+    public GameObject bate;
+    
+    // Tienda
     [SerializeField] private ShopController shopController;
     private bool canMove = true;
     private bool canOpenShop = true;
-
-    // Variables para la linterna
-    private bool flashing = true; // Indica si el jugador tiene la linterna
-    private bool linternaActiva = false; // Indica si la linterna está encendida
-    public Light2D luzLinterna; // Referencia al componente Light2D
-    public Collider2D colliderLinternaNormal; // Collider del cono normal
-    public Collider2D colliderLinternaAmplio; // Collider del cono ampliado
+    
+    // Linterna
+    private bool flashing = true;
+    private bool linternaActiva = false;
+    public Light2D luzLinterna;
+    public Collider2D colliderLinternaNormal;
+    public Collider2D colliderLinternaAmplio;
     private float tiempoLinternaEncendida = 0f;
-    private float duracionMaximaLinterna = 180f; // 180 segundos
-
-    // Variables brujula
+    private float duracionMaximaLinterna = 180f;
+    
+    // Brújula
     private bool brujula = true;
-    public GameObject objetoBrujula; // Referencia al GameObject que representa la brújula
-
-    public bool puedeAtacar = true; // Indica si el jugador puede atacar
-    public GameObject bate; // Objeto del bate
+    public GameObject objetoBrujula;
 
     void Start()
     {
-        Rigidbody2D = GetComponent<Rigidbody2D>();
-        barraVida.SetMaxHealth(vida);
-        barraStamina.SetMaxStamina(stamina);
-
+        canOpenShop = false;
+        rb = GetComponent<Rigidbody2D>();
+        
+        // Inicializar barras de UI
+        //if (barraVida != null) barraVida.SetMaxHealth(vida);
+        if (healthBar != null) healthBar.SetMaxHealth(maxHealth);
+        if (barraStamina != null) barraStamina.SetMaxStamina(stamina);
+        
+        // Configurar tienda
         if (shopController != null)
         {
             shopController.OnShopToggle += HandleShopToggle;
             shopController.ToggleShop(false);
         }
+        
+        // Inicializar linterna
+        if (colliderLinternaAmplio != null) colliderLinternaAmplio.enabled = false;
     }
 
     private void OnDestroy()
@@ -61,9 +77,6 @@ public class PlayerController : MonoBehaviour
         {
             shopController.OnShopToggle -= HandleShopToggle;
         }
-        
-        // Inicialización de la linterna
-        colliderLinternaAmplio.enabled = false; // Asegurarse que el collider amplio está desactivado al inicio
     }
 
     void Update()
@@ -72,34 +85,46 @@ public class PlayerController : MonoBehaviour
 
         HandleMovementInput();
         HandleShopInput();
+        HandleEquipmentInput();
     }
 
     private void HandleMovementInput()
     {
-        Horizontal = Input.GetAxisRaw("Horizontal");
-        Vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
 
-        if (stamina != 0)
+        if (stamina > 0)
         {
-            Speed = Input.GetKey(KeyCode.LeftShift) ? SpeedBoost : SpeedBase;
+            speed = Input.GetKey(KeyCode.LeftShift) ? speedBoost : speedBase;
         }
 
-        if (Speed == SpeedBoost)
+        if (speed == speedBoost)
         {
             ReducirStamina(1);
         }
         else if (stamina < staminaMax)
         {
             stamina += regeneracioStamina;
-            barraStamina.ActualizarStamina(stamina);
+            if (barraStamina != null) barraStamina.ActualizarStamina(stamina);
         }
 
         if (stamina <= 0)
         {
-            Speed = SpeedBase;
+            speed = speedBase;
         }
+    }
 
-        // Lógica de la linterna
+    private void HandleShopInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && canOpenShop)
+        {
+            ToggleShop();
+        }
+    }
+
+    private void HandleEquipmentInput()
+    {
+        // Linterna
         if (flashing && Input.GetKeyDown(KeyCode.F))
         {
             ToggleLinterna();
@@ -114,46 +139,31 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Lógica Brujula
+        // Brújula
         if (brujula)
         {
             ActivateBrujula();
-        } else{
+        }
+        else
+        {
             DesactivarBrujula();
         }
 
-        if (puedeAtacar && Input.GetMouseButtonDown(0)) // Clic izquierdo
+        // Ataque con bate
+        if (puedeAtacar && Input.GetMouseButtonDown(0))
         {
             puedeAtacar = false;
-            if (bate != null)
-            {
-                bate.SetActive(true);
-            }
-        }
-    }
-
-    private void HandleShopInput()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && canOpenShop)
-        {
-            ToggleShop();
-        }
-    }
-
-    private void HandleShopInput()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && canOpenShop)
-        {
-            ToggleShop();
+            if (bate != null) bate.SetActive(true);
         }
     }
 
     private void FixedUpdate()
     {
         if (!canMove) return;
-        Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
+        rb.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
     }
 
+    #region Brújula
     private void ActivateBrujula()
     {
         if (objetoBrujula != null)
@@ -169,8 +179,9 @@ public class PlayerController : MonoBehaviour
             objetoBrujula.SetActive(false);
         }
     }
+    #endregion
 
-    // Métodos para la linterna
+    #region Linterna
     private void ToggleLinterna()
     {
         if (linternaActiva)
@@ -186,70 +197,101 @@ public class PlayerController : MonoBehaviour
     private void EncenderLinterna()
     {
         linternaActiva = true;
-        luzLinterna.pointLightOuterRadius = 10.4f; // Doble del radio normal
-        colliderLinternaNormal.enabled = false;
-        colliderLinternaAmplio.enabled = true;
+        if (luzLinterna != null) luzLinterna.pointLightOuterRadius = 10.4f;
+        if (colliderLinternaNormal != null) colliderLinternaNormal.enabled = false;
+        if (colliderLinternaAmplio != null) colliderLinternaAmplio.enabled = true;
     }
 
     private void ApagarLinterna()
     {
         linternaActiva = false;
-        luzLinterna.pointLightOuterRadius = 5.2f; // Radio normal
-        colliderLinternaAmplio.enabled = false;
-        colliderLinternaNormal.enabled = true;
+        if (luzLinterna != null) luzLinterna.pointLightOuterRadius = 5.2f;
+        if (colliderLinternaAmplio != null) colliderLinternaAmplio.enabled = false;
+        if (colliderLinternaNormal != null) colliderLinternaNormal.enabled = true;
     }
+    #endregion
 
+    #region Atributos y daño
     public void ReducirStamina(int cantidad)
     {
         stamina -= cantidad;
         if (stamina < 0) stamina = 0;
-        barraStamina.ActualizarStamina(stamina);
+        if (barraStamina != null) barraStamina.ActualizarStamina(stamina);
     }
 
-    public void RecibirDano(int cantidad)
+    public void TakeDamage(float damage)
+    {
+        float newHealth = maxHealth - damage;
+        maxHealth = Mathf.Clamp(newHealth, 0, 100f);
+
+        if (maxHealth <= 0)
+        {
+            Morir();
+        }
+
+        if (healthBar != null) healthBar.UpdateHealth(maxHealth);
+    }
+
+    /*public void RecibirDano(int cantidad)
     {
         vida -= cantidad;
         if (vida <= 0)
         {
             Morir();
         }
-        barraVida.ActualizarVida(vida);
-    }
+        if (barraVida != null) barraVida.ActualizarVida(vida);
+    }*/
 
     private void Morir()
     {
         Debug.Log("Muerto");
-        CancelInvoke("RecibirDanoPeriodico");
-        GameObject.Find("Barras").SetActive(false);
+        GameObject.Find("Barras")?.SetActive(false);
         gameObject.SetActive(false);
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 
-    private void RecibirDanoPeriodico()
+    /*private void Die()
+    {
+        GameObject.Find("Barras")?.SetActive(false);
+        gameObject.SetActive(false);
+    }*/
+
+    /*private void RecibirDanoPeriodico()
     {
         RecibirDano(damage);
-    }
+    }*/
+    #endregion
 
+    #region Colisiones y tienda
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
+        /*if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
         {
             HandleEnemyCollision(collision);
-        }
-        else if (collision.CompareTag("Tienda"))
+        }*/
+        if (collision.CompareTag("Tienda"))
         {
             canOpenShop = true;
             Debug.Log("Puedes abrir la tienda con E");
+        } else {
+            canOpenShop = false;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Tienda"))
+        {
+            canOpenShop = false;
         }
     }
 
-    private void HandleEnemyCollision(Collider2D collision)
+    /*private void HandleEnemyCollision(Collider2D collision)
     {
         enemigosTocandoHitbox++;
         EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
         if (enemigo != null)
         {
-                damage = enemigo.damage;
+            damage = enemigo.damage;
         }
         InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
     }
@@ -264,7 +306,7 @@ public class PlayerController : MonoBehaviour
                 CancelInvoke("RecibirDanoPeriodico");
             }
         }
-    }
+    }*/
 
     private void ToggleShop()
     {
@@ -282,7 +324,8 @@ public class PlayerController : MonoBehaviour
         if (!isOpen)
         {
             Time.timeScale = 1f;
-            Rigidbody2D.linearVelocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
     }
+    #endregion
 }
