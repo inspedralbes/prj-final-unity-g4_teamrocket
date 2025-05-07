@@ -23,6 +23,7 @@
 *.VC.db
 
 # Archivos de compilación de VSCode y Rider
+.vs/
 .vscode/
 .idea/
 *.code-workspace
