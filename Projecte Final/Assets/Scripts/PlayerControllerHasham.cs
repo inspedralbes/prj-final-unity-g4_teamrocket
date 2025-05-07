@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerHasham : MonoBehaviour
 {
     private Rigidbody2D Rigidbody2D;
     private float Horizontal;
