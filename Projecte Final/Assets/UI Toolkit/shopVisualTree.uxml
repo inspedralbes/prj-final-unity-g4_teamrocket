@@ -1,0 +1,40 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xmlns:engine="UnityEngine.UIElements" 
+             xmlns:editor="UnityEditor.UIElements" 
+             noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" 
+             editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/ShopStyle.uss" />
+
+    <engine:VisualElement class="shop-container">
+        <engine:VisualElement class="shop-header">
+            <engine:Label class="shop-tab" text="LOADOUTS" />
+            <engine:Label class="shop-tab active" text="SHOP" />
+            <engine:Label class="money-amount" name="player-money" text="$7189" />
+            <engine:Button class="close-button" name="close-button" text="X" />
+        </engine:VisualElement>
+
+        <engine:VisualElement class="shop-content">
+            <!-- Equipamiento -->
+            <engine:ScrollView class="equipment-column">
+                <engine:Label class="section-title" text="EQUIPMENT" />
+                <engine:VisualElement class="equipment-grid" name="equipment-grid" />
+            </engine:ScrollView>
+
+            <!-- Detalle del item -->
+            <engine:VisualElement class="details-column">
+                <engine:Label class="section-title" text="ITEM DETAILS" />
+                <engine:Image class="item-preview" name="item-preview" />
+                <engine:Label class="item-detail-name" name="item-name" text="Select an item" />
+                <engine:Label class="item-detail-description" name="item-description" text="Description..." />
+                <engine:Label class="item-detail-price" name="item-price" text="$0" />
+
+                <engine:VisualElement class="divider-line" />
+
+                <engine:VisualElement class="action-buttons">
+                    <engine:Button class="buy-button" name="buy-button" text="BUY" />
+                    <engine:Button class="sell-button" name="sell-button" text="SELL" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

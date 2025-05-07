@@ -294,7 +294,7 @@ private void ShowNewButtons()
     Debug.Log("Start Offline clicked");
 
     // Cambiar a la escena "Carga"
-    SceneManager.LoadScene("Mansion");
+    SceneManager.LoadScene("Lobby");
 }
 
 private void OnExitButtonClick(ClickEvent evt)
