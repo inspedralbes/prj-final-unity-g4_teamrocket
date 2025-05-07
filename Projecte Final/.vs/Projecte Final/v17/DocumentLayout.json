@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\tilemapvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\tilemapvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\wallgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\wallgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\matthew\\proyectos\\proyecto 4\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\mapa\\walltypeshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\walltypeshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\abstractdungeongenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,6 +13,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\walltypeshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\walltypeshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\tilemapvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\tilemapvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{279301F7-4BBC-710B-B0AB-06DF73D83EEA}|Assembly-CSharp-Editor.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\editor\\randomdungeongeneratoreditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "WallTypesHelper.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallTypesHelper.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\WallTypesHelper.cs",
@@ -69,14 +69,13 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwB0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T23:24:12.243Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T23:24:12.243Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "ProceduralGenerationAlgorithms.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
@@ -84,43 +83,42 @@
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwEAAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T13:53:37.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T13:53:37.247Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "SimpleRandomWalkMapGenerator.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T19:29:04.083Z"
+              "WhenOpened": "2025-05-04T19:29:04.083Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "TilemapVisualizer.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
               "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAA0wC4AAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAIwC4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T21:46:17.629Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T21:46:17.629Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "WallGenerator.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\WallGenerator.cs",
               "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallGenerator.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\WallGenerator.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAQwB8AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAQwB8AAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-05T21:57:55.913Z",
               "EditorCaption": ""
@@ -139,15 +137,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "AbstractDungeonGenerator.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
               "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:38:27.913Z"
+              "WhenOpened": "2025-05-05T07:38:27.913Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
