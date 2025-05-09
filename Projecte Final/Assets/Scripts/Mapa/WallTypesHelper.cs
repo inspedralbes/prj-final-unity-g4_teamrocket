@@ -104,7 +104,9 @@ public static class WallTypesHelper
         0b1101,
         0b0101,
         0b1101,
-        0b1001
+        0b1001,
+        0b1000,
+        0b1011
 
     };
 
@@ -149,7 +151,9 @@ public static class WallTypesHelper
         0b01100010,
         0b10001001,
         0b10001101,
-        0b01100011
+        0b01100011,
+        0b11000100,
+        0b10001110
 
     };
 
