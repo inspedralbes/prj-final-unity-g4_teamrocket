@@ -3,18 +3,20 @@ using UnityEngine;
 public class Batear : MonoBehaviour
 {
     public float velocidadAtaque = 360f; // grados por segundo
-    private float anguloInicial = 60f;
-    private float anguloFinal = -60f;
+    public float tiempoStun = 2f; // segundos de inmovilización
     private float anguloActual;
     private bool atacando = false;
     private PlayerController playerController;
     private Camera mainCamera;
     private Quaternion rotacionInicialHaciaRaton;
+    private float anguloInicial;
+    private float anguloFinal;
+    private bool golpeDerecha;
+    private float velocidadActual;
 
     void OnEnable()
     {
         mainCamera = Camera.main;
-        anguloActual = anguloInicial;
         atacando = true;
         playerController = transform.root.GetComponent<PlayerController>();
         
@@ -23,10 +25,25 @@ public class Batear : MonoBehaviour
         Vector3 direccion = (mousePosition - transform.position).normalized;
         float angulo = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
         
-        // Guardar la rotación inicial hacia el ratón
-        rotacionInicialHaciaRaton = Quaternion.Euler(0f, 0f, angulo - 90);
+        // Determinar si es golpe a derecha o izquierda
+        golpeDerecha = direccion.x > 0;
         
-        // Aplicar rotación inicial
+        // Ajustar ángulos según la dirección
+        if (golpeDerecha)
+        {
+            anguloInicial = 60f;
+            anguloFinal = -60f;
+            velocidadActual = velocidadAtaque;
+        }
+        else
+        {
+            anguloInicial = -60f;
+            anguloFinal = 60f;
+            velocidadActual = -velocidadAtaque;
+        }
+        
+        anguloActual = anguloInicial;
+        rotacionInicialHaciaRaton = Quaternion.Euler(0f, 0f, angulo - 90);
         transform.rotation = rotacionInicialHaciaRaton;
     }
 
@@ -34,11 +51,14 @@ public class Batear : MonoBehaviour
     {
         if (!atacando) return;
 
-        // Aplicar animación de golpe en la dirección del ratón
-        anguloActual -= velocidadAtaque * Time.deltaTime;
+        anguloActual -= velocidadActual * Time.deltaTime;
         transform.rotation = rotacionInicialHaciaRaton * Quaternion.Euler(0f, 0f, anguloActual);
 
-        if (anguloActual <= anguloFinal)
+        bool animacionCompletada = golpeDerecha 
+            ? (anguloActual <= anguloFinal) 
+            : (anguloActual >= anguloFinal);
+
+        if (animacionCompletada)
         {
             atacando = false;
             gameObject.SetActive(false);
@@ -46,4 +66,27 @@ public class Batear : MonoBehaviour
                 playerController.puedeAtacar = true;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Verificar si golpeamos a un jugador o enemigo
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        {
+            // Intentar obtener el componente de movimiento
+            MonoBehaviour[] movementScripts = other.GetComponents<MonoBehaviour>();
+            foreach (var script in movementScripts)
+            {
+                if (script is IStunnable stunnable)
+                {
+                    stunnable.Stun(tiempoStun);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+public interface IStunnable
+{
+    void Stun(float duration);
 }

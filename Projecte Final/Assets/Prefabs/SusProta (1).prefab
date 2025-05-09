@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8999054031511427412}
   - component: {fileID: 6074713371426837427}
+  - component: {fileID: 2004621924739260241}
   m_Layer: 0
   m_Name: ColliderLuzAmpliada
   m_TagString: Vision
@@ -89,6 +90,40 @@ PolygonCollider2D:
       - {x: 0.20163846, y: 0.7429775}
       - {x: 0.3314309, y: 0.98497194}
   m_UseDelaunayMesh: 0
+--- !u!114 &2004621924739260241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451174077251744447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 8999054031511427412}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &541517984152310247
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9102657060347622718}
   - component: {fileID: 108552355582738309}
+  - component: {fileID: 2276466186791174643}
   m_Layer: 0
   m_Name: ColliderLuzNormal
   m_TagString: Vision
@@ -662,6 +698,40 @@ PolygonCollider2D:
       - {x: 0.39026344, y: 0.6981615}
       - {x: 2.0723026, y: 4.744748}
   m_UseDelaunayMesh: 0
+--- !u!114 &2276466186791174643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216849391479271079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 9102657060347622718}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &4137071052943698451
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,13 +743,15 @@ GameObject:
   - component: {fileID: 1354389466345311989}
   - component: {fileID: 7715428148469351570}
   - component: {fileID: 7504288475155032096}
+  - component: {fileID: 2151389497806207591}
+  - component: {fileID: 3324694559109131939}
   m_Layer: 0
   m_Name: Bate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1354389466345311989
 Transform:
   m_ObjectHideFlags: 0
@@ -689,7 +761,7 @@ Transform:
   m_GameObject: {fileID: 4137071052943698451}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5046, y: -0.27, z: -8.198311}
+  m_LocalPosition: {x: 0.4, y: -0.27, z: -8.198311}
   m_LocalScale: {x: 2.6614695, y: 5.416048, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -763,7 +835,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadAtaque: 360
-  objetivo: {fileID: 8335385678671221078}
+  tiempoStun: 2
+--- !u!61 &2151389497806207591
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137071052943698451}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.47}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.26, y: 0.94}
+    newSize: {x: 0.26, y: 0.94}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.26, y: 0.94}
+  m_EdgeRadius: 0
+--- !u!114 &3324694559109131939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137071052943698451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 1354389466345311989}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &6056663557918523750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1317,7 @@ MonoBehaviour:
   colliderLinternaNormal: {fileID: 108552355582738309}
   colliderLinternaAmplio: {fileID: 6074713371426837427}
   objetoBrujula: {fileID: 6056663557918523750}
+  stunEffect: {fileID: 8335385678671221078}
 --- !u!1 &6527587636170514119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,6 +1653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4168139615089585972}
   - component: {fileID: 8176982771249765593}
+  - component: {fileID: 3435750002592693931}
   m_Layer: 0
   m_Name: Juan
   m_TagString: Untagged
@@ -1577,3 +1731,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3435750002592693931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335385678671221078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 4168139615089585972}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01

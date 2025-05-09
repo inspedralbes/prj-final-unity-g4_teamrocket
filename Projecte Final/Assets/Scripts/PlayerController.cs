@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IStunnable
 {
     // Movimiento y física
     private Rigidbody2D rb;
@@ -50,6 +51,12 @@ public class PlayerController : MonoBehaviour
     private bool brujula = true;
     public GameObject objetoBrujula;
 
+    // Añade estas nuevas variables para el stun
+    private bool isStunned = false;
+    private float stunTimer = 0f;
+    private Coroutine stunCoroutine;
+    [SerializeField] private GameObject stunEffect;
+
     void Start()
     {
         canOpenShop = false;
@@ -81,11 +88,51 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!canMove) return;
+        if (!canMove || isStunned) return;
 
         HandleMovementInput();
         HandleShopInput();
         HandleEquipmentInput();
+    }
+
+    // Implementación de la interfaz IStunnable
+    public void Stun(float duration)
+    {
+        // Si ya está aturdido, reiniciamos el timer
+        if (isStunned)
+        {
+            stunTimer = duration;
+            return;
+        }
+
+        isStunned = true;
+        stunTimer = duration;
+        
+        // Opcional: Activar efecto visual
+        if (stunEffect != null) stunEffect.SetActive(true);
+        
+        // Detener el movimiento inmediatamente
+        rb.linearVelocity = Vector2.zero;
+        
+        // Iniciar corutina para el stun
+        if (stunCoroutine != null)
+            StopCoroutine(stunCoroutine);
+        stunCoroutine = StartCoroutine(StunRoutine());
+    }
+
+    private IEnumerator StunRoutine()
+    {
+        while (stunTimer > 0)
+        {
+            stunTimer -= Time.deltaTime;
+            yield return null;
+        }
+
+        // Finalizar el stun
+        isStunned = false;
+        
+        // Opcional: Desactivar efecto visual
+        if (stunEffect != null) stunEffect.SetActive(false);
     }
 
     private void HandleMovementInput()
@@ -159,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMove) return;
+        if (!canMove || isStunned) return;
         rb.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
     }
 
@@ -327,5 +374,10 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
         }
     }
+
+    // public void Stun(float duration)
+    // {
+    //     throw new System.NotImplementedException();
+    // }
     #endregion
 }
