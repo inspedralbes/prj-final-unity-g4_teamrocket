@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
+public class EnemySpawnInfo
+{
+    public GameObject enemyPrefab;
+    public int countPerRoom;
+}
 public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 {
     [SerializeField]
@@ -22,6 +28,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private int numberOfKeys = 3;
     [SerializeField] 
     private int numberOfEnemies = 5;
+    [SerializeField] 
+    private List<EnemySpawnInfo> enemyTypes;
 
 
     //PCG Data
@@ -65,32 +73,40 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             .OrderByDescending(r => Vector2Int.Distance(startRoom, r))
             .First();
 
-        // Instancia el jugador en la primera habitación
-        Vector3 playerPos = new Vector3(startRoom.x, startRoom.y, 0);
-        Instantiate(playerPrefab, playerPos, Quaternion.identity);
+        // Instanciar jugador
+        Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
 
-        // Instancia la salida en la habitación más alejada
-        Vector3 exitPos = new Vector3(farthestRoom.x, farthestRoom.y, 0);
-        Instantiate(exitPrefab, exitPos, Quaternion.identity);
+        // Instanciar salida
+        Instantiate(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0), Quaternion.identity);
 
-        // Excluir la habitación inicial y la de salida
+        // Habitaciones restantes
         var middleRooms = roomCenters.Except(new[] { startRoom, farthestRoom }).OrderBy(x => Guid.NewGuid()).ToList();
 
         // Llaves
-        for (int i = 0; i < Mathf.Min(numberOfKeys, middleRooms.Count); i++)
+        int keysToPlace = Mathf.Min(numberOfKeys, middleRooms.Count);
+        for (int i = 0; i < keysToPlace; i++)
         {
-            var keyPos = new Vector3(middleRooms[i].x, middleRooms[i].y, 0);
-            Instantiate(keyPrefab, keyPos, Quaternion.identity);
+            Vector2Int keyRoom = middleRooms[i];
+            Instantiate(keyPrefab, new Vector3(keyRoom.x, keyRoom.y, 0), Quaternion.identity);
         }
 
         // Enemigos
-        for (int i = 0; i < Mathf.Min(numberOfEnemies, middleRooms.Count - numberOfKeys); i++)
+        for (int i = keysToPlace; i < middleRooms.Count; i++)
         {
-            var enemyRoom = middleRooms[numberOfKeys + i];
-            var enemyPos = new Vector3(enemyRoom.x, enemyRoom.y, 0);
-            Instantiate(enemyPrefab, enemyPos, Quaternion.identity);
+            Vector2Int roomCenter = middleRooms[i];
+            if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
+
+            foreach (var enemyInfo in enemyTypes)
+            {
+                for (int j = 0; j < enemyInfo.countPerRoom; j++)
+                {
+                    Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
+                    Instantiate(enemyInfo.enemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+                }
+            }
         }
     }
+
 
     public List<Vector2Int> IncreaseCorridorBrush3by3(List<Vector2Int> corridor)
     {
@@ -157,5 +173,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         corridorPositions = new HashSet<Vector2Int>(floorPositions);
         return corridors;
     }
+
 
 }

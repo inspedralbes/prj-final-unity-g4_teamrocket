@@ -7,11 +7,12 @@ TagManager:
   - Vision
   - Enemy
   - Item
+  - Waypoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - Walls
