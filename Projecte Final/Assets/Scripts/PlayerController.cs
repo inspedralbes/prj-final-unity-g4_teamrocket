@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
+using System;
 
 public class PlayerController : MonoBehaviour, IStunnable
 {
@@ -57,10 +58,15 @@ public class PlayerController : MonoBehaviour, IStunnable
     private Coroutine stunCoroutine;
     [SerializeField] private GameObject stunEffect;
 
+    private Animator animator;
+    private Vector2 lastDirection;
+    private bool forceAnimationUpdate;
+
     void Start()
     {
         canOpenShop = false;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         
         // Inicializar barras de UI
         //if (barraVida != null) barraVida.SetMaxHealth(vida);
@@ -159,6 +165,34 @@ public class PlayerController : MonoBehaviour, IStunnable
         {
             speed = speedBase;
         }
+
+        Vector2 currentDirection = new Vector2(horizontal, vertical).normalized;
+    
+        // Detectar cambio brusco de dirección
+        if (currentDirection != lastDirection && currentDirection != Vector2.zero)
+        {
+            forceAnimationUpdate = true;
+            lastDirection = currentDirection;
+        }
+
+        // Actualizar parámetros del Animator
+        if (forceAnimationUpdate || currentDirection != Vector2.zero)
+        {
+            animator.SetFloat("Horizontal", horizontal);
+            animator.SetFloat("Vertical", vertical);
+            animator.SetFloat("Speed", currentDirection.magnitude);
+            
+            if (forceAnimationUpdate)
+            {
+                animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0f);
+                forceAnimationUpdate = false;
+            }
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0);
+        }
+
     }
 
     private void HandleShopInput()
