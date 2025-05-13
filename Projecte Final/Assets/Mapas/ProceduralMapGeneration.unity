@@ -60678,8 +60678,9 @@ MonoBehaviour:
     countPerRoom: 2
   - enemyPrefab: {fileID: 6751005966974647979, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
     countPerRoom: 2
-  - enemyPrefab: {fileID: 7509701823768720953, guid: 71278b6b5d98994478eba2a3240b9c0c, type: 3}
-    countPerRoom: 1
+  waypointPrefab: {fileID: 7509701823768720953, guid: 71278b6b5d98994478eba2a3240b9c0c, type: 3}
+  waypointsPerRoom: 1
+  getWaypoints: {fileID: 0}
 --- !u!114 &990215993
 MonoBehaviour:
   m_ObjectHideFlags: 0

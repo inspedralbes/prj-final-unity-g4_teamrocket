@@ -8,6 +8,7 @@ public class EnemySpawnInfo
 {
     public GameObject enemyPrefab;
     public int countPerRoom;
+    
 }
 public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 {
@@ -30,6 +31,12 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private int numberOfEnemies = 5;
     [SerializeField] 
     private List<EnemySpawnInfo> enemyTypes;
+    [SerializeField]
+    private GameObject waypointPrefab;
+    [SerializeField]
+    private int waypointsPerRoom = 1;
+    
+    public GetWaypoints getWaypoints;
 
 
     //PCG Data
@@ -90,12 +97,13 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             Instantiate(keyPrefab, new Vector3(keyRoom.x, keyRoom.y, 0), Quaternion.identity);
         }
 
-        // Enemigos
+        // Enemigos y Waypoints
         for (int i = keysToPlace; i < middleRooms.Count; i++)
         {
             Vector2Int roomCenter = middleRooms[i];
             if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
 
+            // Instanciar enemigos
             foreach (var enemyInfo in enemyTypes)
             {
                 for (int j = 0; j < enemyInfo.countPerRoom; j++)
@@ -103,6 +111,13 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
                     Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
                     Instantiate(enemyInfo.enemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
                 }
+            }
+
+            // Instanciar waypoints
+            for (int w = 0; w < waypointsPerRoom; w++)
+            {
+                Vector2Int randomWaypointPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
+                Instantiate(waypointPrefab, new Vector3(randomWaypointPos.x, randomWaypointPos.y, 0), Quaternion.identity);
             }
         }
     }
