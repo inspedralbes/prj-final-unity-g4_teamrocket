@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Luimberjack_0: -2411842354263702942
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
