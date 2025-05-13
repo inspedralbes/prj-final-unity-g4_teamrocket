@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 380951552}
   - component: {fileID: 380951554}
   - component: {fileID: 380951555}
+  - component: {fileID: 380951556}
   m_Layer: 0
   m_Name: Pentagram_05_TheDarkRitual_BigWander_0
   m_TagString: Untagged
@@ -505,9 +506,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  distanciaInteraccion: 3.67
+  distanciaInteraccion: 4
   teclaTransporte: 109
-  uiInteraccion: {fileID: 0}
+  interactUI: {fileID: 0}
+  highlightParticles: {fileID: 0}
+  mensajeInteraccion: "Presiona M para entrar a la Mansi\xF3n"
 --- !u!114 &380951555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +528,27 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
+--- !u!135 &380951556
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380951551}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &608311505
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,15 +5,15 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(SphereCollider))]
 public class MapaTransport : NetworkBehaviour
 {
-    [Header("Configuración")]
-    [Tooltip("Distancia de interacción")]
+    [Header("Configuración Básica")]
     public float distanciaInteraccion = 3f;
-    [Tooltip("Tecla para interactuar")]
     public KeyCode teclaTransporte = KeyCode.M;
-    
+    public string tagJugador = "Player";
+
     [Header("Feedback")]
-    [SerializeField] private GameObject interactUI; // UI que muestra "Presiona M"
-    [SerializeField] private ParticleSystem highlightParticles;
+    public bool mostrarDebug = true;
+    public GameObject interactUI;
+    public string mensajeInteraccion = "Presiona M para entrar";
 
     private Transform jugador;
     private bool jugadorEnRango;
@@ -21,110 +21,143 @@ public class MapaTransport : NetworkBehaviour
 
     private void Awake()
     {
-        GetComponent<SphereCollider>().radius = distanciaInteraccion;
-        networkManager = FindFirstObjectByType<CustomNetworkManager>();
-        
+        // Configuración inicial del collider
+        SphereCollider collider = GetComponent<SphereCollider>();
+        collider.radius = distanciaInteraccion;
+        collider.isTrigger = true;
+
         if (interactUI) interactUI.SetActive(false);
-        if (highlightParticles) highlightParticles.Stop();
+        
+        // Solo buscar el NetworkManager si estamos en modo online
+        if (NetworkClient.active) 
+        {
+            networkManager = FindFirstObjectByType<CustomNetworkManager>();
+        }
     }
 
     private void Update()
     {
-        if (!TieneJugadorCerca()) return;
-        
-        // Mostrar UI de interacción
-        if (interactUI) interactUI.SetActive(jugadorEnRango);
-        if (highlightParticles)
+        BuscarJugadorSiNoExiste();
+
+        if (jugador == null) 
         {
-            if (jugadorEnRango && !highlightParticles.isPlaying) 
-                highlightParticles.Play();
-            else if (!jugadorEnRango && highlightParticles.isPlaying)
-                highlightParticles.Stop();
+            if (mostrarDebug) Debug.LogWarning("No se encontró jugador con tag: " + tagJugador);
+            return;
+        }
+
+        // Verificar distancia (modo offline seguro)
+        float distancia = Vector3.Distance(transform.position, jugador.position);
+        jugadorEnRango = distancia <= distanciaInteraccion;
+
+        // Mostrar UI de feedback
+        if (interactUI) 
+        {
+            interactUI.SetActive(jugadorEnRango);
         }
 
         // Comprobar interacción
         if (jugadorEnRango && Input.GetKeyDown(teclaTransporte))
         {
-            TransportarATodos();
+            if (mostrarDebug) Debug.Log("Tecla M presionada - Intentando transportar");
+            Transportar();
         }
     }
 
-    private bool TieneJugadorCerca()
+    private void BuscarJugadorSiNoExiste()
     {
-        // Modo offline
-        if (!NetworkClient.active)
-        {
-            if (jugador == null)
-                jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
-            
-            if (jugador == null) return false;
-            
-            jugadorEnRango = Vector3.Distance(transform.position, jugador.position) <= distanciaInteraccion;
-            return true;
-        }
-        
-        // Modo online - solo para jugador local
-        if (!isLocalPlayer) return false;
-        
         if (jugador == null)
-            jugador = NetworkClient.localPlayer.transform;
-        
-        jugadorEnRango = Vector3.Distance(transform.position, jugador.position) <= distanciaInteraccion;
-        return true;
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag(tagJugador);
+            if (playerObj != null)
+            {
+                jugador = playerObj.transform;
+                if (mostrarDebug) Debug.Log("Jugador encontrado: " + jugador.name);
+            }
+        }
     }
 
-    private void TransportarATodos()
+    private void Transportar()
     {
-        Debug.Log("Iniciando transporte...");
-        
-        // Modo offline
-        if (!NetworkClient.active)
+        if (!NetworkClient.active) // Modo offline
         {
-            SceneManager.LoadScene("Mansion");
-            return;
+            if (mostrarDebug) Debug.Log("Iniciando transporte OFFLINE a Mansion");
+            CargarEscenaSeguro("Mansion");
         }
-
-        // Modo online
-        if (isServer)
+        else // Modo online
         {
-            networkManager.ServerChangeScene("Mansion");
-        }
-        else
-        {
-            CmdSolicitarTransporte();
+            if (mostrarDebug) Debug.Log("Iniciando transporte ONLINE a Mansion");
+            if (isServer)
+            {
+                networkManager.ServerChangeScene("Mansion");
+            }
+            else
+            {
+                CmdSolicitarTransporte();
+            }
         }
     }
 
     [Command(requiresAuthority = false)]
     private void CmdSolicitarTransporte()
     {
-        Debug.Log("Solicitud de transporte recibida en servidor");
+        if (mostrarDebug) Debug.Log("Servidor recibió solicitud de transporte");
         networkManager.ServerChangeScene("Mansion");
     }
 
-    // Visualización en el editor
-    private void OnDrawGizmosSelected()
+    private void CargarEscenaSeguro(string nombreEscena)
     {
-        Gizmos.color = new Color(0, 1, 1, 0.3f);
-        Gizmos.DrawSphere(transform.position, distanciaInteraccion);
+        try
+        {
+            SceneManager.LoadScene(nombreEscena);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error al cargar escena: " + e.Message);
+            Debug.Log("Asegúrate que:");
+            Debug.Log("1. La escena existe en Build Settings");
+            Debug.Log("2. El nombre es exacto (sensible a mayúsculas)");
+            Debug.Log("3. No hay errores de compilación");
+        }
     }
 
-    // Detección por trigger (opcional)
+    // Debug visual en el Editor
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, distanciaInteraccion);
+    }
+
+    // Mensaje en pantalla (alternativa al Canvas)
+    private void OnGUI()
+    {
+        if (jugadorEnRango && interactUI == null)
+        {
+            Rect rect = new Rect(Screen.width/2 - 100, Screen.height - 50, 200, 30);
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 20;
+            style.normal.textColor = Color.white;
+            
+            GUI.Label(rect, mensajeInteraccion, style);
+        }
+    }
+
+    // Detección por trigger (backup)
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(tagJugador))
         {
             jugadorEnRango = true;
             jugador = other.transform;
+            if (mostrarDebug) Debug.Log("Jugador entró en rango (trigger)");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(tagJugador))
         {
             jugadorEnRango = false;
-            if (highlightParticles) highlightParticles.Stop();
+            if (mostrarDebug) Debug.Log("Jugador salió de rango (trigger)");
         }
     }
 }
