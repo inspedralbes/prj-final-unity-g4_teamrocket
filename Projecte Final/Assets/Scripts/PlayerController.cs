@@ -67,7 +67,11 @@ public class PlayerController : MonoBehaviour, IStunnable
         canOpenShop = false;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
+        animator.Update(0f); // Fuerza una actualización inmediata
+        animator.SetFloat("Horizontal", 0);
+        animator.SetFloat("Vertical", 0);
+        animator.SetFloat("Speed", 0);
+            
         // Inicializar barras de UI
         //if (barraVida != null) barraVida.SetMaxHealth(vida);
         if (healthBar != null) healthBar.SetMaxHealth(maxHealth);
@@ -166,33 +170,18 @@ public class PlayerController : MonoBehaviour, IStunnable
             speed = speedBase;
         }
 
-        Vector2 currentDirection = new Vector2(horizontal, vertical).normalized;
+        Vector2 inputDirection = new Vector2(horizontal, vertical);
     
-        // Detectar cambio brusco de dirección
-        if (currentDirection != lastDirection && currentDirection != Vector2.zero)
-        {
-            forceAnimationUpdate = true;
-            lastDirection = currentDirection;
-        }
+        // Actualización inmediata (sin normalizar para mantener magnitud)
+        animator.SetFloat("Horizontal", horizontal);
+        animator.SetFloat("Vertical", vertical);
+        animator.SetFloat("Speed", inputDirection.magnitude);
 
-        // Actualizar parámetros del Animator
-        if (forceAnimationUpdate || currentDirection != Vector2.zero)
-        {
-            animator.SetFloat("Horizontal", horizontal);
-            animator.SetFloat("Vertical", vertical);
-            animator.SetFloat("Speed", currentDirection.magnitude);
-            
-            if (forceAnimationUpdate)
-            {
-                animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0f);
-                forceAnimationUpdate = false;
-            }
-        }
-        else
-        {
-            animator.SetFloat("Speed", 0);
-        }
-
+        // // Forzar cambio inmediato si hay input
+        // if (inputDirection.magnitude > 0.1f)
+        // {
+        //     animator.Play("Movement", 0, 0f); // Fuerza reinicio de animación
+        // }
     }
 
     private void HandleShopInput()
