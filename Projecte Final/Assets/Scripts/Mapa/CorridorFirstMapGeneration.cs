@@ -35,7 +35,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private GameObject waypointPrefab;
     [SerializeField]
     private int waypointsPerRoom = 1;
-    
+    [SerializeField]
     public GetWaypoints getWaypoints;
 
 
@@ -117,7 +117,13 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             for (int w = 0; w < waypointsPerRoom; w++)
             {
                 Vector2Int randomWaypointPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
-                Instantiate(waypointPrefab, new Vector3(randomWaypointPos.x, randomWaypointPos.y, 0), Quaternion.identity);
+                Transform newWaypoint = Instantiate(waypointPrefab, new Vector3(randomWaypointPos.x, randomWaypointPos.y, 0), Quaternion.identity).transform;
+
+                // Añadir el waypoint a la lista de GetWaypoints
+                if (getWaypoints != null)
+                {
+                    getWaypoints.RegisterWaypoint(newWaypoint);
+                }
             }
         }
     }

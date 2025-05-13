@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GetWaypoints : MonoBehaviour
 {
-    public List<Vector3> waypoints = new List<Vector3>();
+    public List<Transform> waypoints = new List<Transform>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,5 +14,9 @@ public class GetWaypoints : MonoBehaviour
     void Update()
     {
         
+    }
+    public void RegisterWaypoint(Transform waypoint)
+    {
+        waypoints.Add(waypoint);
     }
 }
