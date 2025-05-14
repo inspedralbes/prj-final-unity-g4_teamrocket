@@ -59,6 +59,8 @@ public class MonsterPatrolController : EnemyBase
     {
         Vector2 playerDirection = player.position - transform.position;
 
+        Debug.Log("Donde esta: " + player.position + " " + transform.position);
+
         // Si el jugador está dentro del cono o dentro del collider, sigue persiguiendo
         if (IsPlayerInVisionCone(playerDirection) || IsPlayerInDetectionRadius())
         {
@@ -180,6 +182,12 @@ public class MonsterPatrolController : EnemyBase
 
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + leftAngle);
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + rightAngle);
+
+        Gizmos.color = Color.green;
+        if (player != null)
+        {
+            Gizmos.DrawLine(transform.position, player.position);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
