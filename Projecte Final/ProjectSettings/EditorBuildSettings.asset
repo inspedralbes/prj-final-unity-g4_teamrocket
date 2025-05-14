@@ -17,9 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Mapas/Lobby.unity
     guid: f44b91320a7da9b43adbb4c35ff7f4a5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Mapas/Mansion.unity
     guid: 42b6c18fb3d4ddd4aa6b6463698dc46f
+  - enabled: 1
+    path: Assets/Mapas/ProceduralMapGeneration.unity
+    guid: 71b560a1ccc00bc43857d9b16d17125f
   - enabled: 1
     path: Assets/Mapas/Carga.unity
     guid: 69c8fbdcf6508de4abef2a8b9f0fc39a
