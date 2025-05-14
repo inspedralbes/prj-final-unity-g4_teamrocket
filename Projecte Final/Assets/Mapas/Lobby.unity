@@ -507,10 +507,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   distanciaInteraccion: 4
-  teclaTransporte: 109
+  teclaTransporte: 101
+  tagJugador: Player
+  mostrarDebug: 1
   interactUI: {fileID: 0}
   highlightParticles: {fileID: 0}
-  mensajeInteraccion: "Presiona M para entrar a la Mansi\xF3n"
+  mensajeInteraccion: "Presiona E para entrar a la Mansi\xF3n"
 --- !u!114 &380951555
 MonoBehaviour:
   m_ObjectHideFlags: 0
