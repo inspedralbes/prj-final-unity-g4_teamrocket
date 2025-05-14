@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 926684514910384150}
   - component: {fileID: 5537465292728389070}
-  - component: {fileID: 8466022438721864012}
   - component: {fileID: 7262065682260037197}
   - component: {fileID: 7843517848511822481}
-  - component: {fileID: -503853504300434933}
+  - component: {fileID: -7585657458608769902}
   m_Layer: 0
   m_Name: spr_Blue_slime_hurt_2
   m_TagString: Untagged
@@ -91,22 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8466022438721864012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6751005966974647979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ff9ccc339804a43beeed00b4b9da53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  speed: 10
-  player: {fileID: 30301615249425696, guid: 9741d606491aac14089430f751cb71f1, type: 3}
-  respawnWaypoint: {fileID: 0}
 --- !u!195 &7262065682260037197
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -159,7 +142,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -175,7 +158,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.1291686, y: 0.14390232}
   m_EdgeRadius: 0
---- !u!114 &-503853504300434933
+--- !u!114 &-7585657458608769902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,10 +167,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6751005966974647979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f22bff79e7b3c5a248535243187e8e7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 36a3d023a0cbac042898ee6300665c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  speed: 1
   player: {fileID: 30301615249425696, guid: 9741d606491aac14089430f751cb71f1, type: 3}
-  respawnWaypoint: {fileID: 0}
-  speed: 3
+  minDistance: 1.5
+  visionRange: 5
+  visionAngle: 60
+  detectionRadius: 2
+  currentAngle: 0
+  waypoints: []
+  waitTime: 1
