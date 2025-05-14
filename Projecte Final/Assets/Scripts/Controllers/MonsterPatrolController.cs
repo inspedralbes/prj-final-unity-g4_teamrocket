@@ -14,8 +14,11 @@ public class MonsterPatrolController : EnemyBase
     public float currentAngle = 0f;
 
     [Header("Patrol")]
-    [SerializeField] private Transform[] waypoints;
-    [SerializeField] private float waitTime = 1f;
+    [SerializeField] 
+    private Transform[] waypoints;
+    private GetWaypoints waypointProvider;
+    [SerializeField] 
+    private float waitTime = 1f;
     private int currentWaypoint = 0;
     private bool isWaiting;
 
@@ -23,21 +26,26 @@ public class MonsterPatrolController : EnemyBase
     private bool isChasing = false;
     private Coroutine damageCoroutine;
 
+    [System.Obsolete]
     void Start()
     {
         damage = 10;
-        speed = 10f;
+        speed = 3f;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = speed;
 
-        waypoints = WaypointAssigner.GetWaypointsByTag();
-        if (waypoints.Length > 0)
-        {
-            transform.position = waypoints[0].position;
-            agent.Warp(waypoints[0].position);
-        }
+        waypointProvider = FindObjectOfType<GetWaypoints>();
+        waypoints = waypointProvider.waypoints.ToArray();
+
+        Debug.Log(waypointProvider);
+
+        //if (waypoints.Length > 0)
+        //{
+        //    transform.position = waypoints[0].position;
+        //    agent.Warp(waypoints[0].position);
+        //}
 
         if (waypoints.Length > 1)
         {
