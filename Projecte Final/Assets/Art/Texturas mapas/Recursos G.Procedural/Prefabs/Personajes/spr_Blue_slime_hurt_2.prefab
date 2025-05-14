@@ -105,6 +105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   speed: 10
+  stunEffect: {fileID: 0}
+  stunAnimationSpeed: 0.3
   player: {fileID: 30301615249425696, guid: 9741d606491aac14089430f751cb71f1, type: 3}
   respawnWaypoint: {fileID: 0}
 --- !u!195 &7262065682260037197
@@ -118,7 +120,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.1
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 70
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
