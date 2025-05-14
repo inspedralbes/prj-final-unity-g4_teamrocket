@@ -32,6 +32,7 @@ public class MonsterPatrolController : EnemyBase
         agent.updateUpAxis = false;
         agent.speed = speed;
 
+        waypoints = WaypointAssigner.GetWaypointsByTag();
         if (waypoints.Length > 0)
         {
             transform.position = waypoints[0].position;
