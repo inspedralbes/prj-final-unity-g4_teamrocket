@@ -253,38 +253,39 @@ namespace NavMeshPlus.Extensions
         }
 
         public static void CollectSources(List<NavMeshBuildSource> sources, Collider2D collider, int area, NavMeshBuilder2dState builder)
-        { 
-            if (collider.usedByComposite)
-            {
-                collider = collider.GetComponent<CompositeCollider2D>();
-            }
+{ 
+    // Reemplazo del método obsoleto usedByComposite
+    if (collider.compositeOperation != Collider2D.CompositeOperation.None)
+    {
+        collider = collider.GetComponent<CompositeCollider2D>();
+    }
 
-            Mesh mesh;
-            mesh = builder.GetMesh(collider);
-            if (mesh == null)
-            {
-                if (!builder.hideEditorLogs) Debug.Log($"{collider.name} mesh is null");
-                return;
-            }
+    Mesh mesh;
+    mesh = builder.GetMesh(collider);
+    if (mesh == null)
+    {
+        if (!builder.hideEditorLogs) Debug.Log($"{collider.name} mesh is null");
+        return;
+    }
 
-            var src = new NavMeshBuildSource();
-            src.shape = NavMeshBuildSourceShape.Mesh;
-            src.area = area;
-            src.component = collider;
-            src.sourceObject = mesh;
-            if (collider.attachedRigidbody)
-            {
-                src.transform = Matrix4x4.TRS(Vector3.Scale(collider.attachedRigidbody.transform.position, builder.overrideVector), collider.attachedRigidbody.transform.rotation, Vector3.one);
-            }
-            else
-            {
-                src.transform = Matrix4x4.identity;
-            }
+    var src = new NavMeshBuildSource();
+    src.shape = NavMeshBuildSourceShape.Mesh;
+    src.area = area;
+    src.component = collider;
+    src.sourceObject = mesh;
+    if (collider.attachedRigidbody)
+    {
+        src.transform = Matrix4x4.TRS(Vector3.Scale(collider.attachedRigidbody.transform.position, builder.overrideVector), collider.attachedRigidbody.transform.rotation, Vector3.one);
+    }
+    else
+    {
+        src.transform = Matrix4x4.identity;
+    }
 
-            sources.Add(src);
+    sources.Add(src);
 
-            builder.lookupCallback?.Invoke(collider.gameObject, src);
-        }
+    builder.lookupCallback?.Invoke(collider.gameObject, src);
+}
 
         public static void CollectTileSources(List<NavMeshBuildSource> sources, Tilemap tilemap, int area, NavMeshBuilder2dState builder)
         {
