@@ -12,7 +12,7 @@ public class MonsterFreezeController : EnemyBase
     void Start() 
     {
         damage = 100;
-        speed = 10f;
+        speed = 3f;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;

@@ -30,6 +30,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private int numberOfKeys = 3;
     [SerializeField]
     private GameObject stalkerEnemyPrefab;
+    [SerializeField]
+    private GameObject freezeEnemyPrefab;
     [SerializeField] 
     private List<EnemySpawnInfo> enemyTypes;
     [SerializeField]
@@ -172,6 +174,28 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         else
         {
             Debug.LogWarning("No se ha podido instanciar el stalker: prefab o waypoints faltantes.");
+        }
+
+        // Número de enemigos MonsterFreeze que se colocarán (1 por cada 4 salas)
+        int freezeEnemiesToPlace = Mathf.FloorToInt(roomsDictionary.Count / 4f);
+
+        // Tomar tantas habitaciones intermedias como enemigos a colocar
+        var freezeEnemyRooms = middleRooms.Take(freezeEnemiesToPlace).ToList();
+
+        foreach (var roomCenter in freezeEnemyRooms)
+        {
+            if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
+
+            // Escoger una posición aleatoria dentro del cuarto para el enemigo freeze
+            Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
+            GameObject freezeEnemy = Instantiate(freezeEnemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+
+            // Asignar la referencia al jugador al enemigo freeze
+            var freezeScript = freezeEnemy.GetComponent<MonsterFreezeController>();
+            if (freezeScript != null)
+            {
+                freezeScript.player = playerInstance.transform;
+            }
         }
 
         if (getWaypoints != null)
