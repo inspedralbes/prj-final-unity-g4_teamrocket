@@ -31,25 +31,27 @@ public class PlayerController : MonoBehaviour, IStunnable
     // Combate
     public float tiempoEntreGolpes = 0.5f;
     public Collider2D miHitbox;
-    public bool puedeAtacar = true;
+    public bool puedeAtacar = false;
     public GameObject bate;
+    public int numBatazos = 0;
     
     // Tienda
     [SerializeField] private ShopController shopController;
     private bool canMove = true;
     private bool canOpenShop = true;
+    public int money = 1000;
     
     // Linterna
-    private bool flashing = true;
+    public bool flashing = false;
     private bool linternaActiva = false;
     public Light2D luzLinterna;
     public Collider2D colliderLinternaNormal;
     public Collider2D colliderLinternaAmplio;
-    private float tiempoLinternaEncendida = 0f;
+    public float tiempoLinternaEncendida = 0f;
     private float duracionMaximaLinterna = 180f;
     
     // Brújula
-    private bool brujula = true;
+    public bool brujula = false;
     public GameObject objetoBrujula;
 
     // Añade estas nuevas variables para el stun
@@ -64,6 +66,9 @@ public class PlayerController : MonoBehaviour, IStunnable
 
     void Start()
     {
+        // Evita que el GameObject se destruya al cargar una nueva escena
+        DontDestroyOnLoad(gameObject);
+
         canOpenShop = false;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -220,9 +225,10 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
 
         // Ataque con bate
-        if (puedeAtacar && Input.GetMouseButtonDown(0))
+        if (numBatazos > 0 && puedeAtacar && Input.GetMouseButtonDown(0))
         {
             puedeAtacar = false;
+            numBatazos--;
             if (bate != null) bate.SetActive(true);
         }
     }

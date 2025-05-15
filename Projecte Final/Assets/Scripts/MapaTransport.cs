@@ -102,7 +102,7 @@ public class MapaTransport : NetworkBehaviour
         if (!NetworkClient.active && !NetworkServer.active)
         {
             if (mostrarDebug) Debug.Log("Iniciando transporte OFFLINE a Mansion");
-            CargarEscenaSeguro("ProceduralMapGeneration");
+            CargarEscenaSeguro("Mansion");
             return;
         }
 
@@ -121,7 +121,7 @@ public class MapaTransport : NetworkBehaviour
         
         if (isServer)
         {
-            networkManager.ServerChangeScene("ProceduralMapGeneration");
+            networkManager.ServerChangeScene("Mansion");
         }
         else
         {

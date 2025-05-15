@@ -526,8 +526,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopUI: {fileID: 1840932658461548571}
-  playerMoney: 7189
-  equipmentItems: []
+  equipmentItems:
+  - id: 0
+    name: Linterna
+    price: 50
+    description: Te permite volar... Que mierda va a hacer es una linterna
+    icon: {fileID: -5469777367704339146, guid: 3c6dc6e3f3790564da5836dee50fb958, type: 3}
+  - id: 1
+    name: Brujula
+    price: 150
+    description: No sabes donde esta la salida? Eres tonto o que te pasa?
+    icon: {fileID: -5502465461007319794, guid: 9f9acf839bd17d14898eedbfd9a6acd2, type: 3}
+  - id: 2
+    name: Bate
+    price: 200
+    description: Sirve para dar caricias agresivas
+    icon: {fileID: 4483504832982471387, guid: be033bed085a2624780460f900d9400b, type: 3}
+  playerController: {fileID: 5255107225499224756}
 --- !u!1 &3129716687022728341
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +948,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &356199957893250054
 Transform:
   m_ObjectHideFlags: 0
@@ -1311,12 +1326,17 @@ MonoBehaviour:
   barraStamina: {fileID: 7389792832212232695}
   tiempoEntreGolpes: 0.5
   miHitbox: {fileID: 7522254436032244155}
-  puedeAtacar: 1
+  puedeAtacar: 0
   bate: {fileID: 4137071052943698451}
+  numBatazos: 3
   shopController: {fileID: 6480694450587509030}
+  money: 1000
+  flashing: 0
   luzLinterna: {fileID: 5265274759915648398}
   colliderLinternaNormal: {fileID: 108552355582738309}
   colliderLinternaAmplio: {fileID: 6074713371426837427}
+  tiempoLinternaEncendida: 0
+  brujula: 0
   objetoBrujula: {fileID: 6056663557918523750}
   stunEffect: {fileID: 8335385678671221078}
 --- !u!95 &4036225779818063539
