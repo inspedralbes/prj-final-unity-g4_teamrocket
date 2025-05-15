@@ -43,8 +43,6 @@ public class MonsterPatrolController : EnemyBase
         waypointProvider = FindObjectOfType<GetWaypoints>();
         waypoints = waypointProvider.waypoints.ToArray();
 
-        Debug.Log(waypointProvider);
-
         //if (waypoints.Length > 0)
         //{
         //    transform.position = waypoints[0].position;
@@ -209,6 +207,12 @@ public class MonsterPatrolController : EnemyBase
 
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + leftAngle);
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + rightAngle);
+
+        Gizmos.color = Color.green;
+        if (player != null)
+        {
+            Gizmos.DrawLine(transform.position, player.position);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

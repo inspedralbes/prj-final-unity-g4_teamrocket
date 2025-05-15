@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NavMeshPlus.Components;
 using UnityEngine;
 
 [System.Serializable]
@@ -27,8 +28,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private GameObject enemyPrefab;
     [SerializeField] 
     private int numberOfKeys = 3;
-    [SerializeField] 
-    private int numberOfEnemies = 5;
+    [SerializeField]
+    private GameObject stalkerEnemyPrefab;
     [SerializeField] 
     private List<EnemySpawnInfo> enemyTypes;
     [SerializeField]
@@ -37,7 +38,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private int waypointsPerRoom = 1;
     [SerializeField]
     public GetWaypoints getWaypoints;
-
+    [SerializeField]
+    private NavMeshSurface navMeshSurface;
 
     //PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
@@ -54,7 +56,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
         List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
-
         HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
 
         floorPositions.UnionWith(roomPositions);
@@ -67,8 +68,20 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
+
+        // Aï¿½ADIDO: Construir la NavMesh ahora que el mapa estï¿½ completo
+        if (navMeshSurface != null)
+        {
+            navMeshSurface.BuildNavMesh();
+        }
+        else
+        {
+            Debug.LogWarning("NavMeshSurface no asignado en el Inspector.");
+        }
+
         PlaceGameplayObjects();
     }
+
 
     private void PlaceGameplayObjects()
     {
@@ -80,8 +93,9 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             .OrderByDescending(r => Vector2Int.Distance(startRoom, r))
             .First();
 
-        // Instanciar jugador
-        Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
+
+        // Instanciar jugador y guardar referencia
+        var playerInstance = Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
 
         // Instanciar salida
         Instantiate(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0), Quaternion.identity);
@@ -109,7 +123,14 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
                 for (int j = 0; j < enemyInfo.countPerRoom; j++)
                 {
                     Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
-                    Instantiate(enemyInfo.enemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+                    var enemyObj = Instantiate(enemyInfo.enemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+
+                    // Asignar al enemigo la referencia al jugador
+                    var enemyScript = enemyObj.GetComponent<MonsterPatrolController>();
+                    if (enemyScript != null)
+                    {
+                        enemyScript.player = playerInstance.transform;
+                    }
                 }
             }
 
@@ -119,15 +140,32 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
                 Vector2Int randomWaypointPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
                 Transform newWaypoint = Instantiate(waypointPrefab, new Vector3(randomWaypointPos.x, randomWaypointPos.y, 0), Quaternion.identity).transform;
 
-                // Añadir el waypoint a la lista de GetWaypoints
                 if (getWaypoints != null)
                 {
                     getWaypoints.RegisterWaypoint(newWaypoint);
                 }
             }
         }
-    }
 
+        // === SPAWN ÃšNICO DEL STALKER ===
+        if (stalkerEnemyPrefab != null && getWaypoints != null && getWaypoints.waypoints.Count > 0)
+        {
+            Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
+
+            GameObject stalker = Instantiate(stalkerEnemyPrefab, chosenRespawn.position, Quaternion.identity);
+
+            var stalkerScript = stalker.GetComponent<MonsterStalkerController>();
+            if (stalkerScript != null)
+            {
+                stalkerScript.player = playerInstance.transform;
+                stalkerScript.respawnWaypoint = chosenRespawn;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No se ha podido instanciar el stalker: prefab o waypoints faltantes.");
+        }
+    }
 
     public List<Vector2Int> IncreaseCorridorBrush3by3(List<Vector2Int> corridor)
     {
