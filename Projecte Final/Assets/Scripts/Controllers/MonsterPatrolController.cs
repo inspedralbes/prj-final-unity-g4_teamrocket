@@ -39,8 +39,6 @@ public class MonsterPatrolController : EnemyBase
         waypointProvider = FindObjectOfType<GetWaypoints>();
         waypoints = waypointProvider.waypoints.ToArray();
 
-        Debug.Log(waypointProvider);
-
         //if (waypoints.Length > 0)
         //{
         //    transform.position = waypoints[0].position;
@@ -58,8 +56,6 @@ public class MonsterPatrolController : EnemyBase
     void Update()
     {
         Vector2 playerDirection = player.position - transform.position;
-
-        Debug.Log("Donde esta: " + player.position + " " + transform.position);
 
         // Si el jugador está dentro del cono o dentro del collider, sigue persiguiendo
         if (IsPlayerInVisionCone(playerDirection) || IsPlayerInDetectionRadius())

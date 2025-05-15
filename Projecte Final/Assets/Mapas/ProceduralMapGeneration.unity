@@ -60634,12 +60634,13 @@ MonoBehaviour:
   randomWalkParameters: {fileID: 11400000, guid: 2d19df39dd195df41a69dd03fe30c0c2, type: 2}
   corridorLength: 25
   corridorCount: 50
-  roomPercent: 0.872
+  roomPercent: 0.43
   playerPrefab: {fileID: 7279041211194800803, guid: 9741d606491aac14089430f751cb71f1, type: 3}
   exitPrefab: {fileID: 4970418405442401705, guid: e3a3a18602d6b8c43bc0752ffc4d5748, type: 3}
   keyPrefab: {fileID: 4970418405442401705, guid: 90e82b3f8c86da646b7c82300c4707d9, type: 3}
   enemyPrefab: {fileID: 4970418405442401705, guid: 9cf5f31ef89d4df4e9a91cea4e56503d, type: 3}
   numberOfKeys: 3
+  stalkerEnemyPrefab: {fileID: 5832621377646979222, guid: f5ffbb93f97fabb498a78999183161be, type: 3}
   enemyTypes:
   - enemyPrefab: {fileID: 6751005966974647979, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
     countPerRoom: 1

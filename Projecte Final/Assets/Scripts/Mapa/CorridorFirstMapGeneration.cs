@@ -28,6 +28,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private GameObject enemyPrefab;
     [SerializeField] 
     private int numberOfKeys = 3;
+    [SerializeField]
+    private GameObject stalkerEnemyPrefab;
     [SerializeField] 
     private List<EnemySpawnInfo> enemyTypes;
     [SerializeField]
@@ -67,7 +69,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
 
-        // AÑADIDO: Construir la NavMesh ahora que el mapa está completo
+        // Aï¿½ADIDO: Construir la NavMesh ahora que el mapa estï¿½ completo
         if (navMeshSurface != null)
         {
             navMeshSurface.BuildNavMesh();
@@ -91,11 +93,9 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             .OrderByDescending(r => Vector2Int.Distance(startRoom, r))
             .First();
 
-        Debug.Log(startRoom.x + ", " + startRoom.y);
 
         // Instanciar jugador y guardar referencia
         var playerInstance = Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
-        Debug.Log($"Player instanciado en: {playerInstance.transform.position}");
 
         // Instanciar salida
         Instantiate(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0), Quaternion.identity);
@@ -145,6 +145,25 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
                     getWaypoints.RegisterWaypoint(newWaypoint);
                 }
             }
+        }
+
+        // === SPAWN ÃšNICO DEL STALKER ===
+        if (stalkerEnemyPrefab != null && getWaypoints != null && getWaypoints.waypoints.Count > 0)
+        {
+            Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
+
+            GameObject stalker = Instantiate(stalkerEnemyPrefab, chosenRespawn.position, Quaternion.identity);
+
+            var stalkerScript = stalker.GetComponent<MonsterStalkerController>();
+            if (stalkerScript != null)
+            {
+                stalkerScript.player = playerInstance.transform;
+                stalkerScript.respawnWaypoint = chosenRespawn;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No se ha podido instanciar el stalker: prefab o waypoints faltantes.");
         }
     }
 

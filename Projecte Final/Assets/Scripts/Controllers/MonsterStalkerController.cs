@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class MonsterStalkerController : EnemyBase
 {
-    [SerializeField] private Transform player;  // Referencia al jugador
-    [SerializeField] private Transform respawnWaypoint;  // El waypoint específico donde respawnea el monstruo
+    public Transform player;  // Referencia al jugador
+    public Transform respawnWaypoint;  // El waypoint específico donde respawnea el monstruo
 
     private NavMeshAgent agent;
 
@@ -23,6 +23,8 @@ public class MonsterStalkerController : EnemyBase
         if (player != null)
         {
             agent.SetDestination(player.position);
+        } else {
+            Debug.Log("No existo");
         }
     }
 
