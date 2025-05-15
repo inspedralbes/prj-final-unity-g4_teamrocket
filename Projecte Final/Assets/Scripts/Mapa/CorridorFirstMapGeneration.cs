@@ -57,6 +57,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
         List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
         HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
+        Debug.Log($"Número de salas generadas: {roomsDictionary.Count}");
 
         floorPositions.UnionWith(roomPositions);
 
@@ -112,33 +113,39 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         }
 
         // Enemigos y Waypoints
-        for (int i = keysToPlace; i < middleRooms.Count; i++)
+        foreach (var kvp in roomsDictionary)
         {
-            Vector2Int roomCenter = middleRooms[i];
-            if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
+            Vector2Int roomCenter = kvp.Key;
+            var roomFloor = kvp.Value;
 
-            // Instanciar enemigos
-            foreach (var enemyInfo in enemyTypes)
+            // Opcional: saltar la sala de salida si no quieres waypoint ahí
+            if (roomCenter == startRoom)
+                continue;
+
+            // Instanciar enemigos solo en las salas intermedias
+            if (middleRooms.Contains(roomCenter))
             {
-                for (int j = 0; j < enemyInfo.countPerRoom; j++)
+                foreach (var enemyInfo in enemyTypes)
                 {
-                    Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
-                    var enemyObj = Instantiate(enemyInfo.enemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
-
-                    // Asignar al enemigo la referencia al jugador
-                    var enemyScript = enemyObj.GetComponent<MonsterPatrolController>();
-                    if (enemyScript != null)
+                    for (int j = 0; j < enemyInfo.countPerRoom; j++)
                     {
-                        enemyScript.player = playerInstance.transform;
+                        Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
+                        var enemyObj = Instantiate(enemyInfo.enemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+
+                        var enemyScript = enemyObj.GetComponent<MonsterPatrolController>();
+                        if (enemyScript != null)
+                        {
+                            enemyScript.player = playerInstance.transform;
+                        }
                     }
                 }
             }
 
-            // Instanciar waypoints
+            // Instanciar waypoints en todas las salas (excepto la de salida si quieres)
             for (int w = 0; w < waypointsPerRoom; w++)
             {
-                Vector2Int randomWaypointPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
-                Transform newWaypoint = Instantiate(waypointPrefab, new Vector3(randomWaypointPos.x, randomWaypointPos.y, 0), Quaternion.identity).transform;
+                Vector3 waypointPosition = new Vector3(roomCenter.x, roomCenter.y, 0);
+                Transform newWaypoint = Instantiate(waypointPrefab, waypointPosition, Quaternion.identity).transform;
 
                 if (getWaypoints != null)
                 {
@@ -146,6 +153,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
                 }
             }
         }
+
 
         // === SPAWN ÚNICO DEL STALKER ===
         if (stalkerEnemyPrefab != null && getWaypoints != null && getWaypoints.waypoints.Count > 0)
@@ -164,6 +172,11 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         else
         {
             Debug.LogWarning("No se ha podido instanciar el stalker: prefab o waypoints faltantes.");
+        }
+
+        if (getWaypoints != null)
+        {
+            Debug.Log($"Número total de waypoints generados: {getWaypoints.waypoints.Count}");
         }
     }
 
