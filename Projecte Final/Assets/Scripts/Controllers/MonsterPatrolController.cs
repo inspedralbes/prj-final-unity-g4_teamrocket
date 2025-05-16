@@ -35,6 +35,10 @@ public class MonsterPatrolController : EnemyBase
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = speed;
+        agent.updatePosition = true;
+        
+        // Fuerza rotación correcta inicial
+        transform.rotation = Quaternion.identity;
 
         // Añade estas líneas:
         agent.autoBraking = false; // Evita que reduzca velocidad al acercarse
