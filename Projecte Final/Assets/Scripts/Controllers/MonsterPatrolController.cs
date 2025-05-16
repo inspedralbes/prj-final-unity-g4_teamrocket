@@ -30,7 +30,7 @@ public class MonsterPatrolController : EnemyBase
     void Start()
     {
         damage = 10;
-        speed = 3f;
+        speed = 8f;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -39,10 +39,6 @@ public class MonsterPatrolController : EnemyBase
         
         // Fuerza rotación correcta inicial
         transform.rotation = Quaternion.identity;
-
-        // Añade estas líneas:
-        agent.autoBraking = false; // Evita que reduzca velocidad al acercarse
-        agent.stoppingDistance = minDistance; // Distancia exacta donde debe parar
 
         waypointProvider = FindObjectOfType<GetWaypoints>();
         waypoints = waypointProvider.waypoints.ToArray();
@@ -67,6 +63,7 @@ public class MonsterPatrolController : EnemyBase
         {
             agent.speed = speed;
         }
+        
         Vector2 playerDirection = player.position - transform.position;
 
         // Si el jugador está dentro del cono o dentro del collider, sigue persiguiendo

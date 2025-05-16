@@ -60634,8 +60634,7 @@ MonoBehaviour:
   randomWalkParameters: {fileID: 11400000, guid: 2d19df39dd195df41a69dd03fe30c0c2, type: 2}
   corridorLength: 25
   corridorCount: 50
-  roomPercent: 0.809
-  playerPrefab: {fileID: 6295919784117300754, guid: 3f9112092be0e43b9826d9372defab46, type: 3}
+  roomPercent: 0.219
   exitPrefab: {fileID: 4970418405442401705, guid: e3a3a18602d6b8c43bc0752ffc4d5748, type: 3}
   keyPrefab: {fileID: 4970418405442401705, guid: 90e82b3f8c86da646b7c82300c4707d9, type: 3}
   numberOfKeys: 3

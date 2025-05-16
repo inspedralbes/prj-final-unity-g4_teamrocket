@@ -172,5 +172,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   speed: 0
-  player: {fileID: 30301615249425696, guid: 9741d606491aac14089430f751cb71f1, type: 3}
+  player: {fileID: 2360453643376553460, guid: 3f9112092be0e43b9826d9372defab46, type: 3}
   respawnWaypoint: {fileID: 0}

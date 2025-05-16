@@ -7,7 +7,7 @@ public class EnemyBase : MonoBehaviour, IStunnable
 {
     public int damage;
     public float speed;
-
+    
     private bool isStunned = false;
     private List<Component> movementComponents; // Cambiado a Component
     
