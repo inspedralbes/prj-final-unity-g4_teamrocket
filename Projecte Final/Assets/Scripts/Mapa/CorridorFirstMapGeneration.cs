@@ -26,12 +26,18 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private GameObject keyPrefab;
     [SerializeField] 
     private int numberOfKeys = 3;
+
+    [Header("Enemies")]
     [SerializeField]
     private GameObject stalkerEnemyPrefab;
     [SerializeField]
     private GameObject freezeEnemyPrefab;
+    [SerializeField] private GameObject ghostEnemyPrefab;
     [SerializeField] 
     private List<EnemySpawnInfo> enemyTypes;
+
+
+    [Header("Altres")]
     [SerializeField]
     private GameObject waypointPrefab;
     [SerializeField]
@@ -128,7 +134,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             {
                 getWaypoints.RegisterWaypoint(newWaypoint);
             }
-
+            
+            // === MonsterPatrol ===
             // Instanciar 1 enemigo sobre el waypoint, solo en salas intermedias
             if (middleRooms.Contains(roomCenter) && enemyTypes.Count > 0)
             {
@@ -145,7 +152,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         }
 
 
-        // === SPAWN ÚNICO DEL STALKER ===
+        // === MonsterStalker ===
         if (stalkerEnemyPrefab != null && getWaypoints != null && getWaypoints.waypoints.Count > 0)
         {
             Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
@@ -164,6 +171,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             Debug.LogWarning("No se ha podido instanciar el stalker: prefab o waypoints faltantes.");
         }
 
+        // === MonsterFreeze ===
         // Número de enemigos MonsterFreeze que se colocarán (1 por cada 4 salas)
         int freezeEnemiesToPlace = Mathf.FloorToInt(roomsDictionary.Count / 4f);
 
@@ -172,11 +180,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
         foreach (var roomCenter in freezeEnemyRooms)
         {
-            if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
-
-            // Escoger una posición aleatoria dentro del cuarto para el enemigo freeze
-            Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
-            GameObject freezeEnemy = Instantiate(freezeEnemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+            Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
+            GameObject freezeEnemy = Instantiate(freezeEnemyPrefab, chosenRespawn.position, Quaternion.identity);
 
             // Asignar la referencia al jugador al enemigo freeze
             var freezeScript = freezeEnemy.GetComponent<MonsterFreezeController>();
@@ -184,6 +189,35 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             {
                 freezeScript.player = playerInstance.transform;
             }
+        }
+
+        // === MonsterGhost ===
+        int ghostEnemiesToSpawn = 3;
+
+        // Asegúrate de que haya suficientes waypoints
+        if (getWaypoints != null && getWaypoints.waypoints.Count >= ghostEnemiesToSpawn)
+        {
+            // Selecciona 3 waypoints aleatorios únicos
+            var selectedWaypoints = getWaypoints.waypoints
+                .OrderBy(x => UnityEngine.Random.value)
+                .Take(ghostEnemiesToSpawn)
+                .ToList();
+
+            foreach (var waypoint in selectedWaypoints)
+            {
+                Transform chosenRespawn = waypoint;
+                GameObject ghostEnemy = Instantiate(ghostEnemyPrefab, chosenRespawn.position, Quaternion.identity);
+
+                var ghostScript = ghostEnemy.GetComponent<MonsterGhostController>();
+                if (ghostScript == null)
+                {
+                    Debug.LogWarning("MonsterGhostController no encontrado en el prefab del Ghost.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No hay suficientes waypoints generados para los Ghosts.");
         }
 
         if (getWaypoints != null)

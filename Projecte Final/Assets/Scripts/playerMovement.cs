@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,22 +6,43 @@ public class PlayerMovement : MonoBehaviour
     private float Horizontal;
     private float Vertical;
     private float Speed = 10f;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private bool controlesInvertidos = false;
+    private float tiempoRestanteInversion = 0f;
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Controles normales
         Horizontal = Input.GetAxisRaw("Horizontal");
         Vertical = Input.GetAxisRaw("Vertical");
+
+        // Invertir si el efecto está activo
+        if (controlesInvertidos)
+        {
+            Horizontal *= -1;
+            Vertical *= -1;
+
+            tiempoRestanteInversion -= Time.deltaTime;
+            if (tiempoRestanteInversion <= 0)
+            {
+                controlesInvertidos = false;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         Rigidbody2D.linearVelocity = new Vector2(Horizontal * Speed, Vertical * Speed);
+    }
+
+    public void InvertirControles(float tiempo)
+    {
+        controlesInvertidos = true;
+        tiempoRestanteInversion = tiempo;
     }
 }

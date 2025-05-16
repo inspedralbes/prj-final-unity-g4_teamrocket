@@ -60641,6 +60641,7 @@ MonoBehaviour:
   numberOfKeys: 3
   stalkerEnemyPrefab: {fileID: 5832621377646979222, guid: f5ffbb93f97fabb498a78999183161be, type: 3}
   freezeEnemyPrefab: {fileID: 6934460635457449643, guid: 2440eec882069cebf8ebc45d448bd62c, type: 3}
+  ghostEnemyPrefab: {fileID: 4417153192077728667, guid: c1cf0667f70dab1e4b26171da3ed333b, type: 3}
   enemyTypes:
   - enemyPrefab: {fileID: 6751005966974647979, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
     countPerRoom: 1
