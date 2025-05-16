@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7269657840206769304}
   - component: {fileID: 4704292968793089426}
   - component: {fileID: 7942079949878271932}
+  - component: {fileID: 5296882412900378006}
   m_Layer: 0
   m_Name: spr_Blue_slime_death_1
   m_TagString: Untagged
@@ -157,3 +158,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.10558316, y: 0.122938946}
   m_EdgeRadius: 0
+--- !u!114 &5296882412900378006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5832621377646979222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ff9ccc339804a43beeed00b4b9da53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  speed: 0
+  player: {fileID: 2360453643376553460, guid: 3f9112092be0e43b9826d9372defab46, type: 3}
+  respawnWaypoint: {fileID: 0}

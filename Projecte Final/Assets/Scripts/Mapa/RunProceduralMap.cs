@@ -5,12 +5,12 @@ public class RunProceduralMap : MonoBehaviour
 
 {
     public AbstractDungeonGenerator generator;
-    public NavMeshSurface navMesh;
+    // public NavMeshSurface navMesh;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         generator.GenerateDungeon();
-        navMesh.BuildNavMesh();
+        // navMesh.BuildNavMesh();
 
     }
 

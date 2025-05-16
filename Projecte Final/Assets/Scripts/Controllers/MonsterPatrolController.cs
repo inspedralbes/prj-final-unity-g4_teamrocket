@@ -14,8 +14,11 @@ public class MonsterPatrolController : EnemyBase
     public float currentAngle = 0f;
 
     [Header("Patrol")]
-    [SerializeField] private Transform[] waypoints;
-    [SerializeField] private float waitTime = 1f;
+    [SerializeField] 
+    private Transform[] waypoints;
+    private GetWaypoints waypointProvider;
+    [SerializeField] 
+    private float waitTime = 1f;
     private int currentWaypoint = 0;
     private bool isWaiting;
 
@@ -23,10 +26,11 @@ public class MonsterPatrolController : EnemyBase
     private bool isChasing = false;
     private Coroutine damageCoroutine;
 
+    [System.Obsolete]
     void Start()
     {
         damage = 10;
-        speed = 10f;
+        speed = 8f;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -36,11 +40,14 @@ public class MonsterPatrolController : EnemyBase
         // Fuerza rotación correcta inicial
         transform.rotation = Quaternion.identity;
 
-        if (waypoints.Length > 0)
-        {
-            transform.position = waypoints[0].position;
-            agent.Warp(waypoints[0].position);
-        }
+        waypointProvider = FindObjectOfType<GetWaypoints>();
+        waypoints = waypointProvider.waypoints.ToArray();
+
+        //if (waypoints.Length > 0)
+        //{
+        //    transform.position = waypoints[0].position;
+        //    agent.Warp(waypoints[0].position);
+        //}
 
         if (waypoints.Length > 1)
         {
@@ -56,6 +63,7 @@ public class MonsterPatrolController : EnemyBase
         {
             agent.speed = speed;
         }
+        
         Vector2 playerDirection = player.position - transform.position;
 
         // Si el jugador está dentro del cono o dentro del collider, sigue persiguiendo
@@ -200,6 +208,12 @@ public class MonsterPatrolController : EnemyBase
 
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + leftAngle);
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + rightAngle);
+
+        Gizmos.color = Color.green;
+        if (player != null)
+        {
+            Gizmos.DrawLine(transform.position, player.position);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
