@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using TMPro;
 
 public class ShopController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class ShopController : MonoBehaviour
     [SerializeField] private UIDocument shopUI;
     [SerializeField] private List<ShopItem> equipmentItems;
     public PlayerController playerController;
+    public TMP_Text textTempsLinterna;
+    public TMP_Text textUsosBate;
 
     private VisualElement root;
     private Label moneyLabel;
@@ -123,6 +126,7 @@ public class ShopController : MonoBehaviour
                 case 0:
                     playerController.flashing = true;
                     playerController.tiempoLinternaEncendida = 0f;
+                    textTempsLinterna.text = $"{playerController.duracionMaximaLinterna}";
                     break;
                 case 1:
                     playerController.brujula = true;
@@ -130,6 +134,7 @@ public class ShopController : MonoBehaviour
                 case 2:
                     playerController.puedeAtacar = true;
                     playerController.numBatazos = 3;
+                    textUsosBate.text = $"{playerController.numBatazos}";
                     break;
                 default:
                     Debug.LogError("ID de item no válido: " + selectedItem.id);

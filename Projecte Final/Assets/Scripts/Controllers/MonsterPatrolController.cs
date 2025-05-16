@@ -36,10 +36,6 @@ public class MonsterPatrolController : EnemyBase
         // Fuerza rotación correcta inicial
         transform.rotation = Quaternion.identity;
 
-        // Añade estas líneas:
-        agent.autoBraking = false; // Evita que reduzca velocidad al acercarse
-        agent.stoppingDistance = minDistance; // Distancia exacta donde debe parar
-
         if (waypoints.Length > 0)
         {
             transform.position = waypoints[0].position;

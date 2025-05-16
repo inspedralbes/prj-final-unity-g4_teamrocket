@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
 using System;
+using TMPro;
 
 public class PlayerController : MonoBehaviour, IStunnable
 {
@@ -48,7 +49,9 @@ public class PlayerController : MonoBehaviour, IStunnable
     public Collider2D colliderLinternaNormal;
     public Collider2D colliderLinternaAmplio;
     public float tiempoLinternaEncendida = 0f;
-    private float duracionMaximaLinterna = 180f;
+    public float duracionMaximaLinterna = 180f;
+    private float tiempoMostrarLinterna;
+    public TMP_Text textTempsLinterna;
     
     // Brújula
     public bool brujula = false;
@@ -59,6 +62,7 @@ public class PlayerController : MonoBehaviour, IStunnable
     private float stunTimer = 0f;
     private Coroutine stunCoroutine;
     [SerializeField] private GameObject stunEffect;
+    public TMP_Text textUsosBate;
 
     private Animator animator;
     private Vector2 lastDirection;
@@ -76,6 +80,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         animator.SetFloat("Horizontal", 0);
         animator.SetFloat("Vertical", 0);
         animator.SetFloat("Speed", 0);
+        tiempoMostrarLinterna = duracionMaximaLinterna;
             
         // Inicializar barras de UI
         //if (barraVida != null) barraVida.SetMaxHealth(vida);
@@ -208,6 +213,8 @@ public class PlayerController : MonoBehaviour, IStunnable
         if (linternaActiva)
         {
             tiempoLinternaEncendida += Time.deltaTime;
+            tiempoMostrarLinterna -= Time.deltaTime;
+            textTempsLinterna.text = $"{tiempoMostrarLinterna:F1}";
             if (tiempoLinternaEncendida >= duracionMaximaLinterna)
             {
                 ApagarLinterna();
@@ -229,6 +236,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         {
             puedeAtacar = false;
             numBatazos--;
+            textUsosBate.text = $"{numBatazos}";
             if (bate != null) bate.SetActive(true);
         }
     }
