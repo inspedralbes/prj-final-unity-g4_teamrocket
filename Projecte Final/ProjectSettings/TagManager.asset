@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Item
   - Waypoint
+  - Key
+  - Salida
   layers:
   - Default
   - TransparentFX
