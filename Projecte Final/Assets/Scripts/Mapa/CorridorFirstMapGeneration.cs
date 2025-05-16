@@ -28,13 +28,11 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private int numberOfKeys = 3;
 
     [Header("Enemies")]
-    [SerializeField]
-    private GameObject stalkerEnemyPrefab;
-    [SerializeField]
-    private GameObject freezeEnemyPrefab;
+    [SerializeField] private GameObject stalkerEnemyPrefab;
+    [SerializeField] private GameObject freezeEnemyPrefab;
     [SerializeField] private GameObject ghostEnemyPrefab;
-    [SerializeField] 
-    private List<EnemySpawnInfo> enemyTypes;
+    [SerializeField] private GameObject deafEnemyPrefab;
+    [SerializeField] private List<EnemySpawnInfo> enemyTypes;
 
 
     [Header("Altres")]
@@ -218,6 +216,20 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         else
         {
             Debug.LogWarning("No hay suficientes waypoints generados para los Ghosts.");
+        }
+
+        // === SPAWN ÚNICO DEL GUARDIÁN EN SALA CON LLAVE ===
+        if (deafEnemyPrefab != null && keysToPlace > 0)
+        {
+            // Escoge una sala aleatoria entre las que tienen llave
+            Vector2Int guardianRoom = middleRooms[UnityEngine.Random.Range(0, keysToPlace)];
+
+            if (roomsDictionary.TryGetValue(guardianRoom, out var roomFloor))
+            {
+                // Usa el centro promedio del suelo de la sala
+                Vector2 center = GetAveragePosition(roomFloor);
+                GameObject guardian = Instantiate(deafEnemyPrefab, new Vector3(center.x, center.y, 0), Quaternion.identity);
+            }
         }
 
         if (getWaypoints != null)
