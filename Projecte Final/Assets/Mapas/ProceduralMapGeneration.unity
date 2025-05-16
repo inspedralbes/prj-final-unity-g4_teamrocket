@@ -60638,14 +60638,13 @@ MonoBehaviour:
   playerPrefab: {fileID: 6295919784117300754, guid: 3f9112092be0e43b9826d9372defab46, type: 3}
   exitPrefab: {fileID: 4970418405442401705, guid: e3a3a18602d6b8c43bc0752ffc4d5748, type: 3}
   keyPrefab: {fileID: 4970418405442401705, guid: 90e82b3f8c86da646b7c82300c4707d9, type: 3}
-  enemyPrefab: {fileID: 4970418405442401705, guid: 9cf5f31ef89d4df4e9a91cea4e56503d, type: 3}
   numberOfKeys: 3
   stalkerEnemyPrefab: {fileID: 5832621377646979222, guid: f5ffbb93f97fabb498a78999183161be, type: 3}
+  freezeEnemyPrefab: {fileID: 6934460635457449643, guid: 2440eec882069cebf8ebc45d448bd62c, type: 3}
   enemyTypes:
   - enemyPrefab: {fileID: 6751005966974647979, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
     countPerRoom: 1
   waypointPrefab: {fileID: 7509701823768720953, guid: 71278b6b5d98994478eba2a3240b9c0c, type: 3}
-  waypointsPerRoom: 1
   getWaypoints: {fileID: 1478853190}
   navMeshSurface: {fileID: 521616575}
 --- !u!114 &990215993
