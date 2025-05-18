@@ -585,13 +585,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopUI: {fileID: 608311507}
-  playerMoney: 7189
   equipmentItems:
   - id: 1
     name: Sus
     price: 122
     description: 'aaaa<<<x '
     icon: {fileID: -5469777367704339146, guid: 3c6dc6e3f3790564da5836dee50fb958, type: 3}
+  playerController: {fileID: 0}
+  textTempsLinterna: {fileID: 0}
+  textUsosBate: {fileID: 0}
 --- !u!114 &608311507
 MonoBehaviour:
   m_ObjectHideFlags: 0
