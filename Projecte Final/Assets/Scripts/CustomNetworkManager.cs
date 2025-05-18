@@ -3,56 +3,74 @@ using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[DisallowMultipleComponent]
 public class CustomNetworkManager : NetworkManager
 {
     [Header("Steam Settings")]
-    [Tooltip("Activa la integración con Steam")]
     public bool useSteam = true;
-    
-    [Tooltip("ID del lobby actual de Steam")]
     public CSteamID currentLobbyID;
 
-    // Callbacks de Steam
-    private Callback<LobbyCreated_t> _lobbyCreated;
-    private Callback<GameLobbyJoinRequested_t> _lobbyJoinRequested;
-    private Callback<LobbyEnter_t> _lobbyEntered;
+    private Callback<LobbyCreated_t> lobbyCreated;
+    private Callback<GameLobbyJoinRequested_t> lobbyJoinRequested;
+    private Callback<LobbyEnter_t> lobbyEntered;
 
     #region Initialization
     public override void Awake()
     {
-        InitializeSteamInEditor();
         base.Awake();
+        
+        #if UNITY_EDITOR
+        if (useSteam)
+        {
+            InitializeSteamInEditor();
+        }
+        #endif
+
         ForceMainMenuScene();
     }
 
     private void InitializeSteamInEditor()
     {
-        #if UNITY_EDITOR
-        if (!useSteam) return;
-
-        try
+        try 
         {
-            if (!SteamManager.Initialized && !SteamAPI.Init())
+            if (SteamManager.Initialized)
             {
-                Debug.LogWarning("Steam no inicializado. Cambiando a modo offline.");
+                Debug.Log("SteamManager ya inicializado (AppID: " + SteamUtils.GetAppID() + ")");
+                return;
+            }
+
+            if (!SteamAPI.Init())
+            {
+                Debug.LogWarning("SteamAPI no pudo inicializarse. Verifica:");
+                Debug.LogWarning("- Steam está ejecutándose");
+                Debug.LogWarning("- steam_appid.txt existe con valor 480");
+                Debug.LogWarning("- Tienes Spacewar en tu biblioteca");
                 useSteam = false;
                 return;
             }
 
-            Debug.Log($"Steam inicializado en Editor (AppID: {SteamUtils.GetAppID()})");
+            Debug.Log("Steam inicializado correctamente (AppID: " + SteamUtils.GetAppID() + ")");
             
-            // Configura el transporte FizzySteam si existe
-            if (TryGetComponent<Transport>(out var transport))
+            // Configura el transporte FizzySteam
+            var transport = GetComponent<Transport>();
+            if (transport != null)
             {
                 transport.enabled = true;
+                Debug.Log("Transporte FizzySteam habilitado");
             }
         }
-        catch (System.Exception e)
+        catch (System.Exception e) 
         {
-            Debug.LogError($"Error al iniciar Steam: {e.Message}");
+            Debug.LogError("Error crítico al inicializar Steam: " + e.Message);
             useSteam = false;
         }
+    }
+
+    public bool IsSteamReady()
+    {
+        #if UNITY_EDITOR
+        return useSteam && SteamManager.Initialized && SteamAPI.IsSteamRunning();
+        #else
+        return useSteam && SteamManager.Initialized;
         #endif
     }
 
@@ -72,29 +90,41 @@ public class CustomNetworkManager : NetworkManager
 
     private void InitializeSteamCallbacks()
     {
-        if (!useSteam || !SteamManager.Initialized) return;
+        if (!IsSteamReady()) return;
 
-        _lobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnLobbyJoinRequested);
-        _lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        lobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnLobbyJoinRequested);
+        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        Debug.Log("Callbacks de Steam registrados");
     }
     #endregion
 
     #region Lobby Management
     public void HostSteamLobby()
     {
-        if (!useSteam || !SteamManager.Initialized)
+        if (!IsSteamReady())
         {
+            Debug.Log("Steam no está listo, iniciando en modo offline");
             StartOfflineHost();
             return;
         }
 
-        _lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+        Debug.Log("Creando lobby de Steam...");
+        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxConnections);
     }
 
     private void StartOfflineHost()
     {
-        Debug.Log("[STEAM] Iniciando lobby en modo offline");
+        useSteam = false;
+        
+        // Desactiva FizzySteam si existe
+        var transport = GetComponent<Transport>();
+        if (transport != null)
+        {
+            transport.enabled = false;
+        }
+        
+        Debug.Log("Iniciando servidor en modo offline");
         StartHost();
         ServerChangeScene("Lobby");
     }
@@ -103,7 +133,7 @@ public class CustomNetworkManager : NetworkManager
     {
         if (callback.m_eResult != EResult.k_EResultOK)
         {
-            Debug.LogError($"[STEAM] Error al crear lobby: {callback.m_eResult}");
+            Debug.LogError("Error al crear lobby de Steam: " + callback.m_eResult);
             return;
         }
 
@@ -117,14 +147,14 @@ public class CustomNetworkManager : NetworkManager
     {
         SteamMatchmaking.SetLobbyData(currentLobbyID, "HostAddress", SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(currentLobbyID, "name", "Darkness Unseen Lobby");
-        Debug.Log($"[STEAM] Lobby creado (ID: {currentLobbyID})");
+        Debug.Log("Lobby de Steam creado (ID: " + currentLobbyID + ")");
     }
     #endregion
 
-    #region Client Connection
+    #region Steam Callbacks
     private void OnLobbyJoinRequested(GameLobbyJoinRequested_t callback)
     {
-        Debug.Log($"[STEAM] Solicitud de unión al lobby: {callback.m_steamIDLobby}");
+        Debug.Log("Solicitud de unión a lobby recibida");
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
     }
 
@@ -134,8 +164,7 @@ public class CustomNetworkManager : NetworkManager
 
         currentLobbyID = new CSteamID(callback.m_ulSteamIDLobby);
         networkAddress = SteamMatchmaking.GetLobbyData(currentLobbyID, "HostAddress");
-        
-        Debug.Log($"[STEAM] Uniéndose a lobby: {networkAddress}");
+        Debug.Log("Uniéndose a lobby en: " + networkAddress);
         StartClient();
     }
     #endregion
@@ -145,10 +174,10 @@ public class CustomNetworkManager : NetworkManager
     {
         base.OnServerSceneChanged(sceneName);
         
-        if (sceneName == "Lobby" && useSteam && currentLobbyID.IsValid())
+        if (sceneName == "Lobby" && currentLobbyID.IsValid())
         {
             SteamFriends.ActivateGameOverlayInviteDialog(currentLobbyID);
-            Debug.Log("[STEAM] Overlay de invitaciones activado");
+            Debug.Log("Overlay de invitaciones de Steam activado");
         }
     }
 
@@ -167,11 +196,11 @@ public class CustomNetworkManager : NetworkManager
 
     private void CleanupSteamLobby()
     {
-        if (!useSteam || !currentLobbyID.IsValid()) return;
+        if (!currentLobbyID.IsValid()) return;
         
         SteamMatchmaking.LeaveLobby(currentLobbyID);
         currentLobbyID.Clear();
-        Debug.Log("[STEAM] Lobby cerrado");
+        Debug.Log("Lobby de Steam cerrado");
     }
 
     private void ReturnToMainMenu()
@@ -183,19 +212,28 @@ public class CustomNetworkManager : NetworkManager
     }
     #endregion
 
-    #region Debug Tools
+    #region Debug GUI
     private void OnGUI()
     {
-        if (!useSteam) return;
-        
         GUILayout.BeginArea(new Rect(10, 40, 300, 200));
-        GUILayout.Label($"Estado Steam: {SteamManager.Initialized}");
-        GUILayout.Label($"AppID: {SteamUtils.GetAppID()}");
+        GUILayout.Label("Estado Steam: " + (IsSteamReady() ? "ACTIVO" : "INACTIVO"));
         
-        if (currentLobbyID.IsValid())
+        if (IsSteamReady())
         {
-            GUILayout.Label($"Lobby ID: {currentLobbyID}");
-            GUILayout.Label($"Mi SteamID: {SteamUser.GetSteamID()}");
+            GUILayout.Label("AppID: " + SteamUtils.GetAppID());
+            GUILayout.Label("SteamID: " + SteamUser.GetSteamID());
+            
+            if (currentLobbyID.IsValid())
+            {
+                GUILayout.Label("Lobby ID: " + currentLobbyID);
+            }
+        }
+        else
+        {
+            GUILayout.Label("Razón posible:");
+            GUILayout.Label("- Steam no iniciado");
+            GUILayout.Label("- Falta steam_appid.txt");
+            GUILayout.Label("- Spacewar no en biblioteca");
         }
         
         GUILayout.EndArea();

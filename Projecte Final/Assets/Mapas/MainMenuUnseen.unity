@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e55fca1f4e4844593a3dd65a3ecb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxConnections: 4
   Channels: 0200000001000000
   Timeout: 25
   AllowSteamRelay: 1
@@ -767,6 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e55fca1f4e4844593a3dd65a3ecb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxConnections: 4
   Channels: 0200000001000000
   Timeout: 25
   AllowSteamRelay: 1
@@ -1074,6 +1076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1d2bda95b1b674e9550b11d089fe83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuDocument: {fileID: 2021917918}
 --- !u!82 &2021917921
 AudioSource:
   m_ObjectHideFlags: 0

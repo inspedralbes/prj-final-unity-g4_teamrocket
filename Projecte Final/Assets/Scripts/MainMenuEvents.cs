@@ -1,15 +1,14 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using Mirror;
-using Steamworks;
 
 public class MainMenuEvents : MonoBehaviour
 {
-    // UI References
-    private UIDocument _document;
+    [Header("UI References")]
+    public UIDocument menuDocument;
+    private VisualElement _root;
     private Button _startButton;
     private Button _createRoomButton;
     private Button _joinRoomButton;
@@ -20,12 +19,12 @@ public class MainMenuEvents : MonoBehaviour
     private Label _generatedCodeLabel;
     private AudioSource _audioSource;
 
-    // Menus
+    [Header("Menu References")]
     private VisualElement _settingsMenu;
     private VisualElement _startS;
     private VisualElement _multiplayerMenu;
 
-    // Settings
+    [Header("Settings References")]
     private Slider _volumeSlider;
     private Label _volumeLabel;
     private Button _englishButton;
@@ -34,7 +33,6 @@ public class MainMenuEvents : MonoBehaviour
     private Button _startOfflineButton;
     private Button _backFromStartSButton;
 
-    // Game Data
     private string _currentLanguage = "en";
     private Dictionary<string, string> _translations;
     private CustomNetworkManager _networkManager;
@@ -47,63 +45,82 @@ public class MainMenuEvents : MonoBehaviour
         InitializeTranslations();
         RegisterCallbacks();
         SetLanguage(_currentLanguage);
-        HideAllSubMenus();
+        SafeHideAllSubMenus();
     }
 
     private void InitializeComponents()
     {
         _audioSource = GetComponent<AudioSource>();
-        _document = GetComponent<UIDocument>();
         _networkManager = FindFirstObjectByType<CustomNetworkManager>();
+        
+        if (menuDocument == null)
+        {
+            Debug.LogError("UIDocument no asignado en el inspector!");
+            return;
+        }
+        
+        _root = menuDocument.rootVisualElement;
     }
 
-    private void HideAllSubMenus()
+    private void SetupUIReferences()
     {
-        _settingsMenu.style.display = DisplayStyle.None;
-        _startS.style.display = DisplayStyle.None;
-        _multiplayerMenu.style.display = DisplayStyle.None;
-        _codeInputField.style.display = DisplayStyle.None;
-        _generatedCodeLabel.style.display = DisplayStyle.None;
+        try
+        {
+            // Main Buttons
+            _startButton = _root.Q<Button>("StartGameButton");
+            _createRoomButton = _root.Q<Button>("CreateR");
+            _joinRoomButton = _root.Q<Button>("JoinR");
+            _exitButton = _root.Q<Button>("Exit");
+            _settingsButton = _root.Q<Button>("Settings");
+            _container = _root.Q<VisualElement>("Container");
+            _codeInputField = _root.Q<TextField>("CodeInputField");
+            _generatedCodeLabel = _root.Q<Label>("GeneratedCodeLabel");
+
+            // Menus
+            _settingsMenu = _root.Q<VisualElement>("SettingsMenu");
+            _startS = _root.Q<VisualElement>("StartS");
+            _multiplayerMenu = _root.Q<VisualElement>("MultiplayerMenu");
+
+            // Settings
+            _volumeSlider = _settingsMenu.Q<Slider>("VolumeSlider");
+            _volumeLabel = _settingsMenu.Q<Label>("VolumeLabel");
+            _englishButton = _settingsMenu.Q<Button>("EnglishButton");
+            _spanishButton = _settingsMenu.Q<Button>("SpanishButton");
+            _backButton = _settingsMenu.Q<Button>("BackButton");
+
+            // Multiplayer
+            _startOfflineButton = _startS.Q<Button>("StartOffline");
+            _backFromStartSButton = _startS.Q<Button>("BackButton");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error asignando referencias UI: " + e.Message);
+        }
+    }
+
+    private void SafeHideAllSubMenus()
+    {
+        try
+        {
+            if (_settingsMenu != null) _settingsMenu.style.display = DisplayStyle.None;
+            if (_startS != null) _startS.style.display = DisplayStyle.None;
+            if (_multiplayerMenu != null) _multiplayerMenu.style.display = DisplayStyle.None;
+            if (_codeInputField != null) _codeInputField.style.display = DisplayStyle.None;
+            if (_generatedCodeLabel != null) _generatedCodeLabel.style.display = DisplayStyle.None;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error ocultando menús: " + e.Message);
+        }
     }
     #endregion
 
-    #region UI Setup
-    private void SetupUIReferences()
-    {
-        var root = _document.rootVisualElement;
-
-        // Main buttons
-        _startButton = root.Q<Button>("StartGameButton");
-        _createRoomButton = root.Q<Button>("CreateR");
-        _joinRoomButton = root.Q<Button>("JoinR");
-        _exitButton = root.Q<Button>("Exit");
-        _settingsButton = root.Q<Button>("Settings");
-        _container = root.Q<VisualElement>("Container");
-        _codeInputField = root.Q<TextField>("CodeInputField");
-        _generatedCodeLabel = root.Q<Label>("GeneratedCodeLabel");
-
-        // Menus
-        _settingsMenu = root.Q<VisualElement>("SettingsMenu");
-        _startS = root.Q<VisualElement>("StartS");
-        _multiplayerMenu = root.Q<VisualElement>("MultiplayerMenu");
-
-        // Settings
-        _volumeSlider = _settingsMenu.Q<Slider>("VolumeSlider");
-        _volumeLabel = _settingsMenu.Q<Label>("VolumeLabel");
-        _englishButton = _settingsMenu.Q<Button>("EnglishButton");
-        _spanishButton = _settingsMenu.Q<Button>("SpanishButton");
-        _backButton = _settingsMenu.Q<Button>("BackButton");
-
-        // Multiplayer
-        _startOfflineButton = _startS.Q<Button>("StartOffline");
-        _backFromStartSButton = _startS.Q<Button>("BackButton");
-    }
-
+    #region Localization
     private void InitializeTranslations()
     {
         _translations = new Dictionary<string, string>
         {
-            // English (en)
+            // English
             { "StartGameButton", "Start Game" },
             { "CreateR", "Create Room" },
             { "JoinR", "Join Room" },
@@ -116,7 +133,7 @@ public class MainMenuEvents : MonoBehaviour
             { "CodeInputField", "Enter Room Code" },
             { "GeneratedCodeLabel", "Room Code: {0}" },
 
-            // Spanish (es)
+            // Spanish
             { "StartGameButton_es", "Iniciar Juego" },
             { "CreateR_es", "Crear Sala" },
             { "JoinR_es", "Unirse a Sala" },
@@ -130,71 +147,119 @@ public class MainMenuEvents : MonoBehaviour
             { "GeneratedCodeLabel_es", "Código: {0}" }
         };
     }
+
+    private void SetLanguage(string lang)
+    {
+        _currentLanguage = lang;
+        UpdateUITexts();
+    }
+
+    private void UpdateUITexts()
+    {
+        try
+        {
+            string suffix = _currentLanguage == "es" ? "_es" : "";
+
+            _startButton.text = _translations["StartGameButton" + suffix];
+            _createRoomButton.text = _translations["CreateR" + suffix];
+            _joinRoomButton.text = _translations["JoinR" + suffix];
+            _exitButton.text = _translations["Exit" + suffix];
+            _settingsButton.text = _translations["Settings" + suffix];
+            _backButton.text = _translations["BackButton" + suffix];
+            _volumeLabel.text = _translations["VolumeLabel" + suffix];
+            _englishButton.text = _translations["EnglishButton" + suffix];
+            _spanishButton.text = _translations["SpanishButton" + suffix];
+            _codeInputField.label = _translations["CodeInputField" + suffix];
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error actualizando textos: " + e.Message);
+        }
+    }
     #endregion
 
     #region Event Handlers
     private void RegisterCallbacks()
     {
-        // Main buttons
-        _startButton.clicked += OnStartButtonClick;
-        _exitButton.clicked += OnExitButtonClick;
-        _settingsButton.clicked += OnSettingsButtonClick;
+        try
+        {
+            // Main buttons
+            _startButton.clicked += OnStartButtonClick;
+            _exitButton.clicked += OnExitButtonClick;
+            _settingsButton.clicked += OnSettingsButtonClick;
 
-        // Settings
-        _volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
-        _englishButton.clicked += () => SetLanguage("en");
-        _spanishButton.clicked += () => SetLanguage("es");
-        _backButton.clicked += OnBackButtonClick;
+            // Settings
+            _volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
+            _englishButton.clicked += () => SetLanguage("en");
+            _spanishButton.clicked += () => SetLanguage("es");
+            _backButton.clicked += OnBackButtonClick;
 
-        // Multiplayer
-        _createRoomButton.clicked += OnCreateRoomClick;
-        _joinRoomButton.clicked += OnJoinRoomClick;
-        _startOfflineButton.clicked += OnStartOfflineClick;
-        _backFromStartSButton.clicked += OnBackFromStartSClick;
+            // Multiplayer
+            _createRoomButton.clicked += OnCreateRoomClick;
+            _joinRoomButton.clicked += OnJoinRoomClick;
+            _startOfflineButton.clicked += OnStartOfflineClick;
+            _backFromStartSButton.clicked += OnBackFromStartSClick;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error registrando callbacks: " + e.Message);
+        }
     }
 
     private void OnStartButtonClick()
     {
-        _container.style.display = DisplayStyle.None;
-        _startS.style.display = DisplayStyle.Flex;
-        ShowMultiplayerButtons();
+        try
+        {
+            _container.style.display = DisplayStyle.None;
+            _startS.style.display = DisplayStyle.Flex;
+            ShowMultiplayerButtons();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error en StartButton: " + e.Message);
+        }
     }
 
     private void ShowMultiplayerButtons()
     {
-        _createRoomButton.style.display = DisplayStyle.Flex;
-        _joinRoomButton.style.display = DisplayStyle.Flex;
-        _startOfflineButton.style.display = DisplayStyle.Flex;
-        _backFromStartSButton.style.display = DisplayStyle.Flex;
+        try
+        {
+            _createRoomButton.style.display = DisplayStyle.Flex;
+            _joinRoomButton.style.display = DisplayStyle.Flex;
+            _startOfflineButton.style.display = DisplayStyle.Flex;
+            _backFromStartSButton.style.display = DisplayStyle.Flex;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error mostrando botones: " + e.Message);
+        }
     }
 
     private void OnCreateRoomClick()
     {
-        #if UNITY_EDITOR
-        if (!SteamManager.Initialized)
+        try
         {
-            Debug.Log("Steam no inicializado - Modo offline forzado");
-            _networkManager.useSteam = false;
-            _networkManager.StartHost();
-            SceneManager.LoadScene("Lobby");
-            return;
-        }
-        #endif
+            if (_networkManager == null)
+            {
+                Debug.LogError("NetworkManager no encontrado!");
+                return;
+            }
 
-        if (!SteamManager.Initialized)
+            _createRoomButton.SetEnabled(false);
+            StartCoroutine(ShowConnectionStatus());
+            
+            // Usa directamente el método del NetworkManager
+            _networkManager.HostSteamLobby();
+        }
+        catch (System.Exception e)
         {
-            Debug.LogError("Steam no está inicializado!");
-            return;
+            Debug.LogError("Error creando sala: " + e.Message);
         }
-
-        _createRoomButton.SetEnabled(false);
-        StartCoroutine(ShowConnectionStatus());
-        _networkManager.HostSteamLobby();
     }
 
     private IEnumerator ShowConnectionStatus()
     {
-        var statusLabel = new Label("Creando lobby...");
+        var statusLabel = new Label(_currentLanguage == "es" ? "Creando lobby..." : "Creating lobby...");
         statusLabel.style.color = Color.white;
         statusLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
         _container.Add(statusLabel);
@@ -203,7 +268,7 @@ public class MainMenuEvents : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
-            statusLabel.text = "Error al conectar";
+            statusLabel.text = _currentLanguage == "es" ? "Error al conectar" : "Connection failed";
             yield return new WaitForSeconds(2f);
             _container.Remove(statusLabel);
             _createRoomButton.SetEnabled(true);
@@ -212,45 +277,93 @@ public class MainMenuEvents : MonoBehaviour
 
     private void OnJoinRoomClick()
     {
-        if (!string.IsNullOrEmpty(_codeInputField.text))
+        try
         {
-            Debug.Log($"Uniéndose con código: {_codeInputField.text}");
-            _networkManager.StartClient();
+            if (!string.IsNullOrEmpty(_codeInputField.text))
+            {
+                Debug.Log("Uniéndose con código: " + _codeInputField.text);
+                if (_networkManager != null)
+                {
+                    _networkManager.StartClient();
+                }
+            }
+            else if (_networkManager.IsSteamReady())
+            {
+                Debug.Log("Esperando invitación de Steam...");
+            }
         }
-        else if (SteamManager.Initialized)
+        catch (System.Exception e)
         {
-            Debug.Log("Esperando invitación de Steam...");
+            Debug.LogError("Error uniéndose a sala: " + e.Message);
         }
     }
 
     private void OnStartOfflineClick()
     {
-        _networkManager.useSteam = false;
-        _networkManager.StartHost();
-        SceneManager.LoadScene("Lobby");
+        try
+        {
+            if (_networkManager != null)
+            {
+                _networkManager.useSteam = false;
+                _networkManager.StartHost();
+                SceneManager.LoadScene("Lobby");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error iniciando offline: " + e.Message);
+        }
     }
 
     private void OnSettingsButtonClick()
     {
-        _container.style.display = DisplayStyle.None;
-        _settingsMenu.style.display = DisplayStyle.Flex;
+        try
+        {
+            _container.style.display = DisplayStyle.None;
+            _settingsMenu.style.display = DisplayStyle.Flex;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error abriendo configuración: " + e.Message);
+        }
     }
 
     private void OnBackButtonClick()
     {
-        _settingsMenu.style.display = DisplayStyle.None;
-        _container.style.display = DisplayStyle.Flex;
+        try
+        {
+            _settingsMenu.style.display = DisplayStyle.None;
+            _container.style.display = DisplayStyle.Flex;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error volviendo atrás: " + e.Message);
+        }
     }
 
     private void OnBackFromStartSClick()
     {
-        _startS.style.display = DisplayStyle.None;
-        _container.style.display = DisplayStyle.Flex;
+        try
+        {
+            _startS.style.display = DisplayStyle.None;
+            _container.style.display = DisplayStyle.Flex;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error volviendo al menú: " + e.Message);
+        }
     }
 
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
-        _audioSource.volume = evt.newValue;
+        try
+        {
+            _audioSource.volume = evt.newValue;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error cambiando volumen: " + e.Message);
+        }
     }
 
     private void OnExitButtonClick()
@@ -260,30 +373,6 @@ public class MainMenuEvents : MonoBehaviour
         #else
         Application.Quit();
         #endif
-    }
-    #endregion
-
-    #region Localization
-    private void SetLanguage(string lang)
-    {
-        _currentLanguage = lang;
-        UpdateUITexts();
-    }
-
-    private void UpdateUITexts()
-    {
-        string suffix = _currentLanguage == "es" ? "_es" : "";
-
-        _startButton.text = _translations["StartGameButton" + suffix];
-        _createRoomButton.text = _translations["CreateR" + suffix];
-        _joinRoomButton.text = _translations["JoinR" + suffix];
-        _exitButton.text = _translations["Exit" + suffix];
-        _settingsButton.text = _translations["Settings" + suffix];
-        _backButton.text = _translations["BackButton" + suffix];
-        _volumeLabel.text = _translations["VolumeLabel" + suffix];
-        _englishButton.text = _translations["EnglishButton" + suffix];
-        _spanishButton.text = _translations["SpanishButton" + suffix];
-        _codeInputField.label = _translations["CodeInputField" + suffix];
     }
     #endregion
 }
