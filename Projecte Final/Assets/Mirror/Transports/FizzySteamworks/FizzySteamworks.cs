@@ -304,9 +304,9 @@ namespace Mirror.FizzySteam
 
         private void InitRelayNetworkAccess()
         {
-            if (!SteamManager.Initialized)
+            if (!SteamAPI.IsSteamRunning())
             {
-                Debug.LogError("SteamNetworking no puede inicializarse - Steam no está cargado");
+                Debug.LogError("Steam no está en ejecución. Abre Steam e inicia el juego desde allí.");
                 return;
             }
 

@@ -2,69 +2,64 @@ using Mirror;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class CustomNetworkManager : NetworkManager
 {
-    [Header("Configuración Steam")]
+    [Header("Steam Settings")]
     public bool useSteam = true;
     
     private Callback<LobbyCreated_t> lobbyCreated;
     private Callback<GameLobbyJoinRequested_t> joinRequested;
     private Callback<LobbyEnter_t> lobbyEntered;
     
-    [Header("Datos del Lobby")]
     public CSteamID currentLobbyID;
+    private bool steamInitialized = false;
 
     public override void Start()
     {
-        if (useSteam)
+        if (useSteam && !steamInitialized)
         {
-            StartCoroutine(InitializeSteamComponents());
+            InitializeSteam();
         }
-        else
-        {
-            Debug.Log("Modo offline activado");
-            base.Start();
-        }
+        base.Start();
     }
 
-    private IEnumerator InitializeSteamComponents()
+    private void InitializeSteam()
     {
-        Debug.Log("Esperando inicialización de Steam...");
-        
-        float timeout = 15f;
-        float startTime = Time.time;
-
-        while (!SteamManager.Initialized)
+        try
         {
-            if (Time.time - startTime > timeout)
+            steamInitialized = SteamAPI.Init();
+            if (!steamInitialized)
             {
-                Debug.LogError("Tiempo de espera agotado para Steam! Cambiando a modo offline");
+                Debug.LogError("SteamAPI no pudo inicializarse. Cambiando a modo offline.");
                 useSteam = false;
-                base.Start();
-                yield break;
+                return;
             }
-            yield return null;
+
+            lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+            joinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequested);
+            lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+            
+            Debug.Log("Steam inicializado correctamente");
         }
-
-        Debug.Log("Configurando callbacks de Steam...");
-        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
-        joinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequested);
-        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-
-        base.Start();
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error inicializando Steam: " + e.Message);
+            useSteam = false;
+        }
     }
 
     public void HostSteamLobby()
     {
-        if (!SteamManager.Initialized)
+        if (!steamInitialized)
         {
-            Debug.LogError("Steam no está inicializado! No se puede crear lobby");
+            Debug.LogError("Steam no está inicializado. Usando modo offline.");
+            useSteam = false;
+            StartHost();
+            SceneManager.LoadScene("Lobby");
             return;
         }
 
-        Debug.Log("Creando lobby de Steam...");
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxConnections);
     }
 
@@ -72,21 +67,34 @@ public class CustomNetworkManager : NetworkManager
     {
         if (callback.m_eResult != EResult.k_EResultOK)
         {
-            Debug.LogError($"Error creando lobby: {callback.m_eResult}");
+            Debug.LogError("Error creando lobby: " + callback.m_eResult);
             return;
         }
 
         currentLobbyID = new CSteamID(callback.m_ulSteamIDLobby);
-        SteamMatchmaking.SetLobbyData(currentLobbyID, "name", "Lobby TeamRocket");
-        SteamMatchmaking.SetLobbyData(currentLobbyID, "host", SteamUser.GetSteamID().m_SteamID.ToString());
-        
-        Debug.Log($"Lobby creado exitosamente. ID: {currentLobbyID.m_SteamID}");
-        StartHost();
+        SteamMatchmaking.SetLobbyData(currentLobbyID, "name", "Darkness Unseen Lobby");
+        SteamMatchmaking.SetLobbyData(currentLobbyID, "host", SteamUser.GetSteamID().ToString());
+
+        Debug.Log($"Lobby creado exitosamente - ID: {currentLobbyID.m_SteamID}");
+
+        // Comportamiento diferente entre Editor y Build
+        if (Application.isEditor)
+        {
+            Debug.Log("Modo Editor: Cargando escena manualmente");
+            StartHost();
+            SceneManager.LoadScene("Lobby");
+        }
+        else
+        {
+            Debug.Log("Modo Build: Usando flujo normal");
+            StartHost();
+            ServerChangeScene("Lobby");
+        }
     }
 
     private void OnJoinRequested(GameLobbyJoinRequested_t callback)
     {
-        Debug.Log($"Solicitud para unirse a lobby: {callback.m_steamIDLobby}");
+        Debug.Log($"Solicitud de unión a lobby recibida: {callback.m_steamIDLobby}");
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
     }
 
@@ -94,34 +102,46 @@ public class CustomNetworkManager : NetworkManager
     {
         if (NetworkServer.active) return;
 
-        CSteamID lobbyID = new CSteamID(callback.m_ulSteamIDLobby);
-        string hostSteamID = SteamMatchmaking.GetLobbyData(lobbyID, "host");
-        
-        if(string.IsNullOrEmpty(hostSteamID))
+        currentLobbyID = new CSteamID(callback.m_ulSteamIDLobby);
+        string hostAddress = SteamMatchmaking.GetLobbyData(currentLobbyID, "host");
+
+        if (string.IsNullOrEmpty(hostAddress))
         {
-            hostSteamID = SteamMatchmaking.GetLobbyOwner(lobbyID).m_SteamID.ToString();
-            Debug.LogWarning("Usando dueño del lobby como host alternativo");
+            hostAddress = SteamMatchmaking.GetLobbyOwner(currentLobbyID).ToString();
+            Debug.LogWarning("No se encontró host en datos del lobby, usando dueño del lobby");
         }
 
-        Debug.Log($"Conectando al host: {hostSteamID}");
-        networkAddress = hostSteamID;
+        Debug.Log($"Uniéndose a lobby. Host: {hostAddress}");
+        networkAddress = hostAddress;
         StartClient();
     }
 
-    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    public override void OnServerSceneChanged(string sceneName)
     {
-        base.OnServerDisconnect(conn);
-        Debug.Log($"Cliente desconectado: {conn.connectionId}");
+        Debug.Log($"Escena del servidor cambiada a: {sceneName}");
+        base.OnServerSceneChanged(sceneName);
     }
 
     public override void OnClientDisconnect()
     {
+        Debug.Log("Cliente desconectado");
         base.OnClientDisconnect();
-        Debug.Log("Desconectado del servidor");
         
-        if (SceneManager.GetActiveScene().name != "MainMenu")
+        if (SceneManager.GetActiveScene().name != "MainMenuUnseen")
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("MainMenuUnseen");
         }
+    }
+
+    public override void OnApplicationQuit()
+    {
+        Debug.Log("Cerrando aplicación...");
+        if (steamInitialized)
+        {
+            SteamAPI.Shutdown();
+            Debug.Log("Steam API cerrada correctamente");
+        }
+        
+        base.OnApplicationQuit();
     }
 }

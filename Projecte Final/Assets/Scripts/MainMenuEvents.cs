@@ -37,7 +37,6 @@ public class MainMenuEvents : MonoBehaviour
     private string roomCode;
     private string _currentLanguage = "en";
     private Dictionary<string, string> _translations;
-    private bool _useSteam = true;
 
     // Network
     private CustomNetworkManager _networkManager;
@@ -156,46 +155,30 @@ public class MainMenuEvents : MonoBehaviour
     }
 
     public void OnCreateRoomClick()
-{
-    var networkManager = FindObjectOfType<CustomNetworkManager>();
-    
-    if (networkManager.useSteam)
     {
-        if (SteamManager.Initialized)
+        var networkManager = FindFirstObjectByType<CustomNetworkManager>();
+        
+        if (networkManager.useSteam)
         {
-            Debug.Log("Creando lobby de Steam...");
-            networkManager.HostSteamLobby();
+            if (SteamAPI.IsSteamRunning())
+            {
+                Debug.Log("Creando lobby de Steam...");
+                networkManager.HostSteamLobby();
+                // La escena se cargará cuando se cree el lobby (en el callback)
+            }
+            else
+            {
+                Debug.LogError("Steam no inicializado! Creando sala offline");
+                networkManager.useSteam = false;
+                networkManager.StartHost();
+                SceneManager.LoadScene("Lobby");
+            }
         }
         else
         {
-            Debug.LogError("Steam no inicializado! Creando sala offline");
-            networkManager.useSteam = false;
             networkManager.StartHost();
             SceneManager.LoadScene("Lobby");
         }
-    }
-    else
-    {
-        networkManager.StartHost();
-        SceneManager.LoadScene("Lobby");
-    }
-}
-
-    // Este método debe ser llamado desde el CustomNetworkManager cuando se crea el lobby
-    public void OnLobbyCreated(LobbyCreated_t callback)
-    {
-        if (callback.m_eResult != EResult.k_EResultOK)
-        {
-            Debug.LogError("Error al crear lobby: " + callback.m_eResult);
-            return;
-        }
-
-        CSteamID lobbyId = new CSteamID(callback.m_ulSteamIDLobby);
-        SteamMatchmaking.SetLobbyData(lobbyId, "name", "Darkness Unseen Lobby");
-        
-        // Iniciar el juego
-        _networkManager.StartHost();
-        SceneManager.LoadScene("Lobby");
     }
 
     private void OnJoinRoomClick()
@@ -204,7 +187,13 @@ public class MainMenuEvents : MonoBehaviour
         if (!string.IsNullOrEmpty(inputCode))
         {
             Debug.Log("Joining room with code: " + inputCode);
-            // Aquí implementarías la lógica para unirse a un lobby existente
+            // Implementación para unirse mediante código
+            _networkManager.StartClient();
+        }
+        else
+        {
+            // Unirse mediante invitación de Steam (manejado por Steamworks)
+            Debug.Log("Esperando invitación de Steam...");
         }
     }
 
@@ -215,6 +204,7 @@ public class MainMenuEvents : MonoBehaviour
 
     private void StartOfflineGame()
     {
+        _networkManager.useSteam = false;
         _networkManager.StartHost();
         SceneManager.LoadScene("Lobby");
     }
