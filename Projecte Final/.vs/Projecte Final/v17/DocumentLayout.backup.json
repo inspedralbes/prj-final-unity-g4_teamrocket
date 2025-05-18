@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\users\\marcc\\desktop\\github\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,24 +19,16 @@
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\controllers\\monsterpatrolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65F06E38-AA39-EA4E-DE62-45773FA3F4AB}|NavMeshPlus.csproj|c:\\users\\marcc\\desktop\\github\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\navmeshcomponents\\scripts\\navmeshbuilder2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{65F06E38-AA39-EA4E-DE62-45773FA3F4AB}|NavMeshPlus.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\navmeshcomponents\\scripts\\navmeshbuilder2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{65F06E38-AA39-EA4E-DE62-45773FA3F4AB}|NavMeshPlus.csproj|solutionrelative:assets\\navmeshcomponents\\scripts\\navmeshbuilder2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4E8FED2D-AA97-BD1F-A6C6-56A21416C7E1}|Mirror.Editor.csproj|c:\\users\\marcc\\desktop\\github\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\mirror\\editor\\networkinformationpreview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4E8FED2D-AA97-BD1F-A6C6-56A21416C7E1}|Mirror.Editor.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\mirror\\editor\\networkinformationpreview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4E8FED2D-AA97-BD1F-A6C6-56A21416C7E1}|Mirror.Editor.csproj|solutionrelative:assets\\mirror\\editor\\networkinformationpreview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\getwaypoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -86,11 +86,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "NavMeshBuilder2d.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
               "RelativeDocumentMoniker": "Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
@@ -98,12 +98,11 @@
               "RelativeToolTip": "Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
               "ViewState": "AgIAAIoAAAAAAAAAAAAvwJsAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T23:03:02.33Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T23:03:02.33Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "NetworkInformationPreview.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
               "RelativeDocumentMoniker": "Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
@@ -111,8 +110,7 @@
               "RelativeToolTip": "Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T22:28:59.487Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T22:28:59.487Z"
             },
             {
               "$type": "Document",
@@ -140,20 +138,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "CorridorFirstMapGeneration.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAADwv5UAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAswJUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-05T23:24:12.243Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MonsterPatrolController.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Controllers\\MonsterPatrolController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Controllers\\MonsterPatrolController.cs",
@@ -161,18 +159,17 @@
               "RelativeToolTip": "Assets\\Scripts\\Controllers\\MonsterPatrolController.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAgwD0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T10:17:09.959Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T10:17:09.959Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "RunProceduralMap.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-12T10:11:08.442Z",
               "EditorCaption": ""
@@ -239,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ProceduralGenerationAlgorithms.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
@@ -247,12 +244,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAAwEAAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T13:53:37.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T13:53:37.247Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "SimpleRandomWalkMapGenerator.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
