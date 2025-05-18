@@ -155,23 +155,31 @@ public class MainMenuEvents : MonoBehaviour
         _backFromStartSButton.style.display = DisplayStyle.Flex;
     }
 
-    private void OnCreateRoomClick()
+    public void OnCreateRoomClick()
+{
+    var networkManager = FindObjectOfType<CustomNetworkManager>();
+    
+    if (networkManager.useSteam)
     {
-        Debug.Log("Creating Steam Lobby");
-        
-        if (_useSteam && SteamManager.Initialized)
+        if (SteamManager.Initialized)
         {
-            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
-        }
-        else if (!_useSteam)
-        {
-            StartOfflineGame();
+            Debug.Log("Creando lobby de Steam...");
+            networkManager.HostSteamLobby();
         }
         else
         {
-            Debug.LogError("Steam no está inicializado");
+            Debug.LogError("Steam no inicializado! Creando sala offline");
+            networkManager.useSteam = false;
+            networkManager.StartHost();
+            SceneManager.LoadScene("Lobby");
         }
     }
+    else
+    {
+        networkManager.StartHost();
+        SceneManager.LoadScene("Lobby");
+    }
+}
 
     // Este método debe ser llamado desde el CustomNetworkManager cuando se crea el lobby
     public void OnLobbyCreated(LobbyCreated_t callback)
