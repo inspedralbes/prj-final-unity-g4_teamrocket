@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{279301F7-4BBC-710B-B0AB-06DF73D83EEA}|Assembly-CSharp-Editor.csproj|c:\\users\\marcc\\desktop\\github\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\editor\\assetbundlebuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{279301F7-4BBC-710B-B0AB-06DF73D83EEA}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\scripts\\editor\\assetbundlebuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\users\\marcc\\desktop\\github\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapatransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapatransport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\users\\marcc\\desktop\\github\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\controllers\\monsterpatrolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{4E8FED2D-AA97-BD1F-A6C6-56A21416C7E1}|Mirror.Editor.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\mirror\\editor\\networkinformationpreview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4E8FED2D-AA97-BD1F-A6C6-56A21416C7E1}|Mirror.Editor.csproj|solutionrelative:assets\\mirror\\editor\\networkinformationpreview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\proceduralgenerationalgorithms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\getwaypoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -86,11 +98,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AssetBundleBuilder.cs",
+              "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Editor\\AssetBundleBuilder.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Editor\\AssetBundleBuilder.cs",
+              "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Editor\\AssetBundleBuilder.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Editor\\AssetBundleBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T21:49:02.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "MapaTransport.cs",
+              "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\MapaTransport.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MapaTransport.cs",
+              "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\MapaTransport.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MapaTransport.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T18:42:16.054Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
+              "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAABRwFEAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T14:09:46.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "NavMeshBuilder2d.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
               "RelativeDocumentMoniker": "Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
@@ -102,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "NetworkInformationPreview.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
               "RelativeDocumentMoniker": "Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
@@ -114,7 +164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "MonsterStalkerAI.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\MonsterStalkerAI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\MonsterStalkerAI.cs",
@@ -126,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "GetWaypoints.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\GetWaypoints.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\GetWaypoints.cs",
@@ -144,14 +194,13 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAswJUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwA0AAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T23:24:12.243Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T23:24:12.243Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "MonsterPatrolController.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Controllers\\MonsterPatrolController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Controllers\\MonsterPatrolController.cs",
@@ -163,7 +212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "RunProceduralMap.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
@@ -171,12 +220,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T10:11:08.442Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T10:11:08.442Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "NavMeshSurface.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\NavMeshComponents\\Scripts\\NavMeshSurface.cs",
               "RelativeDocumentMoniker": "Assets\\NavMeshComponents\\Scripts\\NavMeshSurface.cs",
@@ -188,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "NavMeshBaker.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\NavMeshBaker.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\NavMeshBaker.cs",
@@ -200,7 +248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "ItemPlacementHelper.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\ItemPlacementHelper.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\ItemPlacementHelper.cs",
@@ -212,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "Graph.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\Graph.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\Graph.cs",
@@ -224,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "WallTypesHelper.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallTypesHelper.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\WallTypesHelper.cs",
@@ -236,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "ProceduralGenerationAlgorithms.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
@@ -248,20 +296,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "SimpleRandomWalkMapGenerator.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "ToolTip": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T19:29:04.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T19:29:04.083Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "TilemapVisualizer.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
@@ -273,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "WallGenerator.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\WallGenerator.cs",
@@ -285,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "SimpleRandomWalkSO.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\Data\\SimpleRandomWalkSO.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\Data\\SimpleRandomWalkSO.cs",
@@ -297,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "AbstractDungeonGenerator.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
@@ -309,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "RandomDungeonGeneratorEditor.cs",
               "DocumentMoniker": "C:\\Users\\marcc\\Desktop\\GitHub\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\Editor\\RandomDungeonGeneratorEditor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\Editor\\RandomDungeonGeneratorEditor.cs",
