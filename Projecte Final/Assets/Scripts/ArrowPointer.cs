@@ -4,14 +4,14 @@ public class ArrowPointer : MonoBehaviour
 {
     void Update()
     {
-        GameObject closestItem = FindClosestWithTag("Item");
+        GameObject closestItem = FindClosestWithTag("Key");
 
         GameObject target = closestItem;
 
         if (target == null)
         {
             // Si no hay items, busca el objeto con tag Finish
-            target = GameObject.FindWithTag("Finish");
+            target = GameObject.FindWithTag("Salida");
         }
 
         if (target != null)
