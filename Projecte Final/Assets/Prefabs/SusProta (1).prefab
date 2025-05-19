@@ -1377,6 +1377,8 @@ GameObject:
   - component: {fileID: -7540364054811695704}
   - component: {fileID: 5255107225499224756}
   - component: {fileID: 4036225779818063539}
+  - component: {fileID: 5163950953168637657}
+  - component: {fileID: -7610361568261429600}
   m_Layer: 0
   m_Name: SusProta (1)
   m_TagString: Player
@@ -1646,6 +1648,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a27dfdc55e80f14bb5056019e5faeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  horizontal: 0
+  vertical: 0
+  speed: 5
+  speedBase: 5
+  speedBoost: 10
   maxHealth: 100
   stamina: 100
   staminaMax: 100
@@ -1658,18 +1666,27 @@ MonoBehaviour:
   bate: {fileID: 4137071052943698451}
   numBatazos: 3
   shopController: {fileID: 6480694450587509030}
+  canMove: 1
+  canOpenShop: 1
   money: 1000
   flashing: 0
+  linternaActiva: 0
   luzLinterna: {fileID: 5265274759915648398}
   colliderLinternaNormal: {fileID: 108552355582738309}
   colliderLinternaAmplio: {fileID: 6074713371426837427}
   tiempoLinternaEncendida: 0
   duracionMaximaLinterna: 180
+  tiempoMostrarLinterna: 0
   textTempsLinterna: {fileID: 5666119607871716981}
   brujula: 0
   objetoBrujula: {fileID: 6056663557918523750}
+  isStunned: 0
+  stunTimer: 0
   stunEffect: {fileID: 8335385678671221078}
   textUsosBate: {fileID: 4916771155436648982}
+  animator: {fileID: 0}
+  lastDirection: {x: 0, y: 0}
+  forceAnimationUpdate: 0
 --- !u!95 &4036225779818063539
 Animator:
   serializedVersion: 7
@@ -1692,6 +1709,121 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &5163950953168637657
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295919784117300754}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 20
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-7610361568261429600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295919784117300754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0edb386e1ba314eb2288de9817dc57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  maxVoiceDistance: 20
+  sampleRate: 16000
+  transmissionInterval: 0.1
 --- !u!1 &6527587636170514119
 GameObject:
   m_ObjectHideFlags: 0
