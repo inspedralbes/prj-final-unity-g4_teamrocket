@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 267182782}
   - component: {fileID: 267182781}
   - component: {fileID: 267182784}
+  - component: {fileID: 267182785}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -235,6 +236,18 @@ MonoBehaviour:
   screenMode: 1
   useNativeRefreshRate: 1
   targetRefreshRate: 60
+--- !u!114 &267182785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267182780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

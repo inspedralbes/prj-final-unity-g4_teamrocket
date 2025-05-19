@@ -8,16 +8,16 @@ using TMPro;
 public class PlayerController : MonoBehaviour, IStunnable
 {
     // Movimiento y física
-    private Rigidbody2D rb;
-    private float horizontal;
-    private float vertical;
-    private float speed = 5f;
-    private float speedBase = 5f;
-    private float speedBoost = 10f;
+    public Rigidbody2D rb;
+    public float horizontal;
+    public float vertical;
+    public float speed = 5f;
+    public float speedBase = 5f;
+    public float speedBoost = 10f;
     
     // Atributos del jugador
-    //private int enemigosTocandoHitbox = 0;
-    //private int damage = 1;
+    //public int enemigosTocandoHitbox = 0;
+    //public int damage = 1;
     //public int vida = 3;
     public float maxHealth = 100f;
     public int stamina = 100;
@@ -37,20 +37,20 @@ public class PlayerController : MonoBehaviour, IStunnable
     public int numBatazos = 0;
     
     // Tienda
-    [SerializeField] private ShopController shopController;
-    private bool canMove = true;
-    private bool canOpenShop = true;
+    [SerializeField] public ShopController shopController;
+    public bool canMove = true;
+    public bool canOpenShop = true;
     public int money = 1000;
     
     // Linterna
     public bool flashing = false;
-    private bool linternaActiva = false;
+    public bool linternaActiva = false;
     public Light2D luzLinterna;
     public Collider2D colliderLinternaNormal;
     public Collider2D colliderLinternaAmplio;
     public float tiempoLinternaEncendida = 0f;
     public float duracionMaximaLinterna = 180f;
-    private float tiempoMostrarLinterna;
+    public float tiempoMostrarLinterna;
     public TMP_Text textTempsLinterna;
     
     // Brújula
@@ -58,15 +58,15 @@ public class PlayerController : MonoBehaviour, IStunnable
     public GameObject objetoBrujula;
 
     // Añade estas nuevas variables para el stun
-    private bool isStunned = false;
-    private float stunTimer = 0f;
-    private Coroutine stunCoroutine;
-    [SerializeField] private GameObject stunEffect;
+    public bool isStunned = false;
+    public float stunTimer = 0f;
+    public Coroutine stunCoroutine;
+    [SerializeField] public GameObject stunEffect;
     public TMP_Text textUsosBate;
 
-    private Animator animator;
-    private Vector2 lastDirection;
-    private bool forceAnimationUpdate;
+    public Animator animator;
+    public Vector2 lastDirection;
+    public bool forceAnimationUpdate;
 
     void Start()
     {
@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         if (colliderLinternaAmplio != null) colliderLinternaAmplio.enabled = false;
     }
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         if (shopController != null)
         {
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         stunCoroutine = StartCoroutine(StunRoutine());
     }
 
-    private IEnumerator StunRoutine()
+    public IEnumerator StunRoutine()
     {
         while (stunTimer > 0)
         {
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         if (stunEffect != null) stunEffect.SetActive(false);
     }
 
-    private void HandleMovementInput()
+    public void HandleMovementInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         // }
     }
 
-    private void HandleShopInput()
+    public void HandleShopInput()
     {
         if (Input.GetKeyDown(KeyCode.E) && canOpenShop)
         {
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }
 
-    private void HandleEquipmentInput()
+    public void HandleEquipmentInput()
     {
         // Linterna
         if (flashing && Input.GetKeyDown(KeyCode.F))
@@ -241,14 +241,14 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         if (!canMove || isStunned) return;
         rb.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
     }
 
     #region Brújula
-    private void ActivateBrujula()
+    public void ActivateBrujula()
     {
         if (objetoBrujula != null)
         {
@@ -256,7 +256,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }
 
-    private void DesactivarBrujula()
+    public void DesactivarBrujula()
     {
         if (objetoBrujula != null)
         {
@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour, IStunnable
     #endregion
 
     #region Linterna
-    private void ToggleLinterna()
+    public void ToggleLinterna()
     {
         if (linternaActiva)
         {
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }
 
-    private void EncenderLinterna()
+    public void EncenderLinterna()
     {
         linternaActiva = true;
         if (luzLinterna != null) luzLinterna.pointLightOuterRadius = 10.4f;
@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         if (colliderLinternaAmplio != null) colliderLinternaAmplio.enabled = true;
     }
 
-    private void ApagarLinterna()
+    public void ApagarLinterna()
     {
         linternaActiva = false;
         if (luzLinterna != null) luzLinterna.pointLightOuterRadius = 5.2f;
@@ -326,7 +326,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         if (barraVida != null) barraVida.ActualizarVida(vida);
     }*/
 
-    private void Morir()
+    public void Morir()
     {
         Debug.Log("Muerto");
         GameObject.Find("Barras")?.SetActive(false);
@@ -334,20 +334,20 @@ public class PlayerController : MonoBehaviour, IStunnable
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 
-    /*private void Die()
+    /*public void Die()
     {
         GameObject.Find("Barras")?.SetActive(false);
         gameObject.SetActive(false);
     }*/
 
-    /*private void RecibirDanoPeriodico()
+    /*public void RecibirDanoPeriodico()
     {
         RecibirDano(damage);
     }*/
     #endregion
 
     #region Colisiones y tienda
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         /*if (collision.CompareTag("Enemy") && collision.IsTouching(miHitbox))
         {
@@ -361,7 +361,7 @@ public class PlayerController : MonoBehaviour, IStunnable
             canOpenShop = false;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Tienda"))
         {
@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }
 
-    /*private void HandleEnemyCollision(Collider2D collision)
+    /*public void HandleEnemyCollision(Collider2D collision)
     {
         enemigosTocandoHitbox++;
         EnemigoBase enemigo = collision.GetComponent<EnemigoBase>();
@@ -380,7 +380,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         InvokeRepeating("RecibirDanoPeriodico", 0f, tiempoEntreGolpes);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && !collision.IsTouching(miHitbox))
         {
@@ -392,7 +392,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }*/
 
-    private void ToggleShop()
+    public void ToggleShop()
     {
         if (shopController != null)
         {
@@ -401,7 +401,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         }
     }
 
-    private void HandleShopToggle(bool isOpen)
+    public void HandleShopToggle(bool isOpen)
     {
         canMove = !isOpen;
         
