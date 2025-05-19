@@ -10,6 +10,7 @@ TagManager:
   - Waypoint
   - Key
   - Salida
+  - SpectatorCamera
   layers:
   - Default
   - TransparentFX

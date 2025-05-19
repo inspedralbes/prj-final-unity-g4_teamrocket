@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\matthew\\proyectos\\proyecto 4\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\terminadapartida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\matthew\\proyectos\\proyecto 4\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\mapa\\camerafollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\camerafollower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\terminadapartida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\terminadapartida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|c:\\matthew\\proyectos\\proyecto 4\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\runproceduralmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\simplerandomwalkmapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\corridorfirstmapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{65F06E38-AA39-EA4E-DE62-45773FA3F4AB}|NavMeshPlus.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\navmeshcomponents\\scripts\\navmeshbuilder2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -77,6 +85,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\assets\\scripts\\mapa\\graph.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9494A81C-6E5D-660C-9E54-D68E5E014FF0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mapa\\graph.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|c:\\matthew\\proyectos\\proyecto 4\\prj-final-unity-g4_teamrocket\\projecte final\\assets\\cameramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\cameramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -86,11 +98,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CameraManager.cs",
+              "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\CameraManager.cs",
+              "RelativeDocumentMoniker": "Assets\\CameraManager.cs",
+              "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\CameraManager.cs",
+              "RelativeToolTip": "Assets\\CameraManager.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T08:09:24.991Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "playerMovement.cs",
+              "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\playerMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\playerMovement.cs",
+              "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\playerMovement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\playerMovement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T07:59:33.788Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CameraFollower.cs",
+              "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CameraFollower.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\CameraFollower.cs",
+              "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CameraFollower.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Mapa\\CameraFollower.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T02:47:53.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TerminadaPartida.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\TerminadaPartida.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\TerminadaPartida.cs",
@@ -98,12 +148,11 @@
               "RelativeToolTip": "Assets\\Scripts\\TerminadaPartida.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T08:14:19.473Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T08:14:19.473Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "NavMeshBuilder2d.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
               "RelativeDocumentMoniker": "Assets\\NavMeshComponents\\Scripts\\NavMeshBuilder2d.cs",
@@ -115,7 +164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "NetworkInformationPreview.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
               "RelativeDocumentMoniker": "Assets\\Mirror\\Editor\\NetworkInformationPreview.cs",
@@ -127,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "MonsterStalkerAI.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\MonsterStalkerAI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\MonsterStalkerAI.cs",
@@ -139,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "GetWaypoints.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\GetWaypoints.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\GetWaypoints.cs",
@@ -151,19 +200,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "CorridorFirstMapGeneration.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "ToolTip": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\CorridorFirstMapGeneration.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAswJUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAuwF8AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-05T23:24:12.243Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "RunProceduralMap.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
@@ -171,12 +220,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Mapa\\RunProceduralMap.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T10:11:08.442Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T10:11:08.442Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "NavMeshSurface.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\NavMeshComponents\\Scripts\\NavMeshSurface.cs",
               "RelativeDocumentMoniker": "Assets\\NavMeshComponents\\Scripts\\NavMeshSurface.cs",
@@ -188,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "NavMeshBaker.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\NavMeshBaker.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\NavMeshBaker.cs",
@@ -200,7 +248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "ItemPlacementHelper.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\ItemPlacementHelper.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\ItemPlacementHelper.cs",
@@ -212,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "Graph.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\Graph.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\Graph.cs",
@@ -224,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "WallTypesHelper.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallTypesHelper.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\WallTypesHelper.cs",
@@ -236,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "ProceduralGenerationAlgorithms.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\ProceduralGenerationAlgorithms.cs",
@@ -248,7 +296,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "SimpleRandomWalkMapGenerator.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\SimpleRandomWalkMapGenerator.cs",
@@ -260,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "TilemapVisualizer.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\TilemapVisualizer.cs",
@@ -272,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "WallGenerator.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\WallGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\WallGenerator.cs",
@@ -284,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "SimpleRandomWalkSO.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\Data\\SimpleRandomWalkSO.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\Data\\SimpleRandomWalkSO.cs",
@@ -296,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "AbstractDungeonGenerator.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\AbstractDungeonGenerator.cs",
@@ -308,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "RandomDungeonGeneratorEditor.cs",
               "DocumentMoniker": "C:\\Matthew\\Proyectos\\Proyecto 4\\prj-final-unity-g4_teamrocket\\Projecte Final\\Assets\\Scripts\\Mapa\\Editor\\RandomDungeonGeneratorEditor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mapa\\Editor\\RandomDungeonGeneratorEditor.cs",

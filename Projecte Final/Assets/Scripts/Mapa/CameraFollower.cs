@@ -3,68 +3,84 @@ using System.Collections;
 
 public class PlayerFinder : MonoBehaviour
 {
-    private GameObject[] players;
-
-    private int currentPlayerIndex = 0;
+    private Transform parentTransform;
     private Transform target;
-    public int initialPlayers { get; private set; } = 0;
+    private GameObject[] allPlayers;
+    private GameObject[] validPlayers; // Jugadores válidos (excluyendo al padre)
+    private SpriteRenderer parentSprite;
 
     void Start()
     {
+        parentTransform = transform.parent;
+
+        if (parentTransform != null)
+        {
+            parentSprite = parentTransform.GetComponent<SpriteRenderer>();
+            target = parentTransform;
+        }
+
         StartCoroutine(FindPlayersAfterDelay());
     }
 
     void Update()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        bool parentActive = parentSprite != null && parentSprite.enabled;
 
-        if (players.Length > 0 && target == null)
+        // Actualizar lista de jugadores válidos (excluyendo al padre)
+        UpdateValidPlayers();
+
+        // Comportamiento de seguimiento
+        if (parentActive)
         {
-            target = players[0].transform;
+            target = parentTransform;
         }
-
-        if (players.Length < initialPlayers)
+        else if (target == parentTransform || target == null)
         {
-            // Si target es null o el jugador actual fue destruido, asigna el primero válido
-            if (target == null || !target.gameObject.activeInHierarchy)
+            // Si el padre se desactivó y no hay objetivo válido
+            if (validPlayers.Length > 0)
             {
-                currentPlayerIndex = 0;
-                target = players[currentPlayerIndex].transform;
-            }
-
-            // Cambiar jugador con click izquierdo
-            if (Input.GetMouseButtonDown(0))
-            {
-                currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
-                target = players[currentPlayerIndex].transform;
+                target = validPlayers[0].transform;
             }
         }
 
-        // Mover cámara suavemente hacia el jugador actual
+        // Cambio de objetivo con click izquierdo (solo si el padre no está activo)
+        if (!parentActive && Input.GetMouseButtonDown(0) && validPlayers.Length > 0)
+        {
+            if (target == null || !IsValidTarget(target.gameObject))
+            {
+                target = validPlayers[0].transform;
+            }
+            else
+            {
+                int currentIndex = System.Array.IndexOf(validPlayers, target.gameObject);
+                int nextIndex = (currentIndex + 1) % validPlayers.Length;
+                target = validPlayers[nextIndex].transform;
+            }
+        }
+
+        // Movimiento de la cámara
         if (target != null)
         {
             Vector3 newPos = target.position;
-            newPos.z = Camera.main.transform.position.z;
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, newPos, Time.deltaTime * 5f);
+            newPos.z = transform.position.z;
+            transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * 5f);
         }
     }
 
     IEnumerator FindPlayersAfterDelay()
     {
         yield return new WaitForSeconds(0.1f);
+        UpdateValidPlayers();
+    }
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        initialPlayers = players.Length;
-        Debug.Log($"Número de objetos con tag 'Player': {players.Length}");
+    void UpdateValidPlayers()
+    {
+        allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        validPlayers = System.Array.FindAll(allPlayers, p => p.transform != parentTransform);
+    }
 
-        foreach (GameObject player in players)
-        {
-            Debug.Log($"Encontrado: {player.name}");
-        }
-
-        if (players.Length > 0)
-        {
-            target = players[0].transform; // Inicializar el target al primero
-        }
+    bool IsValidTarget(GameObject obj)
+    {
+        return obj != null && obj.transform != parentTransform;
     }
 }
