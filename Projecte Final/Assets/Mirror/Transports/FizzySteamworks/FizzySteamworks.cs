@@ -13,31 +13,15 @@ namespace Mirror.FizzySteam
         private static IClient client;
         private static IServer server;
 
-        [Header("Connection Settings")]
-        [Tooltip("Maximum number of concurrent connections")]
-        [SerializeField] 
-        public int maxConnections = 4;
-
-        [Header("Channel Configuration")] 
         [SerializeField]
-        public EP2PSend[] Channels = new EP2PSend[2] { 
-            EP2PSend.k_EP2PSendReliable, 
-            EP2PSend.k_EP2PSendUnreliableNoDelay 
-        };
+        public EP2PSend[] Channels = new EP2PSend[2] { EP2PSend.k_EP2PSendReliable, EP2PSend.k_EP2PSendUnreliableNoDelay };
 
-        [Header("Timeout Settings")]
         [Tooltip("Timeout for connecting in seconds.")]
-        [SerializeField]
         public int Timeout = 25;
-
-        [Header("Steam Relay Settings")]
-        [Tooltip("Allow P2P connections to fall back to Steam relay servers")]
-        [SerializeField]
+        [Tooltip("Allow or disallow P2P connections to fall back to being relayed through the Steam servers if a direct connection or NAT-traversal cannot be established.")]
         public bool AllowSteamRelay = true;
 
-        [Header("Network Stack")]
-        [Tooltip("Use SteamNetworkingSockets (modern) instead of SteamNetworking (legacy)")]
-        [SerializeField]
+        [Tooltip("Use SteamSockets instead of the (deprecated) SteamNetworking. This will always use Relay.")]
         public bool UseNextGenSteamNetworking = true;
 
         private void OnEnable()
@@ -79,7 +63,6 @@ namespace Mirror.FizzySteam
         }
 
         public override bool ClientConnected() => ClientActive() && client.Connected;
-
         public override void ClientConnect(string address)
         {
             try
@@ -89,6 +72,7 @@ namespace Mirror.FizzySteam
 #else
                 SteamNetworkingUtils.InitRelayNetworkAccess();
 #endif
+
                 InitRelayNetworkAccess();
 
                 if (ServerActive())
@@ -145,11 +129,10 @@ namespace Mirror.FizzySteam
                 Shutdown();
             }
         }
-
         public bool ClientActive() => client != null;
 
-        public override bool ServerActive() => server != null;
 
+        public override bool ServerActive() => server != null;
         public override void ServerStart()
         {
             try
@@ -159,6 +142,8 @@ namespace Mirror.FizzySteam
 #else
                 SteamNetworkingUtils.InitRelayNetworkAccess();
 #endif
+
+
                 InitRelayNetworkAccess();
 
                 if (ClientActive())
@@ -171,8 +156,8 @@ namespace Mirror.FizzySteam
                 {
                     if (UseNextGenSteamNetworking)
                     {
-                        Debug.Log($"Starting server [SteamSockets] with max connections: {maxConnections}");
-                        server = NextServer.CreateServer(this, maxConnections);
+                        Debug.Log($"Starting server [SteamSockets].");
+                        server = NextServer.CreateServer(this, NetworkManager.singleton.maxConnections);
                     }
                     else
                     {
@@ -180,9 +165,10 @@ namespace Mirror.FizzySteam
 #if UNITY_SERVER
                         SteamGameServerNetworking.AllowP2PPacketRelay(AllowSteamRelay);
 #else
+
                         SteamNetworking.AllowP2PPacketRelay(AllowSteamRelay);
 #endif
-                        server = LegacyServer.CreateServer(this, maxConnections);
+                        server = LegacyServer.CreateServer(this, NetworkManager.singleton.maxConnections);
                     }
                 }
                 else
@@ -221,7 +207,6 @@ namespace Mirror.FizzySteam
                 server.Send(connectionId, data, channelId);
             }
         }
-
         public override void ServerDisconnect(int connectionId)
         {
             if (ServerActive())
@@ -229,9 +214,7 @@ namespace Mirror.FizzySteam
                 server.Disconnect(connectionId);
             }
         }
-
         public override string ServerGetClientAddress(int connectionId) => ServerActive() ? server.ServerGetClientAddress(connectionId) : string.Empty;
-
         public override void ServerStop()
         {
             if (ServerActive())
@@ -256,6 +239,7 @@ namespace Mirror.FizzySteam
                 Debug.Log("Transport shut down - server.");
             }
         }
+
 
         public override int GetMaxPacketSize(int channelId)
         {
@@ -304,12 +288,6 @@ namespace Mirror.FizzySteam
 
         private void InitRelayNetworkAccess()
         {
-            if (!SteamAPI.IsSteamRunning())
-            {
-                Debug.LogError("Steam no está en ejecución. Abre Steam e inicia el juego desde allí.");
-                return;
-            }
-
             try
             {
                 if (UseNextGenSteamNetworking)
@@ -319,12 +297,11 @@ namespace Mirror.FizzySteam
 #else
                     SteamNetworkingUtils.InitRelayNetworkAccess();
 #endif
-                    Debug.Log("SteamNetworking inicializado correctamente");
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Error inicializando SteamNetworking: {ex.Message}");
+                Debug.LogError($"Failed to initialize relay network access: {ex.Message}");
             }
         }
     }
