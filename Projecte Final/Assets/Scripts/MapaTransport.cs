@@ -16,14 +16,12 @@ public class MapaTransport : NetworkBehaviour
     public ParticleSystem highlightParticles;
     public string mensajeInteraccion = "Presiona M para entrar a la Mansión";
 
-    // Variables privadas
     private Transform jugador;
     private bool jugadorEnRango;
     private CustomNetworkManager networkManager;
 
     private void Awake()
     {
-        // Configuración inicial
         SphereCollider collider = GetComponent<SphereCollider>();
         collider.radius = distanciaInteraccion;
         collider.isTrigger = true;
@@ -31,7 +29,6 @@ public class MapaTransport : NetworkBehaviour
         if (interactUI) interactUI.SetActive(false);
         if (highlightParticles) highlightParticles.Stop();
 
-        // Solo buscar NetworkManager si estamos en modo online
         if (NetworkClient.active)
         {
             networkManager = FindFirstObjectByType<CustomNetworkManager>();
@@ -50,14 +47,11 @@ public class MapaTransport : NetworkBehaviour
             return;
         }
 
-        // Verificar distancia
         float distancia = Vector3.Distance(transform.position, jugador.position);
         jugadorEnRango = distancia <= distanciaInteraccion;
 
-        // Feedback visual
         ActualizarFeedback();
 
-        // Comprobar interacción
         if (jugadorEnRango && Input.GetKeyDown(teclaTransporte))
         {
             if (mostrarDebug) Debug.Log("Tecla de transporte presionada");
@@ -80,13 +74,11 @@ public class MapaTransport : NetworkBehaviour
 
     private void ActualizarFeedback()
     {
-        // UI de interacción
         if (interactUI) 
         {
             interactUI.SetActive(jugadorEnRango);
         }
 
-        // Sistema de partículas
         if (highlightParticles)
         {
             if (jugadorEnRango && !highlightParticles.isPlaying) 
@@ -98,15 +90,14 @@ public class MapaTransport : NetworkBehaviour
 
     private void Transportar()
     {
-        // Modo offline (incluyendo pruebas en editor)
         if (!NetworkClient.active && !NetworkServer.active)
         {
             if (mostrarDebug) Debug.Log("Iniciando transporte OFFLINE a Mansion");
+            GameObject.FindGameObjectWithTag(tagJugador).transform.position = Vector3.zero;
             CargarEscenaSeguro("ProceduralMapGeneration");
             return;
         }
 
-        // Modo online
         if (networkManager == null)
         {
             networkManager = FindFirstObjectByType<CustomNetworkManager>();
@@ -121,6 +112,10 @@ public class MapaTransport : NetworkBehaviour
         
         if (isServer)
         {
+            foreach (var player in GameObject.FindGameObjectsWithTag(tagJugador))
+            {
+                player.transform.position = Vector3.zero;
+            }
             networkManager.ServerChangeScene("ProceduralMapGeneration");
         }
         else
@@ -133,6 +128,10 @@ public class MapaTransport : NetworkBehaviour
     private void CmdSolicitarTransporte()
     {
         if (mostrarDebug) Debug.Log("Servidor recibió solicitud de transporte");
+        foreach (var player in GameObject.FindGameObjectsWithTag(tagJugador))
+        {
+            player.transform.position = Vector3.zero;
+        }
         networkManager.ServerChangeScene("ProceduralMapGeneration");
     }
 
@@ -146,14 +145,9 @@ public class MapaTransport : NetworkBehaviour
         catch (System.Exception e)
         {
             Debug.LogError($"Error al cargar {nombreEscena}: {e.Message}");
-            Debug.Log("Verifica que:");
-            Debug.Log("1. La escena está en Build Settings");
-            Debug.Log("2. El nombre coincide exactamente");
-            Debug.Log("3. No hay errores de compilación");
         }
     }
 
-    // Métodos de trigger (backup)
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(tagJugador))
@@ -174,14 +168,12 @@ public class MapaTransport : NetworkBehaviour
         }
     }
 
-    // Visualización en editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(0, 1, 1, 0.5f);
         Gizmos.DrawWireSphere(transform.position, distanciaInteraccion);
     }
 
-    // UI alternativa
     private void OnGUI()
     {
         if (jugadorEnRango && interactUI == null)
