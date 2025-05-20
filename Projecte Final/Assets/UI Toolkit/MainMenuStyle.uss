@@ -1,4 +1,3 @@
-/* Estilos generales para los elementos del menú */
 .header {
     font-size: 100px;
     color: rgb(200, 200, 200);
@@ -12,50 +11,80 @@
     cursor: initial;
 }
 
-/* Estilos generales para los botones */
-.button, .buttonS {
+.button {
     font-size: 20px;
     width: 200px;
     height: 55px;
     align-self: center;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 18px;
     color: rgb(255, 255, 255);
     background-color: rgba(36, 36, 36, 0.85);
-    border: 2px solid #FF5733;
-    transition: opacity 0.5s ease, all 0.3s ease-in-out; /* Añadido efecto de opacidad */
+    border: 2px solid rgb(255, 87, 51);
+    transition: opacity 0.5s ease, all 0.3s ease-in-out;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.4);
     -unity-text-outline-width: 1px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px;
 }
 
-/* Efecto de desaparecer */
-.button.hidden, .buttonS.hidden {
+.buttonS {
+    font-size: 20px;
+    width: 200px;
+    height: 55px;
+    align-self: center;
+    border-radius: 10px;
+    margin-top: 18px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(36, 36, 36, 0.85);
+    border: 2px solid rgb(255, 87, 51);
+    transition: opacity 0.5s ease, all 0.3s ease-in-out;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.4);
+    -unity-text-outline-width: 1px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px;
+}
+
+.button.hidden {
     opacity: 0;
-    pointer-events: none; /* Para que no interactúe mientras está invisible */
+    pointer-events: none;
 }
 
+.buttonS.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
 
-/* Efecto hover (cuando el cursor pasa sobre el botón) */
-.button:hover, .buttonS:hover {
+.button:hover {
     scale: 1.1;
     background-color: rgba(255, 87, 51, 0.7);
-    border-color: #FF4500;
+    border-color: rgb(255, 69, 0);
     box-shadow: 0 0 20px rgba(255, 87, 51, 0.8);
 }
 
-/* Efecto de "presionado" */
-.button:active, .buttonS:active {
-    scale: 0.95;
-    background-color: rgba(255, 87, 51, 0.9);
-    box-shadow: 0 0 10px rgba(255, 87, 51, 1);
+.buttonS:hover {
+    scale: 1.1;
+    background-color: rgba(255, 87, 51, 0.7);
+    border-color: rgb(255, 69, 0);
+    box-shadow: 0 0 20px rgba(255, 87, 51, 0.8);
 }
 
+.button:active {
+    scale: 0.95;
+    background-color: rgba(255, 87, 51, 0.9);
+    box-shadow: 0 0 10px rgb(255, 87, 51);
+}
 
+.buttonS:active {
+    scale: 0.95;
+    background-color: rgba(255, 87, 51, 0.9);
+    box-shadow: 0 0 10px rgb(255, 87, 51);
+}
 
-/* Ajustes a la caja de configuraciones */
 .settings-container {
     width: 350px;
     background-color: rgba(36, 36, 36, 0.9);
@@ -65,27 +94,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: -300px;
     box-shadow: 0 0 15px rgba(255, 87, 51, 0.7);
 }
 
-/* Ajustes a los botones dentro de SettingsMenu */
 .settings-container .button {
     width: 250px;
     height: 50px;
     margin-bottom: 15px;
     font-size: 18px;
-    background-color: #FF5733;
+    background-color: rgb(255, 87, 51);
     border-radius: 5px;
-    border: 2px solid #FF5733;
+    border: 2px solid rgb(255, 87, 51);
     transition: background-color 0.3s;
 }
 
 .settings-container .button:hover {
-    background-color: #FF4500;
+    background-color: rgb(255, 69, 0);
 }
 
-/* Ajustes a la etiqueta de configuración */
 .settings-container .label {
     font-size: 22px;
     color: rgba(255, 255, 255, 0.9);
@@ -93,24 +120,19 @@
     text-align: center;
 }
 
-/* Estilo para el slider */
 .settings-container .slider {
     width: 250px;
     margin-bottom: 10px;
 }
 
-/* Ajuste para la etiqueta del volumen */
 .settings-container .volume-label {
     font-size: 18px;
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: 10px;
 }
 
-/* Ajustes para los botones dentro de StartS */
 .buttonS {
-    margin-top: 15px;
+    margin-top: 16px;
     border-radius: 10px;
-    top: -100px; /* Ajuste de la posición vertical */
+    top: -100px;
 }
-
-
