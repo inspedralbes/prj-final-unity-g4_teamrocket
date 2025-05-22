@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using NavMeshPlus.Components;
 using UnityEngine;
+using Mirror;
 
 [System.Serializable]
 public class EnemySpawnInfo
 {
     public GameObject enemyPrefab;
     public int countPerRoom;
-    
 }
+
 public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 {
     [SerializeField]
@@ -32,8 +33,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     [SerializeField] private GameObject blindEnemyPrefab;
     [SerializeField] private List<EnemySpawnInfo> enemyTypes;
 
-
-    [Header("Altres")]
+    [Header("Otros")]
     [SerializeField]
     private GameObject waypointPrefab;
     [SerializeField]
@@ -41,10 +41,10 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     [SerializeField]
     private NavMeshSurface navMeshSurface;
 
-    //PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
     private HashSet<Vector2Int> floorPositions, corridorPositions;
     private List<Color> roomColors = new List<Color>();
+
     protected override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
@@ -57,8 +57,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
         List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
         HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
-        Debug.Log($"Número de salas generadas: {roomsDictionary.Count}");
-
+        
         floorPositions.UnionWith(roomPositions);
 
         for (int i = 0; i < corridors.Count; i++)
@@ -70,7 +69,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
 
-        // A�ADIDO: Construir la NavMesh ahora que el mapa est� completo
         if (navMeshSurface != null)
         {
             navMeshSurface.BuildNavMesh();
@@ -83,21 +81,17 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         PlaceGameplayObjects();
     }
 
-
     private void PlaceGameplayObjects()
     {
         if (roomsDictionary.Count == 0) return;
 
         var roomCenters = roomsDictionary.Keys.ToList();
         var startRoom = roomCenters[0];
-        var farthestRoom = roomCenters
-            .OrderByDescending(r => Vector2Int.Distance(startRoom, r))
-            .First();
+        var farthestRoom = roomCenters.OrderByDescending(r => Vector2Int.Distance(startRoom, r)).First();
 
-        // Instanciar salida
-        Instantiate(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0), Quaternion.identity);
+        // Spawn de objetos de red
+        SpawnNetworkObject(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0));
 
-        // Habitaciones restantes
         var middleRooms = roomCenters.Except(new[] { startRoom, farthestRoom }).OrderBy(x => Guid.NewGuid()).ToList();
 
         // Llaves
@@ -105,20 +99,17 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         for (int i = 0; i < keysToPlace; i++)
         {
             Vector2Int keyRoom = middleRooms[i];
-            Instantiate(keyPrefab, new Vector3(keyRoom.x, keyRoom.y, 0), Quaternion.identity);
+            SpawnNetworkObject(keyPrefab, new Vector3(keyRoom.x, keyRoom.y, 0));
         }
 
-        // Enemigos y Waypoints
+        // Waypoints y enemigos
         foreach (var kvp in roomsDictionary)
         {
             Vector2Int roomCenter = kvp.Key;
             var roomFloor = kvp.Value;
 
-            // Saltar la sala inicial
-            if (roomCenter == startRoom)
-                continue;
+            if (roomCenter == startRoom) continue;
 
-            // Crear waypoint centrado
             Vector2 center = GetAveragePosition(roomFloor);
             Transform newWaypoint = Instantiate(waypointPrefab, new Vector3(center.x, center.y, 0), Quaternion.identity).transform;
 
@@ -127,49 +118,39 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
                 getWaypoints.RegisterWaypoint(newWaypoint);
             }
             
-            // === MonsterPatrol ===
-            // Instanciar 1 enemigo sobre el waypoint, solo en salas intermedias
             if (middleRooms.Contains(roomCenter) && enemyTypes.Count > 0)
             {
-                // Por ejemplo, elegir aleatoriamente un tipo de enemigo
                 var randomEnemyType = enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)];
-                Instantiate(randomEnemyType.enemyPrefab, newWaypoint.position, Quaternion.identity);
+                SpawnNetworkObject(randomEnemyType.enemyPrefab, newWaypoint.position);
             }
         }
 
+        // Spawn de enemigos especiales
+        SpawnSpecialEnemies(middleRooms, keysToPlace);
+    }
 
-        // === MonsterStalker ===
+    private void SpawnSpecialEnemies(List<Vector2Int> middleRooms, int keysToPlace)
+    {
+        // MonsterStalker
         if (stalkerEnemyPrefab != null && getWaypoints != null && getWaypoints.waypoints.Count > 0)
         {
             Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
-
-            Instantiate(stalkerEnemyPrefab, chosenRespawn.position, Quaternion.identity);
-        }
-        else
-        {
-            Debug.LogWarning("No se ha podido instanciar el stalker: prefab o waypoints faltantes.");
+            SpawnNetworkObject(stalkerEnemyPrefab, chosenRespawn.position);
         }
 
-        // === MonsterFreeze ===
-        // Número de enemigos MonsterFreeze que se colocarán (1 por cada 4 salas)
+        // MonsterFreeze
         int freezeEnemiesToPlace = Mathf.FloorToInt(roomsDictionary.Count / 4f);
-
-        // Tomar tantas habitaciones intermedias como enemigos a colocar
         var freezeEnemyRooms = middleRooms.Take(freezeEnemiesToPlace).ToList();
-
         foreach (var roomCenter in freezeEnemyRooms)
         {
             Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
-            Instantiate(freezeEnemyPrefab, chosenRespawn.position, Quaternion.identity);
+            SpawnNetworkObject(freezeEnemyPrefab, chosenRespawn.position);
         }
 
-        // === MonsterGhost ===
+        // MonsterGhost
         int ghostEnemiesToSpawn = 3;
-
-        // Asegúrate de que haya suficientes waypoints
         if (getWaypoints != null && getWaypoints.waypoints.Count >= ghostEnemiesToSpawn)
         {
-            // Selecciona 3 waypoints aleatorios únicos
             var selectedWaypoints = getWaypoints.waypoints
                 .OrderBy(x => UnityEngine.Random.value)
                 .Take(ghostEnemiesToSpawn)
@@ -177,39 +158,28 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
             foreach (var waypoint in selectedWaypoints)
             {
-                Transform chosenRespawn = waypoint;
-                GameObject ghostEnemy = Instantiate(ghostEnemyPrefab, chosenRespawn.position, Quaternion.identity);
-
-                var ghostScript = ghostEnemy.GetComponent<MonsterGhostController>();
-                if (ghostScript == null)
-                {
-                    Debug.LogWarning("MonsterGhostController no encontrado en el prefab del Ghost.");
-                }
+                SpawnNetworkObject(ghostEnemyPrefab, waypoint.position);
             }
         }
-        else
-        {
-            Debug.LogWarning("No hay suficientes waypoints generados para los Ghosts.");
-        }
 
-        // === SPAWN ÚNICO DEL GUARDIÁN EN SALA CON LLAVE ===
+        // Guardian
         if (blindEnemyPrefab != null && keysToPlace > 0)
         {
-            // Escoge una sala aleatoria entre las que tienen llave
             Vector2Int guardianRoom = middleRooms[UnityEngine.Random.Range(0, keysToPlace)];
-
             if (roomsDictionary.TryGetValue(guardianRoom, out var roomFloor))
             {
-                // Usa el centro promedio del suelo de la sala
                 Vector2 center = GetAveragePosition(roomFloor);
-                Instantiate(blindEnemyPrefab, new Vector3(center.x, center.y, 0), Quaternion.identity);
+                SpawnNetworkObject(blindEnemyPrefab, new Vector3(center.x, center.y, 0));
             }
         }
+    }
 
-        if (getWaypoints != null)
-        {
-            Debug.Log($"Número total de waypoints generados: {getWaypoints.waypoints.Count}");
-        }
+    private void SpawnNetworkObject(GameObject prefab, Vector3 position)
+    {
+        if (!NetworkServer.active) return;
+
+        GameObject obj = Instantiate(prefab, position, Quaternion.identity);
+        NetworkServer.Spawn(obj);
     }
 
     private Vector2 GetAveragePosition(HashSet<Vector2Int> roomFloor)
@@ -238,13 +208,12 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         return newCorridor;
     }
 
-    //2025_05_08_modif_______
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
         int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count * roomPercent);
 
-        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy( x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
+        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         ClearRoomData();
         foreach (var roomPosition in roomsToCreate)
         {
@@ -259,7 +228,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     {
         roomsDictionary[roomPosition] = roomFloor;
         roomColors.Add(UnityEngine.Random.ColorHSV());
-
     }
 
     private void ClearRoomData()
@@ -268,13 +236,11 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         roomColors.Clear();
     }
 
-    //2025_05_08_modif_______
     private List<List<Vector2Int>> CreateCorridors(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> potentialRoomPositions)
     {
         var currentPosition = startPosition;
         potentialRoomPositions.Add(currentPosition);
         List<List<Vector2Int>> corridors = new List<List<Vector2Int>>();
-
 
         for (int i = 0; i < corridorCount; i++)
         {
@@ -287,6 +253,4 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         corridorPositions = new HashSet<Vector2Int>(floorPositions);
         return corridors;
     }
-
-
 }

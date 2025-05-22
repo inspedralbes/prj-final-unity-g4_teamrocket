@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 
-public class EnemyBase : MonoBehaviour, IStunnable
+public class EnemyBase : NetworkBehaviour, IStunnable
 {
     public int damage;
     public float speed;

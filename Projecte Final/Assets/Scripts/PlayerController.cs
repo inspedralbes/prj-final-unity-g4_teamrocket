@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using TMPro;
+using Mirror;
 
-public class PlayerController : MonoBehaviour, IStunnable
+public class PlayerController : NetworkBehaviour, IStunnable
 {
     // Movimiento y física
     public Rigidbody2D rb;
@@ -68,6 +70,9 @@ public class PlayerController : MonoBehaviour, IStunnable
     public Vector2 lastDirection;
     public bool forceAnimationUpdate;
 
+    [SyncVar] public bool isDead = false;
+    public static bool gameOverChecked = false;
+
     void Start()
     {
         // Evita que el GameObject se destruya al cargar una nueva escena
@@ -113,6 +118,12 @@ public class PlayerController : MonoBehaviour, IStunnable
         HandleMovementInput();
         HandleShopInput();
         HandleEquipmentInput();
+
+        // Sistema redundante (seguridad para casos donde Morir() no se llamó correctamente)
+        if (isDead && !gameOverChecked && !CheckForLivingPlayers())
+        {
+            LoadGameOver();
+        }
     }
 
     // Implementación de la interfaz IStunnable
@@ -133,6 +144,7 @@ public class PlayerController : MonoBehaviour, IStunnable
         
         // Detener el movimiento inmediatamente
         rb.linearVelocity = Vector2.zero;
+        canMove = false;
         
         // Iniciar corutina para el stun
         if (stunCoroutine != null)
@@ -150,9 +162,10 @@ public class PlayerController : MonoBehaviour, IStunnable
 
         // Finalizar el stun
         isStunned = false;
-        
+
         // Opcional: Desactivar efecto visual
         if (stunEffect != null) stunEffect.SetActive(false);
+        canMove = true;
     }
 
     public void HandleMovementInput()
@@ -328,10 +341,134 @@ public class PlayerController : MonoBehaviour, IStunnable
 
     public void Morir()
     {
-        Debug.Log("Muerto");
+        if (isDead) return;
+        
+        Debug.Log("Jugador muerto - Verificando estado del juego");
+        isDead = true;
+        
+        // Desactivar componentes
+        canMove = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        
+        // Desactivar hijos específicos
+        Transform[] children = GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in children)
+        {
+            if (child.name == "Light2D" || child.name == "ConoLuz" || 
+                child.name == "Canvas" || child.name == "MicManager" || 
+                child.name == "Brujula")
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+        
         GameObject.Find("Barras")?.SetActive(false);
-        gameObject.SetActive(false);
+        
+        // Primero verificar si hay otros jugadores vivos
+        if (CheckForLivingPlayers())
+        {
+            // Si hay jugadores vivos, activar sistema de cámaras
+            StartCoroutine(SetupCameraSystem());
+        }
+        else
+        {
+            // Si no hay jugadores vivos, cargar GameOver inmediatamente
+            LoadGameOver();
+        }
+    }
+
+    private bool CheckForLivingPlayers()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            // Verificar si el jugador está activo y visible
+            if (player != this.gameObject && 
+                player.activeInHierarchy && 
+                player.GetComponent<SpriteRenderer>()?.enabled == true)
+            {
+                Debug.Log($"Jugador {player.name} todavía está vivo");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void LoadGameOver()
+    {
+        if (gameOverChecked) return;
+        
+        gameOverChecked = true;
+        Debug.Log("Todos los jugadores muertos - Cargando GameOver");
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+        
+        // Desactivar todas las cámaras
+        foreach (Camera cam in Camera.allCameras)
+        {
+            cam.enabled = false;
+        }
+    }
+
+    private IEnumerator SetupCameraSystem()
+    {
+        yield return new WaitForEndOfFrame();
+        
+        // Verificar nuevamente por si acaso el estado cambió
+        if (!CheckForLivingPlayers())
+        {
+            LoadGameOver();
+            yield break;
+        }
+        
+        Camera[] playerCameras = FindObjectsOfType<Camera>();
+        List<Camera> validCameras = new List<Camera>();
+        
+        foreach (Camera cam in playerCameras)
+        {
+            if (cam.CompareTag("MainCamera") && cam.enabled)
+            {
+                validCameras.Add(cam);
+            }
+        }
+        
+        if (validCameras.Count == 0) yield break;
+        
+        int currentCameraIndex = 0;
+        SetActiveCamera(validCameras, currentCameraIndex);
+        
+        while (isDead && !gameOverChecked)
+        {
+            // Verificar periódicamente si aún hay jugadores vivos
+            if (!CheckForLivingPlayers())
+            {
+                LoadGameOver();
+                yield break;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                currentCameraIndex--;
+                if (currentCameraIndex < 0) currentCameraIndex = validCameras.Count - 1;
+                SetActiveCamera(validCameras, currentCameraIndex);
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                currentCameraIndex++;
+                if (currentCameraIndex >= validCameras.Count) currentCameraIndex = 0;
+                SetActiveCamera(validCameras, currentCameraIndex);
+            }
+            
+            yield return null;
+        }
+    }
+    
+    private void SetActiveCamera(List<Camera> cameras, int index)
+    {
+        for (int i = 0; i < cameras.Count; i++)
+        {
+            cameras[i].enabled = (i == index);
+        }
     }
 
     /*public void Die()
@@ -357,7 +494,9 @@ public class PlayerController : MonoBehaviour, IStunnable
         {
             canOpenShop = true;
             Debug.Log("Puedes abrir la tienda con E");
-        } else {
+        }
+        else
+        {
             canOpenShop = false;
         }
     }
