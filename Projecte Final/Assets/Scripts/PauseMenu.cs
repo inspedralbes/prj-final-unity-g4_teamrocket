@@ -115,7 +115,7 @@ public class PauseMenu : MonoBehaviour
         _exitButton.text = language == "es" ? "Salir" : "Exit";
         _volumeLabel.text = language == "es" ? "Volumen" : "Volume";
         _englishButton.text = language == "es" ? "Inglés" : "English";
-        _spanishButton.text = language == "es" ? "Español" : "Spanish";
+        _spanishButton.text = language == "es" ? "Castellano" : "Spanish";
         _backButton.text = language == "es" ? "Atrás" : "Back"; // Cambio de texto en el botón "Back"
     }
     public static bool SiEscenaActiva(string sceneName)

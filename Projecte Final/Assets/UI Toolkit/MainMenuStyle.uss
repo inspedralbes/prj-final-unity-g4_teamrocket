@@ -13,7 +13,7 @@
 
 .button {
     font-size: 20px;
-    width: 200px;
+    width: 280px;
     height: 55px;
     align-self: center;
     border-radius: 10px;
@@ -32,7 +32,7 @@
 
 .buttonS {
     font-size: 20px;
-    width: 200px;
+    width: 280px;
     height: 55px;
     align-self: center;
     border-radius: 10px;
@@ -94,7 +94,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: -300px;
+    margin-top: -237px;
     box-shadow: 0 0 15px rgba(255, 87, 51, 0.7);
 }
 

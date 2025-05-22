@@ -70,6 +70,7 @@ public class MainMenuEvents : MonoBehaviour
             { "SpanishButton", "Spanish" },
             { "CodeInputField", "Enter Room Code" },
             { "GeneratedCodeLabel", "Room Code: {0}" },
+            { "StartOfflineButton", "Start Offline" },
 
             // Español (es)
             { "StartGameButton_es", "Iniciar Juego" },
@@ -82,7 +83,8 @@ public class MainMenuEvents : MonoBehaviour
             { "EnglishButton_es", "Ingles" },
             { "SpanishButton_es", "Castellano" },
             { "CodeInputField_es", "Introduce el Código de la Sala" },
-            { "GeneratedCodeLabel_es", "Código de la Sala: {0}" }
+            { "GeneratedCodeLabel_es", "Código de la Sala: {0}" },
+            { "StartOfflineButton_es", "Jugar Solo" }
         };
     }
 
@@ -243,6 +245,8 @@ public class MainMenuEvents : MonoBehaviour
         _volumeLabel.text = _translations["VolumeLabel" + (language == "es" ? "_es" : "")];
         _englishButton.text = _translations["EnglishButton" + (language == "es" ? "_es" : "")];
         _spanishButton.text = _translations["SpanishButton" + (language == "es" ? "_es" : "")];
+        _startOfflineButton.text = _translations["StartOfflineButton" + (language == "es" ? "_es" : "")]; // Nueva línea
+
 
         _codeInputField.label = _translations["CodeInputField" + (language == "es" ? "_es" : "")];
         _generatedCodeLabel.text = string.Format(_translations["GeneratedCodeLabel" + (language == "es" ? "_es" : "")], roomCode);

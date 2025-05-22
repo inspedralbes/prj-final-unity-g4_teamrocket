@@ -3,10 +3,8 @@
     <engine:VisualElement name="LevelPass" style="flex-grow: 1; flex-direction: column; justify-content: center; align-items: center; padding-top: 20px;">
         <engine:Label name="TitleText" text="The Darkness let you go..." style="font-size: 10px; color: white; unity-text-align: center; align-self: center; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/Font_HelpMe/HelpMe.ttf?fileID=12800000&amp;guid=de38f7a9dc26283438219d0a29482aef&amp;type=3#HelpMe&quot;);" />
         <engine:Label name="ForNowText" text="For Now" style="font-size: 10px; color: red; unity-text-align: center; align-self: center; opacity: 0; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/a-dripping-marker/adrip1.ttf?fileID=12800000&amp;guid=291a6f32b62ff7648a926cc9f27725e4&amp;type=3#adrip1&quot;);" />
-        
-        <!-- Botón Exit con tamaño aumentado y efectos -->
-        <engine:VisualElement name="ButtonContainer" style="flex-direction: column; justify-content: center; align-items: center; opacity: 0; margin-top: 50px;">
-            <engine:Button name="ExitButton" text="Exit" style="background-color: #FF4500; color: white; font-size: 24px; padding: 20px 40px; border-radius: 10px; border: 3px solid #FF6347; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;" />
+        <engine:VisualElement name="ButtonContainer" style="flex-direction: column; justify-content: center; align-items: center; opacity: 0; margin-top: 50px; -unity-font-definition: url(&quot;project://database/Assets/Mirror/Hosting/Edgegap/Editor/Fonts/Src/Spartan/Spartan-Regular.ttf?fileID=12800000&amp;guid=3445f8970e8fa734c96cef5ab98ddd61&amp;type=3#Spartan-Regular&quot;);">
+            <engine:Button name="ExitButton" text="Exit" style="background-color: rgb(255, 69, 0); color: white; font-size: 24px; padding: 20px 40px; border-radius: 10px; border: 3px solid rgb(255, 99, 71); transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
