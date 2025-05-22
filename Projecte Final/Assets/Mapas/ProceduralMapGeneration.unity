@@ -149,6 +149,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1680064813}
+  - {fileID: 1095539333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &383071045
@@ -60519,6 +60520,7 @@ GameObject:
   - component: {fileID: 1095539332}
   - component: {fileID: 1095539331}
   - component: {fileID: 1095539330}
+  - component: {fileID: 1095539334}
   m_Layer: 0
   m_Name: MapGeneratoeComponent
   m_TagString: Untagged
@@ -60541,20 +60543,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  floorTilemap: {fileID: 0}
-  wallTilemap: {fileID: 0}
-  floorTile: {fileID: 0}
-  wallTop: {fileID: 0}
-  wallSideRight: {fileID: 0}
-  wallSideLeft: {fileID: 0}
-  wallBottom: {fileID: 0}
-  wallFull: {fileID: 0}
-  wallInnerCornerDownLeft: {fileID: 0}
-  wallInnerCornerDownRight: {fileID: 0}
-  wallDiagonalCornerDownRight: {fileID: 0}
-  wallDiagonalCornerDownLeft: {fileID: 0}
-  wallDiagonalCornerUpRight: {fileID: 0}
-  wallDiagonalCornerUpLeft: {fileID: 0}
+  floorTilemap: {fileID: 910049661}
+  wallTilemap: {fileID: 2049280383}
+  floorTile: {fileID: 11400000, guid: 3bf1e958a97f20148b478c8ba2915528, type: 2}
+  wallTop: {fileID: 11400000, guid: 5bcd1ec4be2130c4a927935749a6ae90, type: 2}
+  wallSideRight: {fileID: 11400000, guid: b7a7104120a03034a8d84b1b878dc19d, type: 2}
+  wallSideLeft: {fileID: 11400000, guid: de3301c346e0cb743bbf0dd2375d244d, type: 2}
+  wallBottom: {fileID: 11400000, guid: 6f7f3fa2daf0af34ca893ef6dc5fb598, type: 2}
+  wallFull: {fileID: 11400000, guid: 83656e5fd6ab8604099625362472c7e8, type: 2}
+  wallInnerCornerDownLeft: {fileID: 11400000, guid: 382a1d40792d8aa42bca9f5e8482c605, type: 2}
+  wallInnerCornerDownRight: {fileID: 11400000, guid: 1aaf173a34efde2408e0accf1ee0f878, type: 2}
+  wallDiagonalCornerDownRight: {fileID: 11400000, guid: 8f10035a0d6dbb240b330b90ca04fa4d, type: 2}
+  wallDiagonalCornerDownLeft: {fileID: 11400000, guid: 6787effc746d4a64c86f56a24a1b5372, type: 2}
+  wallDiagonalCornerUpRight: {fileID: 11400000, guid: b8ba116b7c2861042bf23c1489b7c222, type: 2}
+  wallDiagonalCornerUpLeft: {fileID: 11400000, guid: 739045c4f3a7064409461cb3565dbad8, type: 2}
 --- !u!114 &1095539331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60588,22 +60590,24 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   startPosition: {x: 0, y: 0}
-  randomWalkParameters: {fileID: 0}
+  randomWalkParameters: {fileID: 11400000, guid: 2d19df39dd195df41a69dd03fe30c0c2, type: 2}
   networkTilemapVisualizer: {fileID: 0}
   corridorLength: 14
   corridorCount: 5
-  roomPercent: 0.8
-  exitPrefab: {fileID: 0}
-  keyPrefab: {fileID: 0}
+  roomPercent: 0.253
+  exitPrefab: {fileID: 4970418405442401705, guid: e3a3a18602d6b8c43bc0752ffc4d5748, type: 3}
+  keyPrefab: {fileID: 4970418405442401705, guid: 90e82b3f8c86da646b7c82300c4707d9, type: 3}
   numberOfKeys: 3
-  stalkerEnemyPrefab: {fileID: 0}
-  freezeEnemyPrefab: {fileID: 0}
-  ghostEnemyPrefab: {fileID: 0}
-  blindEnemyPrefab: {fileID: 0}
-  enemyTypes: []
-  waypointPrefab: {fileID: 0}
-  getWaypoints: {fileID: 0}
-  navMeshSurface: {fileID: 0}
+  stalkerEnemyPrefab: {fileID: 5832621377646979222, guid: f5ffbb93f97fabb498a78999183161be, type: 3}
+  freezeEnemyPrefab: {fileID: 6934460635457449643, guid: 2440eec882069cebf8ebc45d448bd62c, type: 3}
+  ghostEnemyPrefab: {fileID: 4417153192077728667, guid: c1cf0667f70dab1e4b26171da3ed333b, type: 3}
+  blindEnemyPrefab: {fileID: 3700345703284750019, guid: 5b00ce94dcc4bb34fa98b5fd33f97c5f, type: 3}
+  enemyTypes:
+  - enemyPrefab: {fileID: 6751005966974647979, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
+    countPerRoom: 1
+  waypointPrefab: {fileID: 7509701823768720953, guid: 71278b6b5d98994478eba2a3240b9c0c, type: 3}
+  getWaypoints: {fileID: 1478853190}
+  navMeshSurface: {fileID: 521616575}
   networkTilemapVisualizer: {fileID: 0}
 --- !u!4 &1095539333
 Transform:
@@ -60613,13 +60617,39 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095539329}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 28078132}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1095539334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095539329}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff10979639b0f74381c00fbdf3636ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorTilemap: {fileID: 910049661}
+  wallTilemap: {fileID: 2049280383}
+  floorTile: {fileID: 11400000, guid: 3bf1e958a97f20148b478c8ba2915528, type: 2}
+  wallTop: {fileID: 11400000, guid: 5bcd1ec4be2130c4a927935749a6ae90, type: 2}
+  wallSideRight: {fileID: 11400000, guid: b7a7104120a03034a8d84b1b878dc19d, type: 2}
+  wallSideLeft: {fileID: 11400000, guid: de3301c346e0cb743bbf0dd2375d244d, type: 2}
+  wallBottom: {fileID: 11400000, guid: 6f7f3fa2daf0af34ca893ef6dc5fb598, type: 2}
+  wallFull: {fileID: 11400000, guid: 83656e5fd6ab8604099625362472c7e8, type: 2}
+  wallInnerCornerDownLeft: {fileID: 11400000, guid: 382a1d40792d8aa42bca9f5e8482c605, type: 2}
+  wallInnerCornerDownRight: {fileID: 11400000, guid: 1aaf173a34efde2408e0accf1ee0f878, type: 2}
+  wallDiagonalCornerDownRight: {fileID: 11400000, guid: 8f10035a0d6dbb240b330b90ca04fa4d, type: 2}
+  wallDiagonalCornerDownLeft: {fileID: 11400000, guid: 6787effc746d4a64c86f56a24a1b5372, type: 2}
+  wallDiagonalCornerUpRight: {fileID: 11400000, guid: b8ba116b7c2861042bf23c1489b7c222, type: 2}
+  wallDiagonalCornerUpLeft: {fileID: 11400000, guid: 739045c4f3a7064409461cb3565dbad8, type: 2}
 --- !u!1 &1216475937
 GameObject:
   m_ObjectHideFlags: 0
@@ -88392,4 +88422,3 @@ SceneRoots:
   - {fileID: 1478853191}
   - {fileID: 1394372821}
   - {fileID: 28078132}
-  - {fileID: 1095539333}
