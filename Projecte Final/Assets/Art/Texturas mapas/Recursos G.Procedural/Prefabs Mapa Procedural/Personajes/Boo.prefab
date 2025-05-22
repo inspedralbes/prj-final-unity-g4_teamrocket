@@ -137,6 +137,51 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &6464540786569024049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1284524495822384618}
+  - component: {fileID: 1370039373107294033}
+  m_Layer: 0
+  m_Name: MicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1284524495822384618
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464540786569024049}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 30301615249425696}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1370039373107294033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464540786569024049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c92794e5dd99a43b12095f257d4cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  micLoudness: 0
 --- !u!1 &7279041211194800803
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +195,7 @@ GameObject:
   - component: {fileID: 7106398595140738984}
   - component: {fileID: 7183680550341359798}
   - component: {fileID: 4868353505135494654}
+  - component: {fileID: 5074513385318449162}
   m_Layer: 0
   m_Name: Boo
   m_TagString: Player
@@ -171,6 +217,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8315663750124493176}
+  - {fileID: 1284524495822384618}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5915708878062968291
@@ -331,3 +378,20 @@ PolygonCollider2D:
       - {x: 0.5212159, y: 0.2826624}
       - {x: 0.3387015, y: 0.44623375}
   m_UseDelaunayMesh: 0
+--- !u!114 &5074513385318449162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279041211194800803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8e96b05bc60a0478ba6e7bf5074521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  micListener: {fileID: 1370039373107294033}
+  currentMicVolume: 0
