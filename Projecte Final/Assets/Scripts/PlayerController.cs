@@ -421,7 +421,7 @@ public class PlayerController : NetworkBehaviour, IStunnable
             yield break;
         }
         
-        Camera[] playerCameras = FindFirstObjectsByType<Camera>();
+        Camera[] playerCameras = FindObjectsOfType<Camera>();
         List<Camera> validCameras = new List<Camera>();
         
         foreach (Camera cam in playerCameras)
