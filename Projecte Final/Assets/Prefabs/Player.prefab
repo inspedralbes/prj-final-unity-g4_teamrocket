@@ -708,6 +708,51 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &3144233795996259149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2046491144742154397}
+  - component: {fileID: 3031390876828614515}
+  m_Layer: 0
+  m_Name: MicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2046491144742154397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3144233795996259149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2360453643376553460}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3031390876828614515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3144233795996259149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c92794e5dd99a43b12095f257d4cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  micLoudness: 0
 --- !u!1 &3216849391479271079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,8 +1422,9 @@ GameObject:
   - component: {fileID: -7540364054811695704}
   - component: {fileID: 5255107225499224756}
   - component: {fileID: 4036225779818063539}
+  - component: {fileID: 3662702652473109996}
   m_Layer: 0
-  m_Name: SusProta (1)
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1405,6 +1451,7 @@ Transform:
   - {fileID: 356199957893250054}
   - {fileID: 8569787198311566551}
   - {fileID: 6458159830637350831}
+  - {fileID: 2046491144742154397}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3532262456685899569
@@ -1646,6 +1693,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a27dfdc55e80f14bb5056019e5faeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  horizontal: 0
+  vertical: 0
+  speed: 5
+  speedBase: 5
+  speedBoost: 10
   maxHealth: 100
   stamina: 100
   staminaMax: 100
@@ -1658,18 +1711,27 @@ MonoBehaviour:
   bate: {fileID: 4137071052943698451}
   numBatazos: 3
   shopController: {fileID: 6480694450587509030}
+  canMove: 1
+  canOpenShop: 1
   money: 1000
   flashing: 0
+  linternaActiva: 0
   luzLinterna: {fileID: 5265274759915648398}
   colliderLinternaNormal: {fileID: 108552355582738309}
   colliderLinternaAmplio: {fileID: 6074713371426837427}
   tiempoLinternaEncendida: 0
   duracionMaximaLinterna: 180
+  tiempoMostrarLinterna: 0
   textTempsLinterna: {fileID: 5666119607871716981}
   brujula: 0
   objetoBrujula: {fileID: 6056663557918523750}
+  isStunned: 0
+  stunTimer: 0
   stunEffect: {fileID: 8335385678671221078}
   textUsosBate: {fileID: 4916771155436648982}
+  animator: {fileID: 0}
+  lastDirection: {x: 0, y: 0}
+  forceAnimationUpdate: 0
 --- !u!95 &4036225779818063539
 Animator:
   serializedVersion: 7
@@ -1692,6 +1754,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3662702652473109996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295919784117300754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8e96b05bc60a0478ba6e7bf5074521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  micListener: {fileID: 3031390876828614515}
+  currentMicVolume: 0
 --- !u!1 &6527587636170514119
 GameObject:
   m_ObjectHideFlags: 0

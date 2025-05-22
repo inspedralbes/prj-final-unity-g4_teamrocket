@@ -29,7 +29,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     [SerializeField] private GameObject stalkerEnemyPrefab;
     [SerializeField] private GameObject freezeEnemyPrefab;
     [SerializeField] private GameObject ghostEnemyPrefab;
-    [SerializeField] private GameObject deafEnemyPrefab;
+    [SerializeField] private GameObject blindEnemyPrefab;
     [SerializeField] private List<EnemySpawnInfo> enemyTypes;
 
 
@@ -160,21 +160,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         foreach (var roomCenter in freezeEnemyRooms)
         {
             Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
-            GameObject freezeEnemy = Instantiate(freezeEnemyPrefab, chosenRespawn.position, Quaternion.identity);
-
-            // Asignar la referencia al jugador al enemigo freeze
-            var freezeScript = freezeEnemy.GetComponent<MonsterFreezeController>();
-            if (freezeScript != null)
-            {
-                freezeScript.player = playerInstance.transform;
-            }
-
-            //Mirar
-            if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
-
-            // Escoger una posición aleatoria dentro del cuarto para el enemigo freeze
-            Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
-            Instantiate(freezeEnemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
+            Instantiate(freezeEnemyPrefab, chosenRespawn.position, Quaternion.identity);
         }
 
         // === MonsterGhost ===
@@ -207,7 +193,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         }
 
         // === SPAWN ÚNICO DEL GUARDIÁN EN SALA CON LLAVE ===
-        if (deafEnemyPrefab != null && keysToPlace > 0)
+        if (blindEnemyPrefab != null && keysToPlace > 0)
         {
             // Escoge una sala aleatoria entre las que tienen llave
             Vector2Int guardianRoom = middleRooms[UnityEngine.Random.Range(0, keysToPlace)];
@@ -216,7 +202,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             {
                 // Usa el centro promedio del suelo de la sala
                 Vector2 center = GetAveragePosition(roomFloor);
-                GameObject guardian = Instantiate(deafEnemyPrefab, new Vector3(center.x, center.y, 0), Quaternion.identity);
+                Instantiate(blindEnemyPrefab, new Vector3(center.x, center.y, 0), Quaternion.identity);
             }
         }
 
