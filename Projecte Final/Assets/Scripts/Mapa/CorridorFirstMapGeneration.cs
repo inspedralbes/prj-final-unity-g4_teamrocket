@@ -4,6 +4,7 @@ using System.Linq;
 using NavMeshPlus.Components;
 using UnityEngine;
 using Mirror;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class EnemySpawnInfo
@@ -12,34 +13,41 @@ public class EnemySpawnInfo
     public int countPerRoom;
 }
 
+[System.Serializable]
+public struct WallTileData
+{
+    public Vector2Int position;
+    public string binaryType;
+}
+
 public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 {
-    [SerializeField]
-    private int corridorLength = 14, corridorCount = 5;
-    [SerializeField]
-    [Range(0.1f, 1)]
-    public float roomPercent = 0.8f;
-    [SerializeField] 
-    private GameObject exitPrefab;
-    [SerializeField] 
-    private GameObject keyPrefab;
-    [SerializeField] 
-    private int numberOfKeys = 3;
+    [Header("Network Configuration")]
+    [SyncVar(hook = nameof(OnSeedChanged))] 
+    private int networkSeed;
+    
+    [Header("Map Generation Settings")]
+    [SerializeField] private int corridorLength = 14;
+    [SerializeField] private int corridorCount = 5;
+    [SerializeField] [Range(0.1f, 1)] public float roomPercent = 0.8f;
+    
+    [Header("Gameplay Objects")]
+    [SerializeField] private GameObject exitPrefab;
+    [SerializeField] private GameObject keyPrefab;
+    [SerializeField] private int numberOfKeys = 3;
 
-    [Header("Enemies")]
+    [Header("Enemies Configuration")]
     [SerializeField] private GameObject stalkerEnemyPrefab;
     [SerializeField] private GameObject freezeEnemyPrefab;
     [SerializeField] private GameObject ghostEnemyPrefab;
     [SerializeField] private GameObject blindEnemyPrefab;
     [SerializeField] private List<EnemySpawnInfo> enemyTypes;
 
-    [Header("Otros")]
-    [SerializeField]
-    private GameObject waypointPrefab;
-    [SerializeField]
-    public GetWaypoints getWaypoints;
-    [SerializeField]
-    private NavMeshSurface navMeshSurface;
+    [Header("References")]
+    [SerializeField] private GameObject waypointPrefab;
+    [SerializeField] public GetWaypoints getWaypoints;
+    [SerializeField] private NavMeshSurface navMeshSurface;
+    [SerializeField] private NetworkTilemapVisualizer networkTilemapVisualizer;
 
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
     private HashSet<Vector2Int> floorPositions, corridorPositions;
@@ -47,12 +55,30 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
     protected override void RunProceduralGeneration()
     {
+        if (isServer)
+        {
+            networkSeed = Random.Range(int.MinValue, int.MaxValue);
+            GenerateMap();
+        }
+    }
+
+    private void GenerateMap()
+    {
+        Random.InitState(networkSeed);
         CorridorFirstGeneration();
+    }
+
+    private void OnSeedChanged(int oldSeed, int newSeed)
+    {
+        if (!isServer)
+        {
+            GenerateMap();
+        }
     }
 
     private void CorridorFirstGeneration()
     {
-        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        floorPositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
         List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
@@ -66,9 +92,8 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             floorPositions.UnionWith(corridors[i]);
         }
 
-        tilemapVisualizer.PaintFloorTiles(floorPositions);
-        WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
-
+        SyncMapWithClients(floorPositions);
+        
         if (navMeshSurface != null)
         {
             navMeshSurface.BuildNavMesh();
@@ -81,6 +106,49 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         PlaceGameplayObjects();
     }
 
+    private void SyncMapWithClients(HashSet<Vector2Int> floorPositions)
+    {
+        if (networkTilemapVisualizer == null)
+        {
+            Debug.LogError("NetworkTilemapVisualizer no asignado!");
+            return;
+        }
+
+        networkTilemapVisualizer.RpcClearAllTiles();
+        networkTilemapVisualizer.RpcPaintFloorTiles(new List<Vector2Int>(floorPositions));
+        
+        var basicWalls = new List<WallTileData>();
+        var cornerWalls = new List<WallTileData>();
+        
+        var basicWallPositions = WallGenerator.FindWallsInDirections(floorPositions, Direction2D.cardinalDirectionsList);
+        foreach (var position in basicWallPositions)
+        {
+            string binaryType = GetNeighborsBinaryType(position, floorPositions, Direction2D.cardinalDirectionsList);
+            basicWalls.Add(new WallTileData { position = position, binaryType = binaryType });
+        }
+        
+        var cornerWallPositions = WallGenerator.FindWallsInDirections(floorPositions, Direction2D.diagonalDirectionsList);
+        foreach (var position in cornerWallPositions)
+        {
+            string binaryType = GetNeighborsBinaryType(position, floorPositions, Direction2D.eigthDirectionsList);
+            cornerWalls.Add(new WallTileData { position = position, binaryType = binaryType });
+        }
+        
+        networkTilemapVisualizer.RpcPaintBasicWalls(basicWalls);
+        networkTilemapVisualizer.RpcPaintCornerWalls(cornerWalls);
+    }
+
+    private string GetNeighborsBinaryType(Vector2Int position, HashSet<Vector2Int> floorPositions, List<Vector2Int> directions)
+    {
+        string neighboursBinaryType = "";
+        foreach (var direction in directions)
+        {
+            var neighbourPosition = position + direction;
+            neighboursBinaryType += floorPositions.Contains(neighbourPosition) ? "1" : "0";
+        }
+        return neighboursBinaryType;
+    }
+
     private void PlaceGameplayObjects()
     {
         if (roomsDictionary.Count == 0) return;
@@ -89,12 +157,10 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         var startRoom = roomCenters[0];
         var farthestRoom = roomCenters.OrderByDescending(r => Vector2Int.Distance(startRoom, r)).First();
 
-        // Spawn de objetos de red
         SpawnNetworkObject(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0));
 
         var middleRooms = roomCenters.Except(new[] { startRoom, farthestRoom }).OrderBy(x => Guid.NewGuid()).ToList();
 
-        // Llaves
         int keysToPlace = Mathf.Min(numberOfKeys, middleRooms.Count);
         for (int i = 0; i < keysToPlace; i++)
         {
@@ -102,7 +168,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             SpawnNetworkObject(keyPrefab, new Vector3(keyRoom.x, keyRoom.y, 0));
         }
 
-        // Waypoints y enemigos
         foreach (var kvp in roomsDictionary)
         {
             Vector2Int roomCenter = kvp.Key;
@@ -120,39 +185,35 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             
             if (middleRooms.Contains(roomCenter) && enemyTypes.Count > 0)
             {
-                var randomEnemyType = enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)];
+                var randomEnemyType = enemyTypes[Random.Range(0, enemyTypes.Count)];
                 SpawnNetworkObject(randomEnemyType.enemyPrefab, newWaypoint.position);
             }
         }
 
-        // Spawn de enemigos especiales
         SpawnSpecialEnemies(middleRooms, keysToPlace);
     }
 
     private void SpawnSpecialEnemies(List<Vector2Int> middleRooms, int keysToPlace)
     {
-        // MonsterStalker
         if (stalkerEnemyPrefab != null && getWaypoints != null && getWaypoints.waypoints.Count > 0)
         {
-            Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
+            Transform chosenRespawn = getWaypoints.waypoints[Random.Range(0, getWaypoints.waypoints.Count)];
             SpawnNetworkObject(stalkerEnemyPrefab, chosenRespawn.position);
         }
 
-        // MonsterFreeze
         int freezeEnemiesToPlace = Mathf.FloorToInt(roomsDictionary.Count / 4f);
         var freezeEnemyRooms = middleRooms.Take(freezeEnemiesToPlace).ToList();
         foreach (var roomCenter in freezeEnemyRooms)
         {
-            Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
+            Transform chosenRespawn = getWaypoints.waypoints[Random.Range(0, getWaypoints.waypoints.Count)];
             SpawnNetworkObject(freezeEnemyPrefab, chosenRespawn.position);
         }
 
-        // MonsterGhost
         int ghostEnemiesToSpawn = 3;
         if (getWaypoints != null && getWaypoints.waypoints.Count >= ghostEnemiesToSpawn)
         {
             var selectedWaypoints = getWaypoints.waypoints
-                .OrderBy(x => UnityEngine.Random.value)
+                .OrderBy(x => Random.value)
                 .Take(ghostEnemiesToSpawn)
                 .ToList();
 
@@ -162,10 +223,9 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             }
         }
 
-        // Guardian
         if (blindEnemyPrefab != null && keysToPlace > 0)
         {
-            Vector2Int guardianRoom = middleRooms[UnityEngine.Random.Range(0, keysToPlace)];
+            Vector2Int guardianRoom = middleRooms[Random.Range(0, keysToPlace)];
             if (roomsDictionary.TryGetValue(guardianRoom, out var roomFloor))
             {
                 Vector2 center = GetAveragePosition(roomFloor);
@@ -192,7 +252,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         return sum / roomFloor.Count;
     }
 
-    public List<Vector2Int> IncreaseCorridorBrush3by3(List<Vector2Int> corridor)
+    private List<Vector2Int> IncreaseCorridorBrush3by3(List<Vector2Int> corridor)
     {
         List<Vector2Int> newCorridor = new List<Vector2Int>();
         for (int i = 1; i < corridor.Count; i++)
@@ -227,7 +287,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     private void SaveRoomData(Vector2Int roomPosition, HashSet<Vector2Int> roomFloor)
     {
         roomsDictionary[roomPosition] = roomFloor;
-        roomColors.Add(UnityEngine.Random.ColorHSV());
+        roomColors.Add(Random.ColorHSV());
     }
 
     private void ClearRoomData()
@@ -252,5 +312,11 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         }
         corridorPositions = new HashSet<Vector2Int>(floorPositions);
         return corridors;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(new Vector3(startPosition.x, startPosition.y, 0), 0.5f);
     }
 }
