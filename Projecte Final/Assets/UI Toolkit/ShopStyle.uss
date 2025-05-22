@@ -1,0 +1,165 @@
+.shop-container {
+    flex-grow: 1;
+    background-color: #0e0e12;
+    padding: 15px;
+}
+
+.shop-header {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom-width: 1px;
+    border-bottom-color: #333;
+}
+
+.shop-tab {
+    font-size: 18px;
+    color: #777;
+    margin-right: 25px;
+}
+
+.shop-tab.active {
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.money-amount {
+    font-size: 18px;
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.shop-content {
+    flex-direction: row;
+    gap: 20px;
+    height: 90%;
+}
+
+/* Equipamiento */
+.equipment-column {
+    flex: 2;
+    background-color: #16161d;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.details-column {
+    flex: 1;
+    background-color: #1a1a24;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 15px;
+}
+
+/* Grids */
+.equipment-grid {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.equipment-item {
+    flex-direction: row;
+    align-items: center;
+    background-color: #2a2a3a;
+    padding: 10px;
+    border-radius: 5px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.equipment-item:hover {
+    background-color: #3a3a4a;
+}
+
+/* Imagen del item */
+.item-icon {
+    width: 64px;
+    height: 64px;
+}
+
+/* Info de los items */
+.item-info {
+    flex-direction: column;
+}
+
+.item-name {
+    font-size: 16px;
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.item-price {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
+/* Detalles */
+.item-preview {
+    width: 100%;
+    height: 200px;
+    background-color: #222;
+    border-radius: 10px;
+    scale-mode: scale-to-fit;
+}
+
+.item-detail-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-top: 10px;
+}
+
+.item-detail-description {
+    font-size: 14px;
+    color: #b0b0b0;
+    margin-top: 5px;
+}
+
+.item-detail-price {
+    font-size: 18px;
+    color: #e0e0e0;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Botones */
+.action-buttons {
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.buy-button, .sell-button {
+    flex: 1;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.buy-button {
+    background-color: #2a5a2a;
+    color: #e0e0e0;
+}
+
+.sell-button {
+    background-color: #5a2a2a;
+    color: #e0e0e0;
+}
+
+/* Botón de cierre */
+.close-button {
+    width: 30px;
+    height: 30px;
+    background-color: #5a2a2a;
+    color: #e0e0e0;
+    border-radius: 15px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.close-button:hover {
+    background-color: #7a2a2a;
+}

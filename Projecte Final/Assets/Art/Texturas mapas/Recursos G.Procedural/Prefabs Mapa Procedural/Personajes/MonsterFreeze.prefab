@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8638830798566785694
 Transform:
   m_ObjectHideFlags: 0
@@ -104,6 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   speed: 0
+  stunEffect: {fileID: 0}
+  stunAnimationSpeed: 0.3
   player: {fileID: 30301615249425696, guid: 9741d606491aac14089430f751cb71f1, type: 3}
   minDistance: 2
 --- !u!60 &2641849425148245983

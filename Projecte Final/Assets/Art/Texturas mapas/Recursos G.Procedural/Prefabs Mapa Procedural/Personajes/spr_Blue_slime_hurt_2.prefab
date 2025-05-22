@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 7262065682260037197}
   - component: {fileID: 7843517848511822481}
   - component: {fileID: -7585657458608769902}
+  - component: {fileID: 7726161233932249260}
+  - component: {fileID: 3123961366090202484}
   m_Layer: 0
   m_Name: spr_Blue_slime_hurt_2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +103,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.1
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 70
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -172,7 +174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   speed: 1
-  player: {fileID: 30301615249425696, guid: 9741d606491aac14089430f751cb71f1, type: 3}
+  stunEffect: {fileID: 6934460635457449643, guid: 2440eec882069cebf8ebc45d448bd62c, type: 3}
+  stunAnimationSpeed: 0.3
+  player: {fileID: 2360453643376553460, guid: 3f9112092be0e43b9826d9372defab46, type: 3}
   minDistance: 1.5
   visionRange: 5
   visionAngle: 60
@@ -180,3 +184,54 @@ MonoBehaviour:
   currentAngle: 0
   waypoints: []
   waitTime: 1
+--- !u!114 &7726161233932249260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751005966974647979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 926684514910384150}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
+--- !u!114 &3123961366090202484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751005966974647979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 4192369726
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0

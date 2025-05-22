@@ -19,8 +19,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
     [Range(0.1f, 1)]
     public float roomPercent = 0.8f;
     [SerializeField] 
-    private GameObject playerPrefab;
-    [SerializeField] 
     private GameObject exitPrefab;
     [SerializeField] 
     private GameObject keyPrefab;
@@ -98,10 +96,6 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             .OrderByDescending(r => Vector2Int.Distance(startRoom, r))
             .First();
 
-
-        // Instanciar jugador y guardar referencia
-        var playerInstance = Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
-
         // Instanciar salida
         Instantiate(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0), Quaternion.identity);
 
@@ -141,13 +135,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             {
                 // Por ejemplo, elegir aleatoriamente un tipo de enemigo
                 var randomEnemyType = enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)];
-                GameObject enemyObj = Instantiate(randomEnemyType.enemyPrefab, newWaypoint.position, Quaternion.identity);
-
-                var enemyScript = enemyObj.GetComponent<MonsterPatrolController>();
-                if (enemyScript != null)
-                {
-                    enemyScript.player = playerInstance.transform;
-                }
+                Instantiate(randomEnemyType.enemyPrefab, newWaypoint.position, Quaternion.identity);
             }
         }
 
@@ -157,14 +145,7 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
         {
             Transform chosenRespawn = getWaypoints.waypoints[UnityEngine.Random.Range(0, getWaypoints.waypoints.Count)];
 
-            GameObject stalker = Instantiate(stalkerEnemyPrefab, chosenRespawn.position, Quaternion.identity);
-
-            var stalkerScript = stalker.GetComponent<MonsterStalkerController>();
-            if (stalkerScript != null)
-            {
-                stalkerScript.player = playerInstance.transform;
-                stalkerScript.respawnWaypoint = chosenRespawn;
-            }
+            Instantiate(stalkerEnemyPrefab, chosenRespawn.position, Quaternion.identity);
         }
         else
         {
@@ -189,6 +170,13 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
             {
                 freezeScript.player = playerInstance.transform;
             }
+
+            //Mirar
+            if (!roomsDictionary.TryGetValue(roomCenter, out var roomFloor)) continue;
+
+            // Escoger una posición aleatoria dentro del cuarto para el enemigo freeze
+            Vector2Int randomPos = roomFloor.ElementAt(UnityEngine.Random.Range(0, roomFloor.Count));
+            Instantiate(freezeEnemyPrefab, new Vector3(randomPos.x, randomPos.y, 0), Quaternion.identity);
         }
 
         // === MonsterGhost ===
