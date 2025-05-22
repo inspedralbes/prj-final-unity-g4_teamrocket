@@ -26,6 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Mapas/LevelComplete.unity
     guid: b797ef952b9b64946b62f4f11b8faa95
+  - enabled: 1
+    path: Assets/Mapas/PruebaInstanciar.unity
+    guid: ea62d7ba03ba4ed41a7c11a4b0bbfbb9
+  - enabled: 1
+    path: Assets/Mapas/ProceduralMapGeneration.unity
+    guid: 71b560a1ccc00bc43857d9b16d17125f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

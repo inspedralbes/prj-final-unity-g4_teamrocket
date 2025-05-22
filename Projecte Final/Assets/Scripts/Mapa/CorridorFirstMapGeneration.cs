@@ -94,8 +94,17 @@ public class CorridorFirstMapGeneration : SimpleRandomWalkMapGenerator
 
 
         // Instanciar jugador y guardar referencia
-        var playerInstance = Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
-
+        //var playerInstance = Instantiate(playerPrefab, new Vector3(startRoom.x, startRoom.y, 0), Quaternion.identity);
+        GameObject playerInstance = GameObject.FindWithTag("Player");
+        if (playerInstance != null)
+        {
+            playerInstance.transform.position = new Vector3(startRoom.x, startRoom.y, 0);
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró un objeto con el tag 'Player'. Asegúrate de que el jugador esté en la escena.");
+            return;
+        }
         // Instanciar salida
         Instantiate(exitPrefab, new Vector3(farthestRoom.x, farthestRoom.y, 0), Quaternion.identity);
 
