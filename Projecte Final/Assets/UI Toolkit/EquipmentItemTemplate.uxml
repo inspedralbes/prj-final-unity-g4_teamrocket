@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+>
+<engine:VisualElement class="equipment-item">
+    <engine:VisualElement class="item-icon" name="item-icon" />
+    <engine:Label class="item-name" name="item-name" />
+    <engine:Label class="item-price" name="item-price" />
+    <engine:VisualElement class="item-quantity">
+        <engine:Button class="quantity-btn" name="decrease-btn" text="-" />
+        <engine:Label class="quantity-value" name="quantity-value" />
+        <engine:Button class="quantity-btn" name="increase-btn" text="+" />
+    </engine:VisualElement>
+</engine:VisualElement>
+    
+</engine:UXML>
