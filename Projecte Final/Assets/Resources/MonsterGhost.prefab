@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3186073828944549226}
   m_Layer: 0
   m_Name: MonsterGhost
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94998ebad0d5d494ab2889833b75da45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   damage: 0
   speed: 0
   stunEffect: {fileID: 0}
@@ -201,7 +204,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
-  target: {fileID: 926684514910384150, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
+  target: {fileID: 6220909439516105948}
   syncPosition: 1
   syncRotation: 1
   syncScale: 0

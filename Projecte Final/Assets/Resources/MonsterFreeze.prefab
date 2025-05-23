@@ -32,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 6934460635457449643}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.5049, y: -10.2893, z: 0}
-  m_LocalScale: {x: 7.220476, y: 9.150419, z: 1}
+  m_LocalPosition: {x: -30.2111, y: -11.172, z: 0}
+  m_LocalScale: {x: 4.6052194, y: 5.3127337, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,6 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a117bccc33b66eaa434c099beb884c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   damage: 0
   speed: 0
   stunEffect: {fileID: 0}
@@ -217,7 +220,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
-  target: {fileID: 926684514910384150, guid: 7471cbb05f9b41a4898cccda9c64fb16, type: 3}
+  target: {fileID: 8638830798566785694}
   syncPosition: 1
   syncRotation: 1
   syncScale: 0

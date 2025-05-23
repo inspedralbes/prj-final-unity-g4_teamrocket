@@ -149,7 +149,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0011005327, y: -0.00301677}
+  m_Offset: {x: 0.014467537, y: -0.12707594}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -159,7 +159,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.409644, y: 0.61902416}
+  m_Size: {x: 0.2850995, y: 0.37090582}
   m_EdgeRadius: 0
 --- !u!114 &-7585657458608769902
 MonoBehaviour:
@@ -173,6 +173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a3d023a0cbac042898ee6300665c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   damage: 0
   speed: 1
   stunEffect: {fileID: 6934460635457449643, guid: 2440eec882069cebf8ebc45d448bd62c, type: 3}

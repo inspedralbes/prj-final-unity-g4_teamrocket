@@ -1,12 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class MonsterStalkerController : EnemyBase
 {
-    public Transform player;  // Referencia al jugador
-    public Transform respawnWaypoint;  // El waypoint específico donde respawnea el monstruo
-
     private NavMeshAgent agent;
+    private Transform currentTarget;
+    private float targetUpdateCooldown = 2f;
+    private float lastTargetUpdateTime;
+    
+    // Sistema de waypoints
+    private GetWaypoints waypointProvider;
+    private Transform[] waypoints;
+    private Transform currentWaypoint;
 
     void Start()
     {
@@ -16,15 +22,63 @@ public class MonsterStalkerController : EnemyBase
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = speed;
+        
+        // Inicializar sistema de waypoints
+        waypointProvider = FindObjectOfType<GetWaypoints>();
+        if (waypointProvider != null)
+        {
+            waypoints = waypointProvider.waypoints.ToArray();
+            SelectRandomWaypoint();
+        }
+        else
+        {
+            Debug.LogError("No se encontró GetWaypoints en la escena");
+        }
+        
+        UpdateRandomPlayerTarget();
+        lastTargetUpdateTime = Time.time;
     }
 
     void Update()
     {
-        if (player != null)
+        if (Time.time - lastTargetUpdateTime > targetUpdateCooldown)
         {
-            agent.SetDestination(player.position);
-        } else {
-            Debug.Log("No existo");
+            UpdateRandomPlayerTarget();
+            lastTargetUpdateTime = Time.time;
+        }
+
+        if (currentTarget != null)
+        {
+            agent.SetDestination(currentTarget.position);
+        }
+    }
+
+    private void SelectRandomWaypoint()
+    {
+        if (waypoints != null && waypoints.Length > 0)
+        {
+            int randomIndex = Random.Range(0, waypoints.Length);
+            currentWaypoint = waypoints[randomIndex];
+            transform.position = currentWaypoint.position;
+            agent.Warp(currentWaypoint.position);
+        }
+    }
+
+    private void UpdateRandomPlayerTarget()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        var validPlayers = players.Where(p => 
+            p.activeInHierarchy && 
+            p.GetComponent<SpriteRenderer>()?.enabled == true).ToArray();
+
+        if (validPlayers.Length > 0)
+        {
+            int randomIndex = Random.Range(0, validPlayers.Length);
+            currentTarget = validPlayers[randomIndex].transform;
+        }
+        else
+        {
+            currentTarget = null;
         }
     }
 
@@ -32,7 +86,7 @@ public class MonsterStalkerController : EnemyBase
     {
         if (other.CompareTag("Vision"))  
         {
-            RespawnAtWaypoint(); 
+            RespawnAtRandomWaypoint(); 
         }
 
         if (other.CompareTag("Player"))
@@ -45,16 +99,19 @@ public class MonsterStalkerController : EnemyBase
         }
     }
 
-    void RespawnAtWaypoint()
+    void RespawnAtRandomWaypoint()
     {
-        if (respawnWaypoint != null)
+        if (waypointProvider != null && waypoints.Length > 0)
         {
-            agent.Warp(respawnWaypoint.position); // Mueve correctamente el NavMeshAgent
-            Debug.Log("El monstruo ha respawneado en el waypoint específico.");
+            SelectRandomWaypoint();
+            Debug.Log("Monstruo respawneado en waypoint aleatorio");
+            
+            // Buscar nuevo objetivo inmediatamente
+            UpdateRandomPlayerTarget();
         }
         else
         {
-            Debug.LogWarning("No se ha asignado un waypoint de respawn.");
+            Debug.LogWarning("No hay waypoints disponibles para respawn");
         }
     }
 }

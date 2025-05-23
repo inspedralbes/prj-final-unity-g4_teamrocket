@@ -71,7 +71,7 @@ public class MonsterGhostController : EnemyBase
     {
         if (other.CompareTag("Player"))
         {
-            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
             {
                 player.InvertirControles(tiempoEfecto);

@@ -73,6 +73,9 @@ public class PlayerController : NetworkBehaviour, IStunnable
     [SyncVar] public bool isDead = false;
     public static bool gameOverChecked = false;
 
+    private bool controlesInvertidos = false;
+    private float tiempoRestanteInversion = 0f;
+
     void Start()
     {
         // Evita que el GameObject se destruya al cargar una nueva escena
@@ -193,6 +196,19 @@ public class PlayerController : NetworkBehaviour, IStunnable
             speed = speedBase;
         }
 
+        // Invertir si el efecto está activo
+        if (controlesInvertidos)
+        {
+            horizontal *= -1;
+            vertical *= -1;
+
+            tiempoRestanteInversion -= Time.deltaTime;
+            if (tiempoRestanteInversion <= 0)
+            {
+                controlesInvertidos = false;
+            }
+        }
+
         Vector2 inputDirection = new Vector2(horizontal, vertical);
     
         // Actualización inmediata (sin normalizar para mantener magnitud)
@@ -205,6 +221,12 @@ public class PlayerController : NetworkBehaviour, IStunnable
         // {
         //     animator.Play("Movement", 0, 0f); // Fuerza reinicio de animación
         // }
+    }
+
+    public void InvertirControles(float tiempo)
+    {
+        controlesInvertidos = true;
+        tiempoRestanteInversion = tiempo;
     }
 
     public void HandleShopInput()
