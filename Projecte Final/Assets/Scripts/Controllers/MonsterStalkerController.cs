@@ -6,7 +6,7 @@ public class MonsterStalkerController : EnemyBase
 {
     private NavMeshAgent agent;
     private Transform currentTarget;
-    private float targetUpdateCooldown = 2f;
+    private float targetUpdateCooldown = 50f;
     private float lastTargetUpdateTime;
     
     // Sistema de waypoints

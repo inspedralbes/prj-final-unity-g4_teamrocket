@@ -11,7 +11,7 @@ public class PlayerMic : NetworkBehaviour
         if (isLocalPlayer)
         {
             currentMicVolume = micListener.micLoudness;
-            Debug.Log("Enviando volumen al servidor: " + currentMicVolume);
+            // Debug.Log("Enviando volumen al servidor: " + currentMicVolume);
             CmdUpdateMicVolume(currentMicVolume);
         }
     }
@@ -20,6 +20,6 @@ public class PlayerMic : NetworkBehaviour
     void CmdUpdateMicVolume(float volume)
     {
         currentMicVolume = volume;
-        Debug.Log("Volumen recibido en el servidor: " + currentMicVolume);
+        // Debug.Log("Volumen recibido en el servidor: " + currentMicVolume);
     }
 }

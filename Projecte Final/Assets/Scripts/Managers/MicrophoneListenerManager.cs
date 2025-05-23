@@ -11,13 +11,13 @@ public class MicrophoneListenerManager : MonoBehaviour
     {
         micDevice = Microphone.devices[0];
         micClip = Microphone.Start(micDevice, true, 1, AudioSettings.outputSampleRate);
-        Debug.Log("Micrófono iniciado: " + micDevice);
+        Debug.Log("Micrï¿½fono iniciado: " + micDevice);
     }
 
     void Update()
     {
         micLoudness = GetMaxVolume();
-        Debug.Log("Volumen actual: " + micLoudness);
+        // Debug.Log("Volumen actual: " + micLoudness);
     }
 
     float GetMaxVolume()

@@ -2,60 +2,109 @@ using Mirror;
 using UnityEngine;
 using System.Linq;
 
-public class MonsterDeafController : NetworkBehaviour
+public class MonsterDeafController : EnemyBase
 {
     public float hearingThreshold = 0.01f;
-    public float speed = 3f;
     public float memoryDuration = 5f;
+    
+    [Header("Configuraci贸n de Rotaci贸n")]
+    [Tooltip("Activa para forzar rotaci贸n a 0 grados")]
+    public bool lockRotation = true;
+    [Tooltip("Rotaci贸n deseada en grados")]
+    public Vector3 targetRotation = Vector3.zero;
 
     private Transform targetPlayer;
     private Vector3 lastHeardPosition;
     private float memoryTimer = 0f;
+    private SpriteRenderer spriteRenderer;
 
-    [System.Obsolete]
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        ForceCorrectRotation();
+    }
+
     void Update()
     {
         if (!isServer) return;
 
-        var players = FindObjectsOfType<PlayerMic>();
-        var loudPlayers = players
+        // Protecci贸n activa contra rotaci贸n no deseada
+        if (lockRotation && transform.eulerAngles != targetRotation)
+        {
+            ForceCorrectRotation();
+        }
+
+        UpdateHearingBehavior();
+        UpdateVisualOrientation();
+    }
+
+    void LateUpdate()
+    {
+        // Protecci贸n adicional despu茅s de todas las actualizaciones
+        if (lockRotation)
+        {
+            ForceCorrectRotation();
+        }
+    }
+
+    void ForceCorrectRotation()
+    {
+        transform.rotation = Quaternion.Euler(targetRotation);
+    }
+
+    void UpdateHearingBehavior()
+    {
+        var players = FindObjectsOfType<PlayerMic>()
             .Where(p => p.currentMicVolume > hearingThreshold)
             .OrderByDescending(p => p.currentMicVolume)
             .ToList();
 
-        if (loudPlayers.Count > 0)
+        if (players.Count > 0)
         {
-            targetPlayer = loudPlayers[0].transform;
+            targetPlayer = players[0].transform;
             lastHeardPosition = targetPlayer.position;
             memoryTimer = memoryDuration;
-
-            Debug.Log("Persiguiendo jugador: " + loudPlayers[0].name);
         }
         else if (memoryTimer > 0)
         {
             memoryTimer -= Time.deltaTime;
-            targetPlayer = null; // Deja de seguir directamente al jugador
-
-            // Sigue la 鷏tima posici髇 conocida
-            float distance = Vector3.Distance(transform.position, lastHeardPosition);
-            if (distance > 0.1f)
+            targetPlayer = null;
+            
+            if (Vector3.Distance(transform.position, lastHeardPosition) > 0.1f)
             {
-                Vector3 direction = (lastHeardPosition - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-
-                Debug.Log("Buscando en 鷏tima posici髇: " + lastHeardPosition);
+                transform.position += (lastHeardPosition - transform.position).normalized * speed * Time.deltaTime;
             }
         }
         else
         {
-            targetPlayer = null; // Olvida despu閟 de cierto tiempo
+            targetPlayer = null;
         }
 
-        // Si todav韆 tiene a un jugador ruidoso como objetivo
         if (targetPlayer != null)
         {
-            Vector3 direction = (targetPlayer.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
+            transform.position += (targetPlayer.position - transform.position).normalized * speed * Time.deltaTime;
+        }
+    }
+
+    void UpdateVisualOrientation()
+    {
+        if (spriteRenderer == null) return;
+
+        Vector3 direction = targetPlayer != null ? 
+            targetPlayer.position - transform.position : 
+            Vector3.zero;
+
+        if (direction != Vector3.zero)
+        {
+            spriteRenderer.flipX = direction.x < 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && isServer)
+        {
+            other.GetComponent<PlayerController>()?.TakeDamage(damage);
         }
     }
 }
