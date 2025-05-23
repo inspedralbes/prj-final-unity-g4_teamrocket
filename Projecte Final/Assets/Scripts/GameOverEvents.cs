@@ -89,7 +89,7 @@ public class GameOverEvents : MonoBehaviour
 }
 
     private void OntryAgainButton(){
-        SceneManager.LoadScene("Mansion");
+        SceneManager.LoadScene("Lobby");
     }
 
     private void OnExitButtonClicked()

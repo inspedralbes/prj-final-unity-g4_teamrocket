@@ -8,11 +8,14 @@ TagManager:
   - Enemy
   - Item
   - Tienda
+  - Waypoint
+  - Key
+  - Salida
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - Walls

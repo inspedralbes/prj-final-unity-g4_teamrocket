@@ -14,8 +14,11 @@ public class MonsterPatrolController : EnemyBase
     public float currentAngle = 0f;
 
     [Header("Patrol")]
-    [SerializeField] private Transform[] waypoints;
-    [SerializeField] private float waitTime = 1f;
+    [SerializeField] 
+    private Transform[] waypoints;
+    private GetWaypoints waypointProvider;
+    [SerializeField] 
+    private float waitTime = 1f;
     private int currentWaypoint = 0;
     private bool isWaiting;
 
@@ -23,20 +26,28 @@ public class MonsterPatrolController : EnemyBase
     private bool isChasing = false;
     private Coroutine damageCoroutine;
 
+    [System.Obsolete]
     void Start()
     {
         damage = 10;
-        speed = 10f;
+        speed = 8f;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = speed;
+        agent.updatePosition = true;
+        
+        // Fuerza rotación correcta inicial
+        transform.rotation = Quaternion.identity;
 
-        if (waypoints.Length > 0)
-        {
-            transform.position = waypoints[0].position;
-            agent.Warp(waypoints[0].position);
-        }
+        waypointProvider = FindObjectOfType<GetWaypoints>();
+        waypoints = waypointProvider.waypoints.ToArray();
+
+        //if (waypoints.Length > 0)
+        //{
+        //    transform.position = waypoints[0].position;
+        //    agent.Warp(waypoints[0].position);
+        //}
 
         if (waypoints.Length > 1)
         {
@@ -48,6 +59,11 @@ public class MonsterPatrolController : EnemyBase
 
     void Update()
     {
+        if (agent.speed != speed) // Mantiene la velocidad constante
+        {
+            agent.speed = speed;
+        }
+        
         Vector2 playerDirection = player.position - transform.position;
 
         // Si el jugador está dentro del cono o dentro del collider, sigue persiguiendo
@@ -124,8 +140,29 @@ public class MonsterPatrolController : EnemyBase
     // Verifica si el jugador está dentro del círculo de detección
     bool IsPlayerInDetectionRadius()
     {
-        return Vector2.Distance(transform.position, player.position) <= detectionRadius;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject closestPlayer = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject p in players)
+        {
+            float distance = Vector2.Distance(transform.position, p.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlayer = p;
+            }
+        }
+
+        if (closestPlayer != null)
+        {
+            player = closestPlayer.transform;
+            return closestDistance <= detectionRadius;
+        }
+
+        return false;
     }
+
 
     public void UpdateVisionAngleToWaypoint(Vector2 waypointPosition)
     {
@@ -171,6 +208,12 @@ public class MonsterPatrolController : EnemyBase
 
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + leftAngle);
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + rightAngle);
+
+        Gizmos.color = Color.green;
+        if (player != null)
+        {
+            Gizmos.DrawLine(transform.position, player.position);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

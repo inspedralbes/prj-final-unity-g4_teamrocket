@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using TMPro;
 
 public class ShopController : MonoBehaviour
 {
     [System.Serializable]
     public class ShopItem
     {
-        public string id;
+        public int id;
         public string name;
         public int price;
         public string description;
@@ -15,8 +16,10 @@ public class ShopController : MonoBehaviour
     }
 
     [SerializeField] private UIDocument shopUI;
-    [SerializeField] private int playerMoney = 7189;
     [SerializeField] private List<ShopItem> equipmentItems;
+    public PlayerController playerController;
+    public TMP_Text textTempsLinterna;
+    public TMP_Text textUsosBate;
 
     private VisualElement root;
     private Label moneyLabel;
@@ -108,11 +111,35 @@ public class ShopController : MonoBehaviour
     {
         if (selectedItem == null) return;
 
-        if (playerMoney >= selectedItem.price)
+        if (playerController.money >= selectedItem.price)
         {
-            playerMoney -= selectedItem.price;
+            // Verificar que existe
+            if (playerController == null)
+            {
+                Debug.LogError("No se encontró PlayerController en el padre");
+            }
+            playerController.money -= selectedItem.price;
             UpdateMoneyDisplay();
             Debug.Log($"Bought {selectedItem.name} for ${selectedItem.price}");
+            switch (selectedItem.id)
+            {
+                case 0:
+                    playerController.flashing = true;
+                    playerController.tiempoLinternaEncendida = 0f;
+                    textTempsLinterna.text = $"{playerController.duracionMaximaLinterna}";
+                    break;
+                case 1:
+                    playerController.brujula = true;
+                    break;
+                case 2:
+                    playerController.puedeAtacar = true;
+                    playerController.numBatazos = 3;
+                    textUsosBate.text = $"{playerController.numBatazos}";
+                    break;
+                default:
+                    Debug.LogError("ID de item no válido: " + selectedItem.id);
+                    break;
+            }
         }
         else
         {
@@ -124,7 +151,7 @@ public class ShopController : MonoBehaviour
     {
         if (selectedItem == null) return;
 
-        playerMoney += selectedItem.price / 2;
+        playerController.money += selectedItem.price / 2;
         UpdateMoneyDisplay();
         Debug.Log($"Sold {selectedItem.name} for ${selectedItem.price / 2}");
     }
@@ -136,7 +163,7 @@ public class ShopController : MonoBehaviour
 
     private void UpdateMoneyDisplay()
     {
-        moneyLabel.text = $"${playerMoney}";
+        moneyLabel.text = $"${playerController.money}";
     }
 
     public void ToggleShop(bool show)

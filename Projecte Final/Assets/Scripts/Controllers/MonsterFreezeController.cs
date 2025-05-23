@@ -1,19 +1,26 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class MonsterFreezeController : EnemyBase
 {
     [Header("Configuración")]
-    public Transform player;  // Referencia al jugador
-    public float minDistance = 2f;  // Distancia mínima para volver a moverse
-
+    public float minDistance = 2f;
+    public float freezeDuration = 3f;
+    
     private NavMeshAgent agent;
+    private Transform currentTarget;
+    private Animator animator;
+    private bool isFrozen = false;
+    private float freezeEndTime;
 
     void Start() 
     {
         damage = 100;
-        speed = 10f;
+        speed = 3f;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = speed;
@@ -21,60 +28,91 @@ public class MonsterFreezeController : EnemyBase
 
     void Update()
     {
-        if (!agent.isStopped)  // Si el agente no está detenido, persigue al jugador
+        if (isFrozen)
         {
-            ChasePlayer();
+            // Verificar si debe descongelarse
+            if (Time.time >= freezeEndTime)
+            {
+                UnfreezeMonster();
+            }
         }
         else
         {
-            // Verificar si el monstruo puede volver a perseguir al jugador
-            CheckIfPlayerIsFar();
-        }
-    }
-
-    void ChasePlayer()
-    {
-        if (player != null)
-        {
-            agent.SetDestination(player.position);
-        }
-    }
-
-    // Detecta la colisión con el jugador
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))  // Asegúrate de que el jugador tenga la etiqueta "Player"
-        {
-            FreezeMonster();  // Congelar el monstruo cuando toque al jugador
-
-            PlayerController player = other.GetComponent<PlayerController>();
-            if (player != null)
+            // Perseguir al jugador más cercano
+            UpdateClosestPlayerTarget();
+            
+            if (currentTarget != null)
             {
-                player.TakeDamage(damage);
+                agent.SetDestination(currentTarget.position);
             }
         }
+    }
 
-        if (other.CompareTag("Vision"))  // Si deseas que la visión sea un trigger que active el congelamiento
+    private void UpdateClosestPlayerTarget()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if (players == null || players.Length == 0) 
         {
-            FreezeMonster();  // Congelar al monstruo cuando detecte al jugador
+            currentTarget = null;
+            return;
+        }
+
+        currentTarget = players
+            .Where(p => p != null && p.activeInHierarchy)
+            .OrderBy(p => Vector2.Distance(transform.position, p.transform.position))
+            .FirstOrDefault()?.transform;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Vision"))
+        {
+            FreezeMonster();
+            
+            if (other.CompareTag("Player"))
+            {
+                other.GetComponent<PlayerController>()?.TakeDamage(damage);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if ((other.CompareTag("Vision") || other.CompareTag("Player")) && !isFrozen)
+        {
+            FreezeMonster();
         }
     }
 
     void FreezeMonster()
     {
-        agent.isStopped = true;  // Detener el movimiento del agente
-        agent.velocity = Vector3.zero;  // Asegura que el agente no tenga velocidad
-        Debug.Log("El monstruo se ha quedado quieto al tocar al jugador.");
+        if (isFrozen) return;
+
+        // Detener movimiento
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        
+        // Pausar animación
+        if (animator != null)
+        {
+            animator.speed = 0f; // Congela la animación en el frame actual
+        }
+        
+        isFrozen = true;
+        freezeEndTime = Time.time + freezeDuration;
     }
 
-    void CheckIfPlayerIsFar()
+    void UnfreezeMonster()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        if (distanceToPlayer > minDistance)  // Si el jugador se aleja más allá de la distancia mínima
+        // Reanudar movimiento
+        agent.isStopped = false;
+        
+        // Reanudar animación
+        if (animator != null)
         {
-            agent.isStopped = false;  // El monstruo comienza a moverse de nuevo
-            Debug.Log("El monstruo comienza a perseguir nuevamente.");
+            animator.speed = 1f; // Vuelve a la velocidad normal
         }
+        
+        isFrozen = false;
     }
 }
